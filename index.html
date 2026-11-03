@@ -1,0 +1,1913 @@
+<!doctype html><html lang="kk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style><title>Үш перпендикуляр және жазықтықтар бұрышы</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400;1,8..60,600&display=swap">
+<style>
+/* Layout: school-notebook sheet on graph paper. Sticky header, pill tabs, one card per topic
+   (text left, rotatable 3D figure right), reference grid, floating pen toolbar over an ink layer. */
+:root{
+  --u:1.25; --k:1.15; --ul:1.12;
+  --paper:#f6f8fd; --grid:#dde5f4; --surface:#ffffff; --surface-2:#eef3fc;
+  --ink:#142040; --ink-2:#4b5979; --rule:#ccd6ea;
+  --accent:#2447c5; --accent-ink:#ffffff; --accent-soft:rgba(36,71,197,.12);
+  --margin:#d63e4f;
+  --plane-a:rgba(36,71,197,.17); --edge-a:#2447c5;
+  --plane-b:rgba(214,62,79,.17); --edge-b:#d63e4f;
+  --plane-c:rgba(17,122,85,.17); --edge-c:#117a55;
+  --good:#117a55; --good-soft:rgba(17,122,85,.12); --bad:#c2303f; --bad-soft:rgba(194,48,63,.11);
+  --pen-1:#1b3fd0; --pen-2:#d3263f; --pen-3:#0f8a5f;
+  --font-display:'Source Serif 4','Noto Serif',Georgia,serif;
+  --font-ui:'IBM Plex Sans','Noto Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0e1526; --grid:#1a2742; --surface:#141d33; --surface-2:#1a2542;
+    --ink:#e8eefc; --ink-2:#a2b2d4; --rule:#2b3b60;
+    --accent:#86a6ff; --accent-ink:#0e1526; --accent-soft:rgba(134,166,255,.17);
+    --margin:#ff8591;
+    --plane-a:rgba(134,166,255,.20); --edge-a:#86a6ff;
+    --plane-b:rgba(255,133,145,.20); --edge-b:#ff8591;
+    --plane-c:rgba(95,211,161,.20); --edge-c:#5fd3a1;
+    --good:#5fd3a1; --good-soft:rgba(95,211,161,.14); --bad:#ff8591; --bad-soft:rgba(255,133,145,.13);
+    --pen-1:#8fb0ff; --pen-2:#ff8a98; --pen-3:#5fd3a1;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0e1526; --grid:#1a2742; --surface:#141d33; --surface-2:#1a2542;
+  --ink:#e8eefc; --ink-2:#a2b2d4; --rule:#2b3b60;
+  --accent:#86a6ff; --accent-ink:#0e1526; --accent-soft:rgba(134,166,255,.17);
+  --margin:#ff8591;
+  --plane-a:rgba(134,166,255,.20); --edge-a:#86a6ff;
+  --plane-b:rgba(255,133,145,.20); --edge-b:#ff8591;
+  --plane-c:rgba(95,211,161,.20); --edge-c:#5fd3a1;
+  --good:#5fd3a1; --good-soft:rgba(95,211,161,.14); --bad:#ff8591; --bad-soft:rgba(255,133,145,.13);
+  --pen-1:#8fb0ff; --pen-2:#ff8a98; --pen-3:#5fd3a1;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;
+  color:var(--ink); font:400 calc(16px*var(--u))/1.5 var(--font-ui); -webkit-text-size-adjust:100%;
+}
+button,input{font-family:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.wrap{width:100%;max-width:calc(1080px*var(--u));margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.app{padding-block:0 110px}
+
+/* header */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--paper);border-bottom:1px solid var(--rule)}
+.top-in{flex-wrap:wrap;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:10px}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand svg{flex:none}
+.brand-txt{min-width:0}
+.brand-t{font:600 calc(21px*var(--ul))/1.1 var(--font-display);letter-spacing:-.01em;white-space:nowrap}
+.brand-s{font-size:calc(12.5px*var(--u));color:var(--ink-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ctrl{flex-wrap:wrap;display:flex;align-items:center;gap:8px;flex:none}
+.seg{display:inline-flex;border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--surface)}
+.seg button{border:0;background:transparent;color:var(--ink-2);font:600 calc(13px*var(--u)) var(--font-ui);padding:0 11px;min-height:calc(38px*var(--k));cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.icon-btn{width:calc(38px*var(--k));height:calc(38px*var(--k));display:grid;place-items:center;border:1px solid var(--rule);border-radius:10px;background:var(--surface);color:var(--ink);cursor:pointer}
+.icon-btn svg,.tool svg{display:block}
+
+/* tabs */
+.tabs{display:flex;gap:8px;padding-block:14px 4px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;border:1px solid var(--rule);background:var(--surface);color:var(--ink-2);font:600 calc(15px*var(--u)) var(--font-ui);padding:0 16px;min-height:calc(42px*var(--k));border-radius:999px;cursor:pointer;white-space:nowrap}
+.tab[aria-selected="true"]{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+/* sheet */
+.sheet{position:relative}
+.stack{display:grid;gap:16px;padding-block:12px 24px}
+.intro{margin:6px 0 0;max-width:64ch;color:var(--ink-2);font-size:calc(15.5px*var(--u))}
+.src-note{margin:0;font-size:calc(12.5px*var(--u));color:var(--ink-2)}
+.legend{background:var(--surface);border:1px solid var(--rule);border-radius:12px;padding:0 14px}
+.legend summary{cursor:pointer;font-weight:600;min-height:calc(46px*var(--k));display:flex;align-items:center}
+.legend-g{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px 18px;padding:2px 0 14px;margin:0;list-style:none}
+.legend-g li{display:flex;gap:10px;align-items:baseline;min-width:0}
+.legend-g b{font:italic 600 calc(17px*var(--u)) var(--font-display);white-space:nowrap;min-width:5.4em}
+.legend-g span{font-size:calc(14px*var(--u));color:var(--ink-2)}
+
+.card{background:var(--surface);border:1px solid var(--rule);border-radius:16px;padding:18px;display:grid;grid-template-columns:minmax(0,1fr);gap:18px}
+@media (min-width:820px){.card{grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);padding:24px;gap:30px}}
+.c-text{display:flex;flex-direction:column;gap:14px;min-width:0}
+.c-head{display:flex;align-items:center;gap:10px}
+.tag{flex:none;background:var(--accent);color:var(--accent-ink);font:700 calc(14px*var(--u)) var(--font-ui);letter-spacing:.03em;padding:4px 10px;border-radius:8px;white-space:nowrap}
+.c-head h2{margin:0;font:600 calc(22px*var(--u))/1.2 var(--font-display);text-wrap:balance}
+.stmt{margin:0;font:400 calc(19px*var(--u))/1.5 var(--font-display);max-width:58ch}
+.defs{margin:0;padding-left:1.2em;display:grid;gap:4px;font-size:calc(15px*var(--u));color:var(--ink-2);max-width:60ch}
+.sym{margin:0;background:var(--surface-2);border-radius:10px;padding:10px 12px;font:italic 400 calc(17px*var(--u))/1.5 var(--font-display);overflow-wrap:anywhere}
+.sym small{display:block;font:600 calc(11px*var(--u)) var(--font-ui);font-style:normal;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2);margin-bottom:2px}
+.real{border-top:1px dashed var(--rule);padding-top:12px}
+.real small{font:600 calc(11px*var(--u)) var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--margin)}
+.real p{margin:2px 0 0;font-size:calc(15px*var(--u));color:var(--ink-2);max-width:58ch}
+.extra{margin:0;border-top:1px dashed var(--rule);padding-top:12px;font-size:calc(15px*var(--u));max-width:60ch}
+.extra b{font-weight:600}
+.proof{border-top:1px dashed var(--rule);padding-top:4px}
+.proof summary{cursor:pointer;font-weight:600;min-height:calc(44px*var(--k));display:flex;align-items:center}
+.proof ol{margin:0;padding-left:1.3em;display:grid;gap:8px;font-size:calc(15.5px*var(--u));max-width:60ch}
+.proof li::marker{font-weight:600;color:var(--ink-2)}
+.ref{display:inline-block;font:700 calc(12px*var(--u)) var(--font-ui);background:var(--accent-soft);color:var(--accent);border-radius:6px;padding:0 6px;margin-left:4px;white-space:nowrap}
+
+/* figure */
+.c-fig{min-width:0}
+.fig{margin:0;background:var(--surface-2);border:1px solid var(--rule);border-radius:12px;overflow:hidden}
+.fig svg{display:block;width:100%;height:auto;touch-action:pan-y;cursor:grab;user-select:none;-webkit-user-select:none}
+.fig svg.grab{cursor:grabbing}
+.fig figcaption{padding:10px 14px;border-top:1px solid var(--rule);font-size:calc(14.5px*var(--u));line-height:1.45;color:var(--ink-2);min-height:5.2em}
+.counts{display:flex;gap:8px;margin-top:10px}
+.count{flex:1;min-width:0;background:var(--surface-2);border:1px solid var(--rule);border-radius:10px;padding:6px 10px;display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.count span{font-size:calc(12.5px*var(--u));color:var(--ink-2);min-width:0;overflow-wrap:anywhere}
+.count b{font:600 calc(22px*var(--u)) var(--font-display);font-variant-numeric:tabular-nums}
+.modes{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.mode{border:1px solid var(--rule);background:var(--surface);color:var(--ink-2);font:600 calc(13.5px*var(--u)) var(--font-ui);border-radius:999px;padding:0 14px;min-height:calc(38px*var(--k));cursor:pointer}
+.mode[aria-pressed="true"]{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.slider{display:flex;align-items:center;gap:12px;margin-top:10px;font-weight:600;font-size:calc(14px*var(--u))}
+.slider span{white-space:nowrap;min-width:4.2em;font-variant-numeric:tabular-nums}
+.slider input{flex:1;min-width:0;accent-color:var(--accent);min-height:calc(30px*var(--k))}
+.fig-foot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:6px;font-size:calc(12.5px*var(--u));color:var(--ink-2)}
+.link-btn{border:0;background:transparent;color:var(--accent);font:600 calc(13px*var(--u)) var(--font-ui);cursor:pointer;min-height:calc(36px*var(--k));padding:0 4px}
+.pl-a{fill:var(--plane-a);stroke:var(--edge-a);stroke-width:1.5;stroke-linejoin:round}
+.pl-b{fill:var(--plane-b);stroke:var(--edge-b);stroke-width:1.5;stroke-linejoin:round}
+.pl-c{fill:var(--plane-c);stroke:var(--edge-c);stroke-width:1.5;stroke-linejoin:round}
+.pl-f{fill:var(--plane-a);stroke:none}
+.ln{fill:none;stroke-linecap:round}
+.ln-ink{stroke:var(--ink)} .ln-accent{stroke:var(--accent)} .ln-faint{stroke:var(--ink-2)}
+.pt{fill:var(--ink);stroke:var(--surface-2);stroke-width:2}
+.lbl{font:italic 600 calc(18px*var(--ul)) var(--font-display);fill:var(--ink);text-anchor:middle;dominant-baseline:middle;paint-order:stroke;stroke:var(--surface-2);stroke-width:3px}
+.lbl-h{fill:var(--ink-2)}
+.lbl-a{fill:var(--edge-a)} .lbl-b{fill:var(--edge-b)} .lbl-c{fill:var(--edge-c)} .lbl-ln{fill:var(--accent)}
+.lbl-pl{font-size:calc(21px*var(--ul))}
+
+/* reference */
+.ref-tools{display:grid;gap:10px}
+.search{width:100%;min-height:calc(46px*var(--k));border:1px solid var(--rule);border-radius:12px;background:var(--surface);color:var(--ink);font:500 calc(16px*var(--u)) var(--font-ui);padding:0 14px}
+.search::placeholder{color:var(--ink-2)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.rgroup{display:grid;gap:10px}
+.rgroup h3{margin:6px 0 0;font:600 calc(13px*var(--u)) var(--font-ui);letter-spacing:.09em;text-transform:uppercase;color:var(--ink-2)}
+.ref-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.rc{background:var(--surface);border:1px solid var(--rule);border-radius:14px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.rc-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.symbtn{border:1px solid var(--rule);background:var(--surface-2);color:var(--ink);border-radius:10px;padding:4px 12px;min-height:calc(44px*var(--k));max-width:100%;font:italic 600 calc(24px*var(--u))/1.2 var(--font-display);cursor:pointer;text-align:left;overflow-wrap:anywhere}
+.symbtn:hover{border-color:var(--accent)}
+.rc-term{font:600 calc(20px*var(--u))/1.25 var(--font-display)}
+.rc-src{flex:none;font:700 calc(12px*var(--u)) var(--font-ui);color:var(--ink-2);background:var(--surface-2);border-radius:6px;padding:2px 7px;white-space:nowrap}
+.rc-txt{margin:0;font-size:calc(15px*var(--u))}
+.rc-ex{margin:0;font:italic calc(15.5px*var(--u)) var(--font-display);color:var(--ink-2);overflow-wrap:anywhere}
+.rc-alt{margin:0;font-size:calc(13.5px*var(--u));color:var(--ink-2)}
+.empty{padding:28px 12px;text-align:center;color:var(--ink-2)}
+
+/* quiz */
+.quiz{max-width:720px;grid-template-columns:minmax(0,1fr)!important;gap:16px}
+.prog{display:flex;gap:4px}
+.prog i{flex:1;height:6px;border-radius:3px;background:var(--rule)}
+.prog i.on{background:var(--accent)}
+.q-n{font-size:calc(13px*var(--u));color:var(--ink-2);font-weight:600}
+.q-t{margin:0;font:600 calc(21px*var(--ul))/1.35 var(--font-display);text-wrap:balance}
+.opts{display:grid;gap:8px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;padding:12px 14px;border:1px solid var(--rule);border-radius:12px;background:var(--surface);color:var(--ink);font:500 calc(16px*var(--u))/1.4 var(--font-ui);cursor:pointer;min-height:calc(50px*var(--k))}
+.opt .k{flex:none;width:24px;height:24px;border-radius:50%;border:1px solid var(--rule);display:grid;place-items:center;font-size:calc(12px*var(--u));font-weight:700;color:var(--ink-2)}
+.opt.ok{border-color:var(--good);background:var(--good-soft)}
+.opt.bad{border-color:var(--bad);background:var(--bad-soft)}
+.opt[disabled]{cursor:default}
+.fb{margin:0;padding:12px 14px;border-radius:12px;background:var(--surface-2);font-size:calc(15px*var(--u))}
+.fb b.ok{color:var(--good)} .fb b.bad{color:var(--bad)}
+.btn{align-self:flex-start;border:0;background:var(--accent);color:var(--accent-ink);font:600 calc(15px*var(--u)) var(--font-ui);padding:0 20px;min-height:calc(46px*var(--k));border-radius:12px;cursor:pointer}
+.score{font:600 calc(40px*var(--u))/1 var(--font-display)}
+
+/* pen */
+#ink{position:absolute;left:0;top:0;z-index:5;pointer-events:none}
+body[data-tool="pen"] #ink,body[data-tool="eraser"] #ink{pointer-events:auto;touch-action:none;cursor:crosshair}
+body[data-tool="eraser"] #ink{cursor:cell}
+.pen{position:fixed;left:0;right:0;bottom:0;z-index:40;display:flex;justify-content:center;pointer-events:none;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-bottom:calc(10px + env(safe-area-inset-bottom,0px))}
+.pen-bar{pointer-events:auto;display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:4px;padding:6px;background:var(--surface);border:1px solid var(--rule);border-radius:16px;box-shadow:0 8px 28px rgba(8,16,40,.22)}
+.tool{width:calc(38px*var(--k));height:calc(38px*var(--k));display:grid;place-items:center;border:1px solid transparent;border-radius:10px;background:transparent;color:var(--ink);cursor:pointer;padding:0}
+.tool[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.tool.armed{background:var(--bad);color:#fff}
+.tool .dot{display:block;border-radius:50%;background:currentColor}
+.tool.sw .dot{width:20px;height:20px}
+.tool.sw[aria-pressed="true"]{background:transparent;border-color:var(--ink)}
+.sep{width:1px;height:24px;background:var(--rule);margin:0 3px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(76px + env(safe-area-inset-bottom,0px));z-index:45;max-width:min(92vw,420px);background:var(--ink);color:var(--paper);padding:10px 14px;border-radius:12px;font-size:calc(14px*var(--u));line-height:1.35;text-align:center;pointer-events:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+
+.ang-f{fill:var(--plane-b);stroke:none}
+.ang-s{fill:none;stroke:var(--edge-b);stroke-width:1.9;stroke-linejoin:round;stroke-linecap:round}
+.ln-b{stroke:var(--edge-b)} .ln-c{stroke:var(--edge-c)}
+.lbl-ang{font-size:calc(17px*var(--ul))}
+.brand-t{white-space:normal}
+.legend-g{grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr))}
+.legend-g b{min-width:0;white-space:normal;flex:none;max-width:45%}
+.tab{max-width:calc(100vw - 32px);white-space:normal;line-height:1.25;padding-block:6px}
+.brand-t,.brand-s,.c-head h2,.c-text,.stmt,.defs li,.sym{min-width:0;overflow-wrap:break-word;hyphens:auto}
+.ang-f{fill:var(--plane-b);stroke:none}
+.ang-s{fill:none;stroke:var(--edge-b);stroke-width:1.9;stroke-linejoin:round;stroke-linecap:round}
+.ln-b{stroke:var(--edge-b)} .ln-c{stroke:var(--edge-c)}
+.lbl-ang{font-size:calc(17px*var(--ul))}
+.brand-t{white-space:normal}
+.legend-g{grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr))}
+.legend-g b{min-width:0;white-space:normal;flex:none;max-width:45%}
+.tab{max-width:calc(100vw - 32px);white-space:normal;line-height:1.25;padding-block:6px}
+.brand-t,.brand-s,.c-head h2,.c-text,.stmt,.defs li,.sym{min-width:0;overflow-wrap:break-word;hyphens:auto}
+
+.ln-a{stroke:var(--edge-a)}
+.sol-f{display:flex;flex-direction:column;gap:6px;margin-bottom:14px;min-width:0}
+.sol-f>label,.sol-o legend{font-weight:700;font-size:calc(calc(14px*var(--u))*var(--u));color:var(--ink-2)}
+.sol select,.sol input[type=number]{width:100%;min-width:0;min-height:calc(44px*var(--k));border:1px solid var(--rule);border-radius:12px;background:var(--surface);color:var(--ink);font:500 calc(calc(16px*var(--u))*var(--u)) var(--font-ui);padding:0 12px}
+.sol select:focus-visible,.sol input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.sol input[aria-invalid="true"]{border-color:var(--edge-b)}
+.sol-par{display:flex;flex-wrap:wrap;gap:10px}
+.sol-n span{white-space:nowrap}.sol select{font-size:calc(calc(14.5px*var(--u))*var(--u))}
+.sol-n{display:flex;align-items:center;gap:8px;flex:1 1 130px;min-width:0;font-weight:700;font-size:calc(calc(15px*var(--u))*var(--u))}
+.sol-hint{color:var(--ink-2);font-size:calc(calc(13px*var(--u))*var(--u));overflow-wrap:anywhere}
+.sol-objs{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:14px}
+.sol-o{flex:1 1 200px;min-width:0;border:1px solid var(--rule);border-radius:12px;padding:8px 12px 12px;display:flex;flex-direction:column;gap:8px}
+.sol-v{display:flex;flex-direction:column;gap:4px;font-size:calc(calc(13px*var(--u))*var(--u));color:var(--ink-2)}
+.sol-ans{display:flex;flex-direction:column;gap:8px;border:1px solid var(--accent);background:var(--accent-soft);border-radius:14px;padding:12px 14px;margin:6px 0 12px}
+.sol-ans small{font-weight:700;color:var(--accent);font-size:calc(calc(13px*var(--u))*var(--u))}
+.sol-res{display:flex;flex-direction:column;gap:2px;min-width:0}
+.sol-res .k{color:var(--ink-2);font-size:calc(calc(14px*var(--u))*var(--u))}
+.sol-res b{font-size:calc(calc(18px*var(--u))*var(--u));overflow-wrap:anywhere;font-variant-numeric:tabular-nums}
+.sol-res.main b{font-size:calc(calc(24px*var(--u))*var(--u))}
+.sol .proof li{overflow-wrap:anywhere}
+.work{margin-top:16px;min-height:calc(220px*var(--k));border:2px dashed var(--rule);border-radius:14px;padding:8px 12px}.work small{color:var(--ink-2);font-weight:600}
+.sol-o{flex-direction:row;flex-wrap:wrap}.sol-o legend{flex:none}.sol-v{flex:1 1 90px;min-width:0}
+.rc-top{flex-wrap:wrap;min-width:0}.rc-src{white-space:normal;overflow-wrap:anywhere;min-width:0}</style>
+
+<div class="app">
+  <header class="top">
+    <div class="wrap top-in">
+      <div class="brand">
+        <svg width="36" height="36" viewBox="0 0 36 36" aria-hidden="true">
+          <path d="M3 25l9-12h21l-9 12z" fill="var(--accent-soft)" stroke="var(--accent)" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M18 3v31" stroke="var(--ink)" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="18" cy="19" r="2.6" fill="var(--ink)"/>
+        </svg>
+        <div class="brand-txt"><div class="brand-t" id="bt"></div><div class="brand-s" id="bs"></div></div>
+      </div>
+      <div class="ctrl">
+        <div class="seg" role="group" aria-label="Язык / Тіл">
+          <button type="button" data-lang="ru" aria-pressed="true">РУС</button>
+          <button type="button" data-lang="kk" aria-pressed="false">ҚАЗ</button>
+        </div>
+        <div class="seg" id="sizeSeg" role="group"><button type="button" data-size="0">А</button><button type="button" data-size="1">А+</button><button type="button" data-size="2">А++</button></div>
+        <button type="button" class="icon-btn" id="themeBtn" data-act="theme"></button>
+      </div>
+    </div>
+  </header>
+  <div class="wrap"><nav class="tabs" id="tabs" role="tablist"></nav></div>
+  <div class="wrap">
+    <main class="sheet" id="sheet">
+      <div id="view"></div>
+      <canvas id="ink" aria-hidden="true"></canvas>
+    </main>
+  </div>
+</div>
+<div class="pen" id="penWrap"></div>
+<div class="toast" id="toast" hidden></div>
+
+<script>
+(function(){
+'use strict';
+var $=function(s,r){return (r||document).querySelector(s)};
+var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var LS={
+  get:function(k){try{return JSON.parse(localStorage.getItem(k))}catch(e){return null}},
+  set:function(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+};
+var D=Math.PI/180, SUB='₁';
+
+/* ---------- UI strings ---------- */
+var T={
+ru:{sizeGroup:'Размер текста',sizeNames:['Обычный текст','Крупный текст','Очень крупный текст'],title:'Три перпендикуляра и угол',sub:'Тема 10.5 · §15 и §17',
+ tabs:{tp:'Теорема о трёх перпендикулярах',dih:'Двугранный угол',pl:'Угол между плоскостями',ref:'Справочник',qz:'Тест'},
+ intro:{
+  tp:'Тема 10.5, §15. Теорема о трёх перпендикулярах, обратная теорема, примеры в кубе и расстояние от точки до прямой. Поворачивайте чертёж мышью или пальцем.',
+  dih:'Тема 10.5, §17. Двугранный угол, линейный угол и его величина, примеры в пирамиде, призме и тетраэдре.',
+  pl:'Тема 10.5, §17. Угол между пересекающимися плоскостями, признак перпендикулярности плоскостей и примеры в кубе.',
+  ref:'Обозначения, формулы и термины темы 10.5. Нажмите на знак, чтобы скопировать его в записи.'},
+ notation:'Обозначения',real:'В жизни',proof:'Доказательство',sym:'Запись',more:'Ещё',
+ hint:'Потяните фигуру, чтобы повернуть',reset:'Сбросить вид',
+ qOf:'Вопрос',of:'из',next:'Дальше',finish:'Завершить',result:'Результат',again:'Пройти ещё раз',ok:'Верно.',bad:'Неверно.',
+ r5:'Отлично, тема усвоена.',r3:'Хорошо. Повторите карточки, где были ошибки.',r0:'Вернитесь к карточкам и попробуйте ещё раз.',
+ pen:'Ручка',eraser:'Ластик',c1:'Синяя ручка',c2:'Красная ручка',c3:'Зелёная ручка',size:'Толщина линии',undo:'Отменить последний штрих',
+ clear:'Стереть все записи',clearArmed:'Нажмите ещё раз, чтобы стереть всё',
+ penOn:'Ручка включена: пишите прямо на странице. Чтобы листать, нажмите на ручку ещё раз.',
+ eraserOn:'Ластик: проведите по записи.',cleared:'Записи стёрты',
+ toLight:'Включить светлую тему',toDark:'Включить тёмную тему',penGroup:'Ручка для записей',
+ search:'Найти знак, формулу или термин',all:'Все',empty:'Ничего не найдено',copied:'Скопировано',copyFail:'Не удалось скопировать',
+ cntNames:['вершины','рёбра','грани'],cntLetters:['В','Р','Г'],srcNote:'По учебнику В. А. Смирнова, Е. А. Туякова «Геометрия 10», Мектеп, 2019: §15 и §17.'},
+kk:{sizeGroup:'Мәтін өлшемі',sizeNames:['Қалыпты мәтін','Ірі мәтін','Өте ірі мәтін'],title:'Үш перпендикуляр және бұрыш',sub:'10.5 тақырып · §15 және §17',
+ tabs:{tp:'Үш перпендикуляр теоремасы',dih:'Екіжақты бұрыш',pl:'Екі жазықтықтың арасындағы бұрыш',ref:'Анықтамалық',qz:'Тест'},
+ intro:{
+  tp:'10.5 тақырып, §15. Үш перпендикуляр туралы теорема, кері теорема, кубтағы мысалдар және нүктеден түзуге дейінгі қашықтық. Сызбаны тышқанмен немесе саусақпен бұрыңыз.',
+  dih:'10.5 тақырып, §17. Екіжақты бұрыш, сызықтық бұрыш және оның шамасы, пирамидадағы, призмадағы және тетраэдрдегі мысалдар.',
+  pl:'10.5 тақырып, §17. Қиылысатын жазықтықтар арасындағы бұрыш, жазықтықтардың перпендикулярлық белгісі және кубтағы мысалдар.',
+  ref:'10.5 тақырыптың белгілері, формулалары және терминдері. Жазбаға көшіру үшін белгіні басыңыз.'},
+ notation:'Белгілеулер',real:'Өмірде',proof:'Дәлелдеу',sym:'Жазылуы',more:'Тағы',
+ hint:'Бұру үшін фигураны сүйреңіз',reset:'Көріністі қалпына келтіру',
+ qOf:'Сұрақ',of:'/',next:'Келесі',finish:'Аяқтау',result:'Нәтиже',again:'Қайта өту',ok:'Дұрыс.',bad:'Бұрыс.',
+ r5:'Тамаша, тақырып меңгерілді.',r3:'Жақсы. Қателескен карточкаларды қайталаңыз.',r0:'Карточкаларға оралып, қайта байқап көріңіз.',
+ pen:'Қалам',eraser:'Өшіргіш',c1:'Көк қалам',c2:'Қызыл қалам',c3:'Жасыл қалам',size:'Сызық қалыңдығы',undo:'Соңғы сызықты болдырмау',
+ clear:'Барлық жазбаны өшіру',clearArmed:'Бәрін өшіру үшін қайта басыңыз',
+ penOn:'Қалам қосулы: бетке тікелей жазыңыз. Жылжыту үшін қаламды қайта басыңыз.',
+ eraserOn:'Өшіргіш: жазудың үстінен жүргізіңіз.',cleared:'Жазбалар өшірілді',
+ toLight:'Жарық тақырыпты қосу',toDark:'Қараңғы тақырыпты қосу',penGroup:'Жазба қаламы',
+ search:'Белгіні, формуланы немесе терминді іздеу',all:'Барлығы',empty:'Ештеңе табылмады',copied:'Көшірілді',copyFail:'Көшіру мүмкін болмады',
+ cntNames:['төбелер','қырлар','жақтар'],cntLetters:['Т','К','Ж'],srcNote:'В. А. Смирнов, Е. А. Тұяқов «Геометрия 10» оқулығы бойынша, Мектеп, 2019: §15 және §17.'}
+};
+
+var LEGEND=[
+ ['AA′ ⊥ π',{ru:'AA′ — перпендикуляр к плоскости π, A′ — проекция точки A',kk:'AA′ — π жазықтығына перпендикуляр, A′ — A нүктесінің проекциясы'}],
+ ['AB',{ru:'наклонная; A′B — её ортогональная проекция',kk:'көлбеу; A′B — оның ортогональ проекциясы'}],
+ ['α ⊥ β',{ru:'плоскости α и β перпендикулярны (угол между ними 90°)',kk:'α және β жазықтықтары перпендикуляр (арасындағы бұрыш 90°)'}],
+ ['∠(α, β)',{ru:'угол между плоскостями α и β, 0° < φ ≤ 90°',kk:'α және β жазықтықтары арасындағы бұрыш, 0° < φ ≤ 90°'}],
+ ['∠(α, c, β)',{ru:'двугранный угол с гранями α, β и ребром c',kk:'жақтары α, β және қыры c болатын екіжақты бұрыш'}]
+];
+
+/* ---------- 3D helpers ---------- */
+/* ---------- 3D helpers ---------- */
+function planeAround(th,hx,hs){var s=Math.sin(th),c=Math.cos(th);return [[-hx,-hs*s,-hs*c],[hx,-hs*s,-hs*c],[hx,hs*s,hs*c],[-hx,hs*s,hs*c]];}
+function yShift(pts,dy){return pts.map(function(p){return [p[0],p[1]+dy,p[2]];});}
+function lerp(a,b,t){return [a[0]+(b[0]-a[0])*t,a[1]+(b[1]-a[1])*t,a[2]+(b[2]-a[2])*t];}
+function pl(pts,col,lab,li){return {k:'plane',pts:pts,col:col,lab:lab,li:li};}
+function ln(a,b,o){var r={k:'line',a:a,b:b,c:'ink',w:2,le:'b',lo:[8,-10]};for(var k in o)r[k]=o[k];return r;}
+function pt(p,lab,o){var r={k:'pt',p:p,lab:lab,o:[9,-9]};for(var k in o)r[k]=o[k];return r;}
+var PH=planeAround(0,1.25,.95);
+var LET='ABCDEFGH';
+
+/* polyhedra */
+function ngon(n,r,y,rot){var a=[],k,t;for(k=0;k<n;k++){t=rot+2*Math.PI*k/n;a.push([r*Math.cos(t),y,r*Math.sin(t)]);}return a;}
+function poly(V,F,names){return {k:'poly',V:V,F:F,names:names};}
+function boxPoly(hx,hy,hz,sx,sz){
+ var b=[[-hx,-hy,hz],[hx,-hy,hz],[hx,-hy,-hz],[-hx,-hy,-hz]],
+     t=b.map(function(q){return [q[0]+sx,hy,q[2]+sz];});
+ return poly(b.concat(t),[[0,1,2,3],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]],
+  ['A','B','C','D','A'+SUB,'B'+SUB,'C'+SUB,'D'+SUB]);
+}
+function tetraPoly(){
+ return poly([[-.75,-.6,.43],[.75,-.6,.43],[0,-.6,-.87],[0,.62,0]],[[0,1,2],[0,1,3],[1,2,3],[2,0,3]],['A','B','C','D']);
+}
+function prismPoly(n,obl){
+ var rot=Math.PI*.75,b=ngon(n,.85,-.65,rot),t=ngon(n,.85,.65,rot).map(function(q){return obl?[q[0]+.5,q[1],q[2]-.25]:q;}),
+     F=[[],[]],names=[],i,j;
+ for(i=0;i<n;i++){F[0].push(i);F[1].push(n+i);names.push(LET[i]);}
+ for(i=0;i<n;i++)names.push(LET[i]+SUB);
+ for(i=0;i<n;i++){j=(i+1)%n;F.push([i,j,n+j,n+i]);}
+ return poly(b.concat(t),F,names);
+}
+function pyramidPoly(n){
+ var b=ngon(n,.95,-.6,Math.PI*.75),F=[[]],names=[],i,j;
+ for(i=0;i<n;i++){F[0].push(i);names.push(LET[i]);}
+ for(i=0;i<n;i++){j=(i+1)%n;F.push([i,j,n]);}
+ names.push('S');
+ return poly(b.concat([[0,.85,0]]),F,names);
+}
+function polyCounts(p){
+ var seen={},e=0;
+ p.F.forEach(function(f){for(var i=0;i<f.length;i++){var a=f[i],b=f[(i+1)%f.length],k=a<b?a+'-'+b:b+'-'+a;if(!seen[k]){seen[k]=1;e++;}}});
+ return [p.V.length,e,p.F.length];
+}
+
+/* ---------- content ---------- */
+var ITEMS={};
+var LIST={tp:['t1','t2','t3'],dih:['d1','d2','d3','d4','d5'],pl:['e1','e2','e3']};
+/* ---------- vector helpers and angle marks ---------- */
+function vadd(a,b){return [a[0]+b[0],a[1]+b[1],a[2]+b[2]];}
+function vsub(a,b){return [a[0]-b[0],a[1]-b[1],a[2]-b[2]];}
+function vmul(a,k){return [a[0]*k,a[1]*k,a[2]*k];}
+function vdot(a,b){return a[0]*b[0]+a[1]*b[1]+a[2]*b[2];}
+function vcross(a,b){return [a[1]*b[2]-a[2]*b[1],a[2]*b[0]-a[0]*b[2],a[0]*b[1]-a[1]*b[0]];}
+function vlen(a){return Math.sqrt(vdot(a,a));}
+function vunit(a){var l=vlen(a)||1;return vmul(a,1/l);}
+function angDeg(a,b){var c=vdot(a,b)/(vlen(a)*vlen(b));return Math.acos(Math.max(-1,Math.min(1,c)))/D;}
+function fmtN(x,d){return String(+x.toFixed(d)).replace('.',',');}
+function ang(o,u,w,opt){var r={k:'ang',o:o,u:vunit(u),w:vunit(w),r:.3,sq:false,lab:'',col:'b'};for(var k in opt)r[k]=opt[k];return r;}
+function rightAt(o,u,w,r){return ang(o,u,w,{sq:true,r:r||.16});}
+function dashed(a,b,c){return ln(a,b,{c:c||'faint',d:1,w:1.6});}
+var BIG=planeAround(0,1.5,1.15);
+
+function cubeP(){return boxPoly(.56,.56,.56,0,0);}
+function nmv(P,pair){return P.names[pair[0]]+P.names[pair[1]];}
+function idxOf(P,q){var i;for(i=0;i<P.V.length;i++)if(vlen(vsub(P.V[i],q))<1e-6)return i;return -1;}
+function rayDir(psi){return [Math.cos(psi*D),0,Math.sin(psi*D)];}
+var KS=.95/3;
+function dec1(n){return fmtN(n/10,1);}
+function perpTo(v,e){return vsub(v,vmul(e,vdot(v,e)));}
+function centroid(P,idx){var c=[0,0,0];idx.forEach(function(i){c=vadd(c,P.V[i]);});return vmul(c,1/idx.length);}
+/* ================= tab 1: theorem of three perpendiculars (§15) ================= */
+ITEMS.t1={tag:'§15',
+ title:{ru:'Теорема о трёх перпендикулярах',kk:'Үш перпендикуляр туралы теорема'},
+ stmt:{ru:'Если прямая, лежащая в плоскости, перпендикулярна ортогональной проекции наклонной к этой плоскости, то она перпендикулярна и самой наклонной. Верно и обратное: если прямая плоскости перпендикулярна наклонной, то она перпендикулярна и проекции наклонной.',
+       kk:'Егер жазықтықта жатқан түзу осы жазықтыққа жүргізілген көлбеудің ортогональ проекциясына перпендикуляр болса, онда ол көлбеудің өзіне де перпендикуляр болады. Кері тұжырым да дұрыс: егер жазықтықтағы түзу көлбеуге перпендикуляр болса, онда ол көлбеудің ортогональ проекциясына да перпендикуляр.'},
+ defs:{ru:['Три перпендикуляра: AA′ ⊥ π, A′B ⊥ b и (по теореме) AB ⊥ b.','Наклонная — прямая (или отрезок), не перпендикулярная плоскости.'],
+       kk:['Үш перпендикуляр: AA′ ⊥ π, A′B ⊥ b және (теорема бойынша) AB ⊥ b.','Көлбеу — жазықтыққа перпендикуляр емес түзу (немесе кесінді).']},
+ sym:{ru:'AA′ ⊥ π,  b ⊂ π:   b ⊥ A′B  ⇔  b ⊥ AB',kk:'AA′ ⊥ π,  b ⊂ π:   b ⊥ A′B  ⇔  b ⊥ AB'},
+ real:{ru:'Наклонная стойка и её тень на полу: линия на полу, перпендикулярная тени, перпендикулярна и стойке.',kk:'Көлбеу тіреу және оның еденге түскен көлеңкесі: еденде көлеңкеге перпендикуляр сызық тіреуге де перпендикуляр.'},
+ proof:[
+  {ru:'Прямая теорема. Пусть AA′ ⊥ π, AB — наклонная, A′B — проекция, b ⊂ π и b ⊥ A′B.',kk:'Тура теорема. AA′ ⊥ π, AB — көлбеу, A′B — проекция, b ⊂ π және b ⊥ A′B болсын.'},
+  {ru:'Так как AA′ ⊥ π, то AA′ ⊥ b (перпендикуляр к плоскости перпендикулярен любой её прямой).',kk:'AA′ ⊥ π болғандықтан, AA′ ⊥ b (жазықтыққа перпендикуляр оның кез келген түзуіне перпендикуляр).'},
+  {ru:'Прямая b перпендикулярна двум пересекающимся прямым AA′ и A′B плоскости AA′B, значит, b ⊥ плоскости AA′B.',kk:'b түзуі AA′B жазықтығындағы қиылысатын AA′ және A′B түзулеріне перпендикуляр, демек b ⊥ AA′B жазықтығы.'},
+  {ru:'Наклонная AB лежит в плоскости AA′B, поэтому b ⊥ AB.',kk:'AB көлбеуі AA′B жазықтығында жатыр, сондықтан b ⊥ AB.'},
+  {ru:'Обратная теорема. Пусть b ⊥ AB. Так как и AA′ ⊥ b, то b ⊥ плоскости AA′B.',kk:'Кері теорема. b ⊥ AB болсын. AA′ ⊥ b болғандықтан, b ⊥ AA′B жазықтығы.'},
+  {ru:'Проекция A′B лежит в этой плоскости, значит, b ⊥ A′B.',kk:'A′B проекциясы осы жазықтықта жатыр, демек b ⊥ A′B.'}],
+ def:'setup',
+ modes:[
+  {id:'setup',ru:'Дано',kk:'Берілгені',cap:{ru:'AA′ ⊥ π, AB — наклонная, A′B — её проекция. В плоскости π через B проходит прямая b.',kk:'AA′ ⊥ π, AB — көлбеу, A′B — оның проекциясы. π жазықтығында B нүктесі арқылы b түзуі өтеді.'}},
+  {id:'given',ru:'b ⊥ A′B',kk:'b ⊥ A′B',cap:{ru:'Пусть b перпендикулярна проекции A′B (второй перпендикуляр).',kk:'b түзуі A′B проекциясына перпендикуляр болсын (екінші перпендикуляр).'}},
+  {id:'res',ru:'⇒ b ⊥ AB',kk:'⇒ b ⊥ AB',cap:{ru:'Тогда b перпендикулярна и наклонной AB (третий перпендикуляр).',kk:'Онда b түзуі AB көлбеуіне де перпендикуляр (үшінші перпендикуляр).'}},
+  {id:'inv',ru:'Обратная',kk:'Кері',cap:{ru:'Обратная теорема: если b ⊥ AB, то b ⊥ A′B.',kk:'Кері теорема: егер b ⊥ AB болса, онда b ⊥ A′B.'}}],
+ build:function(m){
+  var Ap=[-.3,0,.15],A=vadd(Ap,[0,.95,0]),B=[.6,0,.5],pb=vsub(B,Ap),bd=vunit([-pb[2],0,pb[0]]),
+      o=[pl(BIG,'a','π',2),ln(A,Ap,{c:'accent',w:2.6}),ln(A,B,{c:'b',w:2.8}),ln(Ap,B,{c:'c',w:2.8}),
+         pt(A,'A',{o:[-12,-6]}),pt(Ap,'A′',{o:[-14,12]}),pt(B,'B',{o:[14,10]}),rightAt(Ap,[0,1,0],pb,.17)];
+  o.push(ln(vadd(B,vmul(bd,-1.0)),vadd(B,vmul(bd,1.0)),{c:'ink',w:2.4,lab:'b',le:'b',lo:[12,-8]}));
+  if(m==='given')o.push(rightAt(B,bd,vsub(Ap,B),.17));
+  if(m==='res'||m==='inv')o.push(rightAt(B,bd,vsub(Ap,B),.17),rightAt(B,bd,vsub(A,B),.25));
+  return o;
+ }};
+
+/* cube examples */
+var CUBE_TP=[
+ {id:'m1',o:[1,7],pl:[0,1,2,3],b:[0,2],ru:'AC ⊥ BD₁',kk:'AC ⊥ BD₁',
+  cap:{ru:'Проекция BD₁ на плоскость ABC — диагональ BD. Прямая AC ⊥ BD (диагонали квадрата), значит, AC ⊥ BD₁ (пример из учебника).',
+       kk:'BD₁-дің ABC жазықтығына проекциясы — BD диагоналі. AC ⊥ BD (квадрат диагональдары), демек AC ⊥ BD₁ (оқулықтағы мысал).'}},
+ {id:'m2',o:[1,7],pl:[0,1,5,4],b:[0,5],ru:'AB₁ ⊥ BD₁',kk:'AB₁ ⊥ BD₁',
+  cap:{ru:'Проекция BD₁ на плоскость ABB₁ — диагональ BA₁ (D₁A₁ ⊥ ABB₁). AB₁ ⊥ A₁B (диагонали квадрата), значит, AB₁ ⊥ BD₁.',
+       kk:'BD₁-дің ABB₁ жазықтығына проекциясы — BA₁ диагоналі (D₁A₁ ⊥ ABB₁). AB₁ ⊥ A₁B (квадрат диагональдары), демек AB₁ ⊥ BD₁.'}},
+ {id:'m3',o:[0,6],pl:[0,1,2,3],b:[1,3],ru:'BD ⊥ AC₁',kk:'BD ⊥ AC₁',
+  cap:{ru:'Проекция AC₁ на плоскость ABC — диагональ AC. BD ⊥ AC, значит, BD ⊥ AC₁.',
+       kk:'AC₁-дің ABC жазықтығына проекциясы — AC диагоналі. BD ⊥ AC, демек BD ⊥ AC₁.'}},
+ {id:'m4',o:[2,4],pl:[0,3,7,4],b:[0,7],ru:'AD₁ ⊥ CA₁',kk:'AD₁ ⊥ CA₁',
+  cap:{ru:'Проекция CA₁ на плоскость ADD₁ — диагональ DA₁ (CD ⊥ ADD₁). AD₁ ⊥ DA₁ (диагонали квадрата), значит, AD₁ ⊥ CA₁.',
+       kk:'CA₁-дің ADD₁ жазықтығына проекциясы — DA₁ диагоналі (CD ⊥ ADD₁). AD₁ ⊥ DA₁ (квадрат диагональдары), демек AD₁ ⊥ CA₁.'}}
+];
+function cubeThree(m){
+ var P=cubeP(),V=P.V,p0=V[m.pl[0]],n=vunit(vcross(vsub(V[m.pl[1]],p0),vsub(V[m.pl[2]],p0))),d0=vdot(n,p0),
+     o1=V[m.o[0]],o2=V[m.o[1]],pr=function(q){return vsub(q,vmul(n,vdot(n,q)-d0));},
+     q1=pr(o1),q2=pr(o2),b1=V[m.b[0]],b2=V[m.b[1]],dp=vsub(q2,q1),db=vsub(b2,b1),
+     i1=idxOf(P,q1),i2=idxOf(P,q2),pn=(i1>=0&&i2>=0)?P.names[i1]+P.names[i2]:'',
+     ov=[pl(m.pl.map(function(i){return V[i];}),'c',null,0),
+         ln(o1,o2,{c:'b',w:3,lab:nmv(P,m.o),le:'m',lt:.4,lo:[-18,-10]}),
+         ln(q1,q2,{c:'c',w:3,lab:pn,le:'m',lt:.6,lo:[14,12]}),
+         ln(b1,b2,{c:'accent',w:3,lab:nmv(P,m.b),le:'m',lt:.5,lo:[-16,12]})];
+ [[o1,q1],[o2,q2]].forEach(function(pq){if(vlen(vsub(pq[0],pq[1]))>1e-6)ov.push(dashed(pq[0],pq[1]));});
+ var cr=vcross(dp,db),cl=vdot(cr,cr);
+ if(cl>1e-9){
+  var s=vdot(vcross(vsub(b1,q1),db),cr)/cl,X=vadd(q1,vmul(dp,s));
+  ov.push(rightAt(X,db,dp,.18));
+ }
+ P.ov=ov;return P;
+}
+ITEMS.t2={tag:'§15',
+ title:{ru:'Теорема о трёх перпендикулярах в кубе',kk:'Кубтағы үш перпендикуляр теоремасы'},
+ stmt:{ru:'Чтобы доказать, что прямая b перпендикулярна наклонной, строят проекцию наклонной на плоскость, где лежит b, и проверяют, что b перпендикулярна этой проекции.',
+       kk:'b түзуінің көлбеуге перпендикуляр екенін дәлелдеу үшін көлбеудің b жатқан жазықтыққа проекциясын салып, b-ның осы проекцияға перпендикуляр екенін тексереді.'},
+ sym:{ru:'b ⊥ проекции наклонной  ⇒  b ⊥ наклонной',kk:'b ⊥ көлбеудің проекциясы  ⇒  b ⊥ көлбеу'},
+ extra:{ru:'Красная прямая — наклонная, зелёная — её проекция, синяя — прямая b плоскости проекции. Похожие задачи: 15.10–15.13 учебника.',kk:'Қызыл түзу — көлбеу, жасыл — оның проекциясы, көк — проекция жазықтығындағы b түзуі. Ұқсас есептер: оқулықтың 15.10–15.13.'},
+ real:{ru:'Диагонали граней и диагонали куба задают много пар перпендикулярных прямых.',kk:'Кубтың жақ диагональдары мен кеңістік диагональдары көптеген перпендикуляр түзулер жұбын береді.'},
+ def:'m1',v0:{yaw:-.4,pitch:.55},
+ modes:CUBE_TP.map(function(m){return {id:m.id,ru:m.ru,kk:m.kk,cap:m.cap};}),
+ poly:function(){return cubeP();},
+ build:function(mm){return [cubeThree(CUBE_TP.filter(function(x){return x.id===mm;})[0])];}};
+
+ITEMS.t3={tag:'§15',
+ title:{ru:'Расстояние от точки до прямой плоскости',kk:'Нүктеден жазықтықтағы түзуге дейінгі қашықтық'},
+ stmt:{ru:'Пусть точка A не лежит в плоскости π, а прямая b лежит в π. Опустим перпендикуляр AA′ на π и перпендикуляр A′B на b. По теореме о трёх перпендикулярах AB ⊥ b, поэтому AB — расстояние от A до прямой b.',
+       kk:'A нүктесі π жазықтығында жатпасын, ал b түзуі π-де жатсын. AA′ перпендикулярын π-ге, A′B перпендикулярын b-ға түсіреміз. Үш перпендикуляр туралы теорема бойынша AB ⊥ b, сондықтан AB — A нүктесінен b түзуіне дейінгі қашықтық.'},
+ sym:{ru:'AB² = AA′² + A′B²',kk:'AB² = AA′² + A′B²'},
+ real:{ru:'Расстояние от лампы под потолком до прямой линии на полу.',kk:'Төбедегі шамнан еденде жатқан түзуге дейінгі қашықтық.'},
+ def:'one',
+ modes:[{id:'one',ru:'Расстояние',kk:'Қашықтық',cap:null}],
+ slider:{min:0,max:35,def:20,sym:'A′B',unit:'',fmt:dec1},
+ dyn:function(v,L){
+  var d=v.n/10,ab=Math.sqrt(9+d*d);
+  if(v.n===0)return L==='ru'?'Прямая b проходит через A′: AB = AA′ = 3.':'b түзуі A′ арқылы өтеді: AB = AA′ = 3.';
+  return L==='ru'?('AA′ = 3, A′B = '+fmtN(d,1)+' ⇒ AB² = 9 + '+fmtN(d*d,2)+' = '+fmtN(9+d*d,2)+', AB ≈ '+fmtN(ab,2)+'. Это расстояние от A до прямой b.'):
+   ('AA′ = 3, A′B = '+fmtN(d,1)+' ⇒ AB² = 9 + '+fmtN(d*d,2)+' = '+fmtN(9+d*d,2)+', AB ≈ '+fmtN(ab,2)+'. Бұл A нүктесінен b түзуіне дейінгі қашықтық.');
+ },
+ build:function(m,v){
+  var Ap=[-.6,0,.1],A=vadd(Ap,[0,.95,0]),B=vadd(Ap,[v.n/10*KS,0,0]),o=[pl(BIG,'a','π',2)];
+  o.push(ln([B[0],0,B[2]-1.1],[B[0],0,B[2]+1.1],{c:'ink',w:2.4,lab:'b',le:'b',lo:[10,-10]}),ln(A,Ap,{c:'accent',w:2.8}),pt(A,'A',{o:[-12,-6]}),pt(Ap,'A′',{o:[-14,12]}));
+  if(v.n>0)o.push(ln(Ap,B,{c:'c',w:2.8}),ln(A,B,{c:'b',w:2.8}),pt(B,'B',{o:[14,10]}),rightAt(Ap,[0,1,0],[1,0,0],.17),rightAt(B,[0,0,1],[-1,0,0],.17),rightAt(B,[0,0,1],vsub(A,B),.25));
+  return o;
+ }};
+
+/* ================= tab 2: dihedral angle (§17) ================= */
+function halfPlane(phi,col,lab){
+ var e=[0,Math.sin(phi*D),Math.cos(phi*D)];
+ return pl([[-1.25,0,0],[1.25,0,0],vadd([1.25,0,0],vmul(e,1.15)),vadd([-1.25,0,0],vmul(e,1.15))],col,lab,2);
+}
+ITEMS.d1={tag:'§17',
+ title:{ru:'Двугранный угол',kk:'Екіжақты бұрыш'},
+ stmt:{ru:'Двугранным углом называется фигура в пространстве, образованная двумя полуплоскостями с общей граничной прямой и одной из частей пространства, ограниченной этими полуплоскостями. Полуплоскости — грани, их общая прямая — ребро двугранного угла.',
+       kk:'Екіжақты бұрыш деп ортақ бір түзумен шектелген екі жартыжазықтықтан және кеңістіктің осы жартыжазықтықтармен шектелген бөлігінен тұратын фигураны айтады. Жартыжазықтықтарды екіжақты бұрыштың жақтары, ал оларды шектейтін түзуді қыры деп атайды.'},
+ defs:{ru:['Линейный угол: плоскость γ ⊥ c пересекает грани по лучам a₁, b₁; угол между ними — линейный угол двугранного угла.','Величина двугранного угла — величина его линейного угла, принадлежит промежутку (0°; 180°].','Двугранный угол прямой, острый или тупой, как и его линейный угол.'],
+       kk:['Сызықтық бұрыш: c-ға перпендикуляр γ жазықтығы жақтарды a₁, b₁ сәулелері бойынша қиды; олардың арасындағы бұрыш — екіжақты бұрыштың сызықтық бұрышы.','Екіжақты бұрыштың шамасы — оның сызықтық бұрышының шамасы, (0°; 180°] аралығында жатады.','Екіжақты бұрыш та сызықтық бұрышы сияқты тік, сүйір немесе доғал болады.']},
+ sym:{ru:'α c β — двугранный угол;  φ = ∠a₁Ob₁,  0° < φ ≤ 180°',kk:'α c β — екіжақты бұрыш;  φ = ∠a₁Ob₁,  0° < φ ≤ 180°'},
+ real:{ru:'Приоткрытая книга, крыша дома, открытая дверь: между гранями образуется двугранный угол.',kk:'Ашылған кітап, үй төбесі, ашық есік: жақтарының арасында екіжақты бұрыш пайда болады.'},
+ def:'one',v0:{yaw:-.7,pitch:.35},
+ modes:[{id:'one',ru:'Линейный угол',kk:'Сызықтық бұрыш',cap:null}],
+ slider:{min:10,max:170,def:70,sym:'φ',unit:'°'},
+ dyn:function(v,L){
+  var f=v.n,k=f<90?{ru:'острый',kk:'сүйір'}:(f===90?{ru:'прямой',kk:'тік'}:{ru:'тупой',kk:'доғал'});
+  return L==='ru'?('Линейный угол a₁Ob₁ равен '+f+'°. Двугранный угол '+k.ru+'.'):('a₁Ob₁ сызықтық бұрышы '+f+'°-қа тең. Екіжақты бұрыш '+k.kk+'.');
+ },
+ build:function(m,v){
+  var O=[.1,0,0],e=[0,Math.sin(v.n*D),Math.cos(v.n*D)];
+  return [halfPlane(0,'a','α'),halfPlane(v.n,'b','β'),ln([-1.4,0,0],[1.4,0,0],{c:'accent',w:2.8,lab:'c',le:'b',lo:[10,-12]}),
+   ln(O,vadd(O,[0,0,1.0]),{c:'ink',w:2,lab:'a₁',le:'b',lo:[8,10]}),ln(O,vadd(O,vmul(e,1.0)),{c:'ink',w:2,lab:'b₁',le:'b',lo:[10,-8]}),
+   ang(O,[0,0,1],e,{r:.5,sq:v.n===90,lab:v.n+'°'}),pt(O,'O',{o:[-12,12]})];
+ }};
+
+ITEMS.d2={tag:'§17',
+ title:{ru:'Линейный угол не зависит от выбора',kk:'Сызықтық бұрыш таңдауға байланысты емес'},
+ stmt:{ru:'Величина линейного угла двугранного угла не зависит от того, в какой точке ребра и какой плоскостью, перпендикулярной ребру, он построен. Поэтому величина двугранного угла определена корректно.',
+       kk:'Екіжақты бұрыштың сызықтық бұрышының шамасы қырдың қай нүктесінде және қырға перпендикуляр қай жазықтықпен салынғанына байланысты емес. Сондықтан екіжақты бұрыштың шамасы дұрыс анықталған.'},
+ sym:{ru:'γ₁ ⊥ c, γ₂ ⊥ c  ⇒  ∠a₁Ob₁ = ∠a₂O′b₂',kk:'γ₁ ⊥ c, γ₂ ⊥ c  ⇒  ∠a₁Ob₁ = ∠a₂O′b₂'},
+ real:{ru:'Угол раскрытия книги один и тот же в любом месте корешка.',kk:'Кітаптың ашылу бұрышы омыртқаның кез келген жерінде бірдей.'},
+ proof:[
+  {ru:'Пусть γ₁ и γ₂ — плоскости, перпендикулярные ребру c. Они пересекают грани a и b по лучам a₁, a₂ и b₁, b₂.',kk:'γ₁ және γ₂ — c қырына перпендикуляр жазықтықтар. Олар a және b жақтарын a₁, a₂ және b₁, b₂ сәулелері бойынша қиды.'},
+  {ru:'Лучи a₁ и a₂ лежат в одной полуплоскости и перпендикулярны одной прямой c, поэтому они сонаправлены. То же верно для b₁ и b₂.',kk:'a₁ және a₂ сәулелері бір жартыжазықтықта жатады және бір c түзуіне перпендикуляр, сондықтан бағыттас. b₁ және b₂ үшін де солай.'},
+  {ru:'Углы с сонаправленными сторонами равны, значит, линейные углы равны.',kk:'Бағыттас қабырғалары бар бұрыштар тең, демек сызықтық бұрыштар тең.'}],
+ def:'two',v0:{yaw:-.7,pitch:.35},
+ modes:[{id:'one',ru:'Одно сечение',kk:'Бір қима',cap:null},{id:'two',ru:'Два сечения',kk:'Екі қима',cap:null}],
+ slider:{min:10,max:170,def:110,sym:'φ',unit:'°'},
+ dyn:function(v,L){
+  return v.mode==='one'?(L==='ru'?'Плоскость γ₁ ⊥ c даёт линейный угол '+v.n+'°.':'γ₁ ⊥ c жазықтығы '+v.n+'° сызықтық бұрыш береді.'):
+   (L==='ru'?'Во второй точке ребра линейный угол тоже '+v.n+'°: лучи сонаправлены.':'Қырдың екінші нүктесінде де сызықтық бұрыш '+v.n+'°: сәулелер бағыттас.');
+ },
+ build:function(m,v){
+  var e=[0,Math.sin(v.n*D),Math.cos(v.n*D)],o=[halfPlane(0,'a','α'),halfPlane(v.n,'b','β'),ln([-1.4,0,0],[1.4,0,0],{c:'accent',w:2.8,lab:'c',le:'b',lo:[10,-12]})],
+      pts=m==='two'?[[.7,0,0],[-.6,0,0]]:[[.1,0,0]];
+  pts.forEach(function(O,i){
+   o.push(ln(O,vadd(O,[0,0,.95]),{c:'ink',w:2}),ln(O,vadd(O,vmul(e,.95)),{c:'ink',w:2}),ang(O,[0,0,1],e,{r:.45,sq:v.n===90,lab:v.n+'°'}),pt(O,i?'O′':'O',{o:[-12,12]}));
+  });
+  return o;
+ }};
+
+function pyrH(h){
+ var s=.8,H=h*.8,yb=-H/2,yt=H/2,P=poly([[-s,yb,s],[s,yb,s],[s,yb,-s],[-s,yb,-s],[0,yt,0]],[[0,1,2,3],[0,1,4],[1,2,4],[2,3,4],[3,0,4]],['A','B','C','D','S']),
+     O=[0,yb,0],E=[s,yb,0],S=[0,yt,0];
+ P.ov=[dashed(S,O,'c'),dashed(O,E,'c'),ln(S,E,{c:'b',w:2.6}),pt(O,'O',{o:[-12,12]}),pt(E,'E',{o:[14,10]}),rightAt(O,vsub(S,O),vsub(E,O),.14),ang(E,vsub(O,E),vsub(S,E),{r:.3,lab:'φ'})];
+ return P;
+}
+ITEMS.d3={tag:'§17',
+ title:{ru:'Двугранный угол при основании пирамиды',kk:'Пирамида табанындағы екіжақты бұрыш'},
+ stmt:{ru:'В правильной четырёхугольной пирамиде SABCD сторона основания равна 2, высота SO = h. Проведём высоту SE боковой грани SBC. Угол SEO — линейный угол двугранного угла между боковой гранью и основанием.',
+       kk:'Дұрыс төртбұрышты SABCD пирамидасында табанының қабырғасы 2-ге тең, биіктігі SO = h. SBC бүйір жағының SE биіктігін жүргіземіз. SEO бұрышы — бүйір жақ пен табан арасындағы екіжақты бұрыштың сызықтық бұрышы.'},
+ sym:{ru:'tg φ = SO : OE = h : 1',kk:'tg φ = SO : OE = h : 1'},
+ extra:{ru:'При h = 1 получаем катеты SO = EO = 1 и угол 45° (пример 1 учебника).',kk:'h = 1 болғанда SO = EO = 1 катеттері және 45° бұрыш шығады (оқулықтағы 1-мысал).'},
+ real:{ru:'Склон крыши-пирамиды и стена: чем выше крыша, тем круче боковая грань.',kk:'Пирамида пішінді шатыр беткейі: шатыр биік болған сайын бүйір жағы тіктеу болады.'},
+ def:'one',v0:{yaw:-.5,pitch:.4},
+ modes:[{id:'one',ru:'Высота пирамиды',kk:'Пирамида биіктігі',cap:null}],
+ slider:{min:3,max:30,def:10,sym:'h',unit:'',fmt:dec1},
+ dyn:function(v,L){
+  var h=v.n/10,f=Math.atan(h)/D;
+  return L==='ru'?('SO = '+fmtN(h,1)+', OE = 1 ⇒ tg φ = '+fmtN(h,1)+', φ ≈ '+fmtN(f,1)+'°.'):('SO = '+fmtN(h,1)+', OE = 1 ⇒ tg φ = '+fmtN(h,1)+', φ ≈ '+fmtN(f,1)+'°.');
+ },
+ poly:function(v){return pyrH(v.n/10);},
+ build:function(m,v){return [pyrH(v.n/10)];}};
+
+function prismDih(n){
+ var P=prismPoly(n,false),V=P.V,A=V[0];
+ P.ov=[ang(A,vsub(V[1],A),vsub(V[n-1],A),{r:.34,lab:fmtN((n-2)*180/n,1)+'°'})];
+ return P;
+}
+ITEMS.d4={tag:'§17',
+ title:{ru:'Двугранные углы правильной призмы',kk:'Дұрыс призманың екіжақты бұрыштары'},
+ stmt:{ru:'В прямой призме боковые рёбра перпендикулярны основанию, поэтому линейный угол двугранного угла при боковом ребре равен углу многоугольника в основании. Для правильной n-угольной призмы двугранный угол между соседними боковыми гранями равен (n − 2)·180° / n.',
+       kk:'Тік призмада бүйір қырлары табанына перпендикуляр, сондықтан бүйір қырындағы екіжақты бұрыштың сызықтық бұрышы табандағы көпбұрыштың бұрышына тең. Дұрыс n бұрышты призма үшін көрші бүйір жақтар арасындағы екіжақты бұрыш (n − 2)·180° / n-ге тең.'},
+ sym:{ru:'φ = (n − 2)·180° / n',kk:'φ = (n − 2)·180° / n'},
+ extra:{ru:'Треугольная призма: 60°, шестиугольная: 120° (задачи 17.4 и 17.5).',kk:'Үшбұрышты призма: 60°, алтыбұрышты: 120° (17.4 және 17.5 есептер).'},
+ real:{ru:'Шестигранный карандаш: соседние грани образуют угол 120°.',kk:'Алты қырлы қарындаш: көрші жақтары 120° бұрыш жасайды.'},
+ def:'one',v0:{yaw:-.5,pitch:.5},
+ slider:{min:3,max:8,def:6,sym:'n',unit:''},
+ modes:[{id:'one',ru:'Призма',kk:'Призма',cap:null}],
+ dyn:function(v,L){
+  var n=v.n,f=(n-2)*180/n;
+  return L==='ru'?('Правильная '+n+'-угольная призма: угол при основании '+fmtN(f,1)+'°, значит, двугранный угол при боковом ребре тоже '+fmtN(f,1)+'°.'):
+   ('Дұрыс '+n+' бұрышты призма: табандағы бұрыш '+fmtN(f,1)+'°, демек бүйір қырындағы екіжақты бұрыш та '+fmtN(f,1)+'°.');
+ },
+ poly:function(v){return prismDih(v.n);},
+ build:function(m,v){return [prismDih(v.n)];}};
+
+function tetraDih(){
+ var P=tetraPoly(),V=P.V,E=lerp(V[1],V[2],.5),u=vsub(V[0],E),w=vsub(V[3],E);
+ P.ov=[dashed(V[0],E,'c'),ln(V[3],E,{c:'b',w:2.6}),pt(E,'E',{o:[12,12]}),ang(E,u,w,{r:.3,lab:'70,5°'})];
+ return P;
+}
+ITEMS.d5={tag:'§17',
+ title:{ru:'Двугранный угол правильного тетраэдра',kk:'Дұрыс тетраэдрдің екіжақты бұрышы'},
+ stmt:{ru:'Пусть ребро правильного тетраэдра ABCD равно a, E — середина ребра BC. Тогда AE ⊥ BC и DE ⊥ BC, и угол AED — линейный угол двугранного угла между гранями ABC и DBC. AE = DE = a√3/2, AD = a.',
+       kk:'ABCD дұрыс тетраэдрінің қыры a-ға тең, E — BC қырының ортасы болсын. Онда AE ⊥ BC және DE ⊥ BC, ал AED бұрышы — ABC және DBC жақтары арасындағы екіжақты бұрыштың сызықтық бұрышы. AE = DE = a√3/2, AD = a.'},
+ sym:{ru:'cos φ = (AE² + DE² − AD²) / (2·AE·DE) = 1/3',kk:'cos φ = (AE² + DE² − AD²) / (2·AE·DE) = 1/3'},
+ extra:{ru:'cos φ = (3/4 + 3/4 − 1) : (2 · 3/4) = 1/3, φ ≈ 70,5° (задача 17.15).',kk:'cos φ = (3/4 + 3/4 − 1) : (2 · 3/4) = 1/3, φ ≈ 70,5° (17.15 есеп).'},
+ real:{ru:'Старая упаковка «Тетра Пак»: все четыре грани сходятся под одним и тем же двугранным углом.',kk:'Ескі «Тетра Пак» қаптамасы: барлық төрт жағы бірдей екіжақты бұрышпен түйіседі.'},
+ def:'one',v0:{yaw:-.6,pitch:.4},
+ modes:[{id:'one',ru:'Тетраэдр',kk:'Тетраэдр',cap:{ru:'Двугранный угол при ребре BC: cos φ = 1/3, φ ≈ 70,5°.',kk:'BC қырындағы екіжақты бұрыш: cos φ = 1/3, φ ≈ 70,5°.'}}],
+ poly:function(){return tetraDih();},
+ build:function(){return [tetraDih()];}};
+
+/* ================= tab 3: angle between planes (§17) ================= */
+ITEMS.e1={tag:'§17',
+ title:{ru:'Угол между пересекающимися плоскостями',kk:'Қиылысқан екі жазықтықтың арасындағы бұрыш'},
+ stmt:{ru:'Углом между двумя пересекающимися плоскостями называется наименьший из двугранных углов, образованных соответствующими полуплоскостями этих плоскостей. Две пересекающиеся плоскости перпендикулярны, если они образуют прямой угол.',
+       kk:'Қиылысқан екі жазықтықтың арасындағы бұрыш деп сәйкес екі жартыжазықтықпен жасалған екіжақты бұрыштардың ең кішісінің шамасын айтады. Екі жазықтық тік екіжақты бұрыш жасаса, онда оларды перпендикуляр жазықтықтар деп атайды.'},
+ sym:{ru:'φ = ∠(α, β),  0° < φ ≤ 90°;  α ⊥ β',kk:'φ = ∠(α, β),  0° < φ ≤ 90°;  α ⊥ β'},
+ real:{ru:'Два листа бумаги, пересекающиеся вдоль линии сгиба: угол между плоскостями — меньший из образованных.',kk:'Бүктеу сызығы бойымен қиылысқан екі қағаз парағы: жазықтықтар арасындағы бұрыш — пайда болған бұрыштардың кішісі.'},
+ def:'one',v0:{yaw:-.7,pitch:.35},
+ modes:[{id:'one',ru:'Две плоскости',kk:'Екі жазықтық',cap:null}],
+ slider:{min:10,max:170,def:60,sym:'θ',unit:'°'},
+ dyn:function(v,L){
+  var th=v.n,f=Math.min(th,180-th);
+  if(th===90)return L==='ru'?'Все четыре двугранных угла прямые: плоскости перпендикулярны (α ⊥ β).':'Төрт екіжақты бұрыштың бәрі тік: жазықтықтар перпендикуляр (α ⊥ β).';
+  return L==='ru'?('Плоскости образуют двугранные углы '+th+'° и '+(180-th)+'°. Угол между плоскостями — наименьший из них: '+f+'°.'):
+   ('Жазықтықтар '+th+'° және '+(180-th)+'° екіжақты бұрыштар жасайды. Жазықтықтар арасындағы бұрыш — олардың кішісі: '+f+'°.');
+ },
+ build:function(m,v){
+  var th=v.n*D,O=[.1,0,0],u=v.n<=90?[0,0,1]:[0,0,-1],w=[0,Math.sin(th),Math.cos(th)],f=Math.min(v.n,180-v.n);
+  return [pl(planeAround(0,1.3,.95),'a','α',2),pl(planeAround(th,1.3,.95),'b','β',3),
+   ln([-1.45,0,0],[1.45,0,0],{c:'accent',w:2.8,lab:'c',le:'b',lo:[10,-12]}),
+   ang(O,u,w,{r:.5,sq:v.n===90,lab:f+'°'}),pt(O,'O',{o:[-12,12]})];
+ }};
+
+ITEMS.e2={tag:'§17',
+ title:{ru:'Признак перпендикулярности плоскостей',kk:'Жазықтықтардың перпендикулярлық белгісі'},
+ stmt:{ru:'Если плоскость проходит через прямую, перпендикулярную другой плоскости, то эти плоскости перпендикулярны.',
+       kk:'Екі жазықтықтың бірі екіншісіне перпендикуляр түзу арқылы өтетін болса, мұндай жазықтықтар өзара перпендикуляр болады.'},
+ sym:{ru:'a ⊂ α,  a ⊥ β  ⇒  α ⊥ β',kk:'a ⊂ α,  a ⊥ β  ⇒  α ⊥ β'},
+ real:{ru:'Дверь на косяке с вертикальной осью перпендикулярна полу при любом положении двери.',kk:'Тік осьті есік жақтауына ілінген есік кез келген қалпында еденге перпендикуляр.'},
+ proof:[
+  {ru:'Пусть плоскость α проходит через прямую a, перпендикулярную плоскости β, и c — линия пересечения α и β.',kk:'α жазықтығы β-ға перпендикуляр a түзуі арқылы өтсін, ал c — α және β жазықтықтарының қиылысу түзуі.'},
+  {ru:'В плоскости β через точку пересечения a и β проведём прямую b ⊥ c.',kk:'β жазықтығында a мен β қиылысу нүктесі арқылы b ⊥ c түзуін жүргіземіз.'},
+  {ru:'Так как a ⊥ β, то a ⊥ b. Угол между a и b — линейный угол двугранного угла плоскостей α и β.',kk:'a ⊥ β болғандықтан, a ⊥ b. a мен b арасындағы бұрыш — α және β жазықтықтарының екіжақты бұрышының сызықтық бұрышы.'},
+  {ru:'Этот угол прямой, значит, плоскости α и β перпендикулярны.',kk:'Бұл бұрыш тік, демек α және β жазықтықтары перпендикуляр.',ref:['d2']}],
+ def:'given',v0:{yaw:-.6,pitch:.4},
+ modes:[
+  {id:'given',ru:'Дано',kk:'Берілгені',cap:{ru:'Прямая a лежит в плоскости α и перпендикулярна плоскости β.',kk:'a түзуі α жазықтығында жатыр және β жазықтығына перпендикуляр.'}},
+  {id:'res',ru:'Вывод',kk:'Қорытынды',cap:{ru:'Линейный угол между a и b равен 90°, поэтому α ⊥ β.',kk:'a мен b арасындағы сызықтық бұрыш 90°, сондықтан α ⊥ β.'}}],
+ build:function(m){
+  var O=[.3,0,0],o=[pl(BIG,'a','β',2),pl([[-1.3,0,0],[1.3,0,0],[1.3,1.2,0],[-1.3,1.2,0]],'b','α',2),
+   ln([-1.45,0,0],[1.45,0,0],{c:'accent',w:2.8,lab:'c',le:'b',lo:[10,-10]}),ln(vadd(O,[0,-.0,0]),vadd(O,[0,1.1,0]),{c:'ink',w:2.8,lab:'a',le:'b',lo:[12,0]}),
+   ln(vadd(O,[0,0,-1.0]),vadd(O,[0,0,1.0]),{c:'c',w:2.4,lab:'b',le:'b',lo:[10,-8]}),pt(O,'O',{o:[-12,14]})];
+  if(m==='given')o.push(rightAt(O,[0,1,0],[1,0,0],.2),rightAt(O,[0,1,0],[0,0,1],.2));
+  else o.push(rightAt(O,[1,0,0],[0,0,1],.17),rightAt(O,[0,1,0],[0,0,1],.3));
+  return o;
+ }};
+
+var CUBE_PL=[
+ {id:'c1',p1:[0,1,2,3],p2:[0,3,7,4],edge:[0,3],ru:'ABC и ADD₁',kk:'ABC және ADD₁',
+  cap:{ru:'Смежные грани куба пересекаются по ребру AD. AB ⊥ AD и AA₁ ⊥ AD, линейный угол BAA₁ равен 90° (задача 17.1).',
+       kk:'Кубтың көрші жақтары AD қыры бойымен қиылысады. AB ⊥ AD және AA₁ ⊥ AD, BAA₁ сызықтық бұрышы 90°-қа тең (17.1 есеп).'}},
+ {id:'c2',p1:[0,1,2,3],p2:[3,2,5,4],edge:[3,2],ru:'ABC и CDA₁',kk:'ABC және CDA₁',
+  cap:{ru:'Плоскости пересекаются по CD. DA ⊥ CD и DA₁ ⊥ CD, линейный угол ADA₁ равен 45°, так как AA₁ = AD (задача 17.3).',
+       kk:'Жазықтықтар CD бойымен қиылысады. DA ⊥ CD және DA₁ ⊥ CD, ADA₁ сызықтық бұрышы 45°, өйткені AA₁ = AD (17.3 есеп).'}},
+ {id:'c3',p1:[0,1,2],p2:[0,2,5],edge:[0,2],ru:'ABC и ACB₁',kk:'ABC және ACB₁',
+  cap:{ru:'Плоскости пересекаются по AC. Если O — середина AC, то BO ⊥ AC и B₁O ⊥ AC. В треугольнике BOB₁ tg φ = BB₁ : BO = 1 : (√2/2) = √2, φ ≈ 54,7° (задача 17.8).',
+       kk:'Жазықтықтар AC бойымен қиылысады. O — AC-ның ортасы болса, BO ⊥ AC және B₁O ⊥ AC. BOB₁ үшбұрышында tg φ = BB₁ : BO = 1 : (√2/2) = √2, φ ≈ 54,7° (17.8 есеп).'}},
+ {id:'c4',p1:[0,2,5],p2:[0,2,7],edge:[0,2],ru:'ACB₁ и ACD₁',kk:'ACB₁ және ACD₁',
+  cap:{ru:'Плоскости пересекаются по AC. B₁O ⊥ AC и D₁O ⊥ AC, где O — середина AC. В треугольнике B₁OD₁ по теореме косинусов cos φ = 1/3, φ ≈ 70,5° (задача 17.9).',
+       kk:'Жазықтықтар AC бойымен қиылысады. O — AC-ның ортасы, B₁O ⊥ AC және D₁O ⊥ AC. B₁OD₁ үшбұрышында косинус теоремасы бойынша cos φ = 1/3, φ ≈ 70,5° (17.9 есеп).'}}
+];
+function cubePlanes(m){
+ var P=cubeP(),V=P.V,E1=V[m.edge[0]],E2=V[m.edge[1]],O=lerp(E1,E2,.5),e=vunit(vsub(E2,E1)),
+     u=perpTo(vsub(centroid(P,m.p1),O),e),w=perpTo(vsub(centroid(P,m.p2),O),e),phi=angDeg(u,w);
+ P.ov=[pl(m.p1.map(function(i){return V[i];}),'c',null,0),pl(m.p2.map(function(i){return V[i];}),'b',null,0),
+  ln(E1,E2,{c:'accent',w:3}),ln(O,vadd(O,vmul(vunit(u),.55)),{c:'ink',w:2,d:1}),ln(O,vadd(O,vmul(vunit(w),.55)),{c:'ink',w:2,d:1}),
+  ang(O,u,w,{r:.3,sq:Math.abs(phi-90)<.01,lab:fmtN(phi,1)+'°'})];
+ return P;
+}
+ITEMS.e3={tag:'§17',
+ title:{ru:'Угол между плоскостями в кубе',kk:'Кубтағы екі жазықтықтың арасындағы бұрыш'},
+ stmt:{ru:'Чтобы найти угол между плоскостями, находят линию их пересечения и в каждой плоскости проводят к ней перпендикуляр из одной точки. Угол между этими перпендикулярами — линейный угол двугранного угла.',
+       kk:'Жазықтықтар арасындағы бұрышты табу үшін олардың қиылысу түзуін тауып, әр жазықтықта бір нүктеден оған перпендикуляр жүргізеді. Осы перпендикулярлар арасындағы бұрыш — екіжақты бұрыштың сызықтық бұрышы.'},
+ sym:{ru:'∠(α, β) = ∠(u, w),  u ⊂ α, w ⊂ β,  u ⊥ c, w ⊥ c',kk:'∠(α, β) = ∠(u, w),  u ⊂ α, w ⊂ β,  u ⊥ c, w ⊥ c'},
+ extra:{ru:'Зелёная и красная области — части сравниваемых плоскостей, синий отрезок — их линия пересечения. Примеры взяты из задач 17.1, 17.3, 17.8 и 17.9.',kk:'Жасыл және қызыл аймақтар — салыстырылатын жазықтықтардың бөліктері, көк кесінді — олардың қиылысу түзуі. Мысалдар 17.1, 17.3, 17.8 және 17.9 есептерінен алынған.'},
+ real:{ru:'Угол наклона крышки ящика, откинутой на петлях.',kk:'Топсаға бекітілген жәшік қақпағының еңкею бұрышы.'},
+ def:'c1',v0:{yaw:-.85,pitch:.42},
+ modes:CUBE_PL.map(function(m){return {id:m.id,ru:m.ru,kk:m.kk,cap:m.cap};}),
+ poly:function(){return cubeP();},
+ build:function(mm){return [cubePlanes(CUBE_PL.filter(function(x){return x.id===mm;})[0])];}};
+
+/* ---------- reference data ---------- */
+var GROUPS=[
+ {id:'tp',ru:'Три перпендикуляра',kk:'Үш перпендикуляр'},
+ {id:'dih',ru:'Двугранный угол',kk:'Екіжақты бұрыш'},
+ {id:'pl',ru:'Плоскости',kk:'Жазықтықтар'},
+ {id:'form',ru:'Формулы',kk:'Формулалар'},
+ {id:'term',ru:'Термины',kk:'Терминдер'}
+];
+var REF=[
+ {g:'tp',s:'AA′ ⊥ π',ru:'AA′ — перпендикуляр к плоскости π, A′ — основание перпендикуляра.',kk:'AA′ — π жазықтығына перпендикуляр, A′ — перпендикулярдың табаны.',src:'§15'},
+ {g:'tp',s:'A′',ru:'Ортогональная проекция точки A на плоскость π.',kk:'A нүктесінің π жазықтығына ортогональ проекциясы.',src:'§15'},
+ {g:'tp',s:'AB, A′B',ru:'AB — наклонная, A′B — её ортогональная проекция.',kk:'AB — көлбеу, A′B — оның ортогональ проекциясы.',src:'§15'},
+ {g:'tp',s:'b ⊥ A′B ⇒ b ⊥ AB',ru:'Теорема о трёх перпендикулярах (b лежит в плоскости проекции).',kk:'Үш перпендикуляр туралы теорема (b проекция жазықтығында жатыр).',src:'§15'},
+ {g:'tp',s:'b ⊥ AB ⇒ b ⊥ A′B',ru:'Обратная теорема о трёх перпендикулярах.',kk:'Үш перпендикуляр туралы кері теорема.',src:'§15'},
+ {g:'dih',s:'α c β',ru:'Двугранный угол с гранями α, β и ребром c.',kk:'Жақтары α, β және қыры c болатын екіжақты бұрыш.',src:'§17'},
+ {g:'dih',s:'∠a₁Ob₁',ru:'Линейный угол двугранного угла: лучи a₁, b₁ перпендикулярны ребру c в точке O.',kk:'Екіжақты бұрыштың сызықтық бұрышы: a₁, b₁ сәулелері O нүктесінде c қырына перпендикуляр.',src:'§17'},
+ {g:'dih',s:'0° < φ ≤ 180°',ru:'Величина двугранного угла принадлежит промежутку (0°; 180°].',kk:'Екіжақты бұрыштың шамасы (0°; 180°] аралығында жатады.',src:'§17'},
+ {g:'pl',s:'∠(α, β)',ru:'Угол между плоскостями: наименьший из двугранных углов, 0° < φ ≤ 90°.',kk:'Жазықтықтар арасындағы бұрыш: екіжақты бұрыштардың ең кішісі, 0° < φ ≤ 90°.',src:'§17'},
+ {g:'pl',s:'α ⊥ β',ru:'Плоскости перпендикулярны: угол между ними равен 90°.',kk:'Жазықтықтар перпендикуляр: арасындағы бұрыш 90°.',src:'§17'},
+ {g:'pl',s:'a ⊂ α, a ⊥ β ⇒ α ⊥ β',ru:'Признак перпендикулярности плоскостей.',kk:'Жазықтықтардың перпендикулярлық белгісі.',src:'§17'},
+ {g:'pl',s:'c = α ∩ β',ru:'c — линия пересечения плоскостей.',kk:'c — жазықтықтардың қиылысу түзуі.',src:'§1'},
+ {g:'pl',s:'a ⊂ α',ru:'Прямая лежит в плоскости (в учебнике записывается ∈).',kk:'Түзу жазықтықта жатады (оқулықта ∈ деп жазылады).',src:'§1'},
+ {g:'form',s:'AB² = AA′² + A′B²',ru:'Расстояние от точки A до прямой b плоскости (A′B ⊥ b).',kk:'A нүктесінен жазықтықтағы b түзуіне дейінгі қашықтық (A′B ⊥ b).',src:'§15'},
+ {g:'form',s:'φ = (n − 2)·180° / n',ru:'Двугранный угол при боковом ребре правильной n-угольной призмы.',kk:'Дұрыс n бұрышты призманың бүйір қырындағы екіжақты бұрыш.',src:'§17'},
+ {g:'form',s:'tg φ = SO / OE',ru:'Двугранный угол при основании правильной пирамиды: SO — высота, OE — апофема основания.',kk:'Дұрыс пирамида табанындағы екіжақты бұрыш: SO — биіктік, OE — табанның апофемасы.',src:'§17'},
+ {g:'form',s:'cos φ = 1/3',ru:'Двугранный угол правильного тетраэдра, φ ≈ 70,5°.',kk:'Дұрыс тетраэдрдің екіжақты бұрышы, φ ≈ 70,5°.',src:'§17'},
+ {g:'form',s:'c² = a² + b² − 2ab·cos C',ru:'Теорема косинусов.',kk:'Косинус теоремасы.',src:'§9'},
+ {g:'form',s:'tg φ = a / b',ru:'Тангенс острого угла прямоугольного треугольника: противолежащий катет к прилежащему.',kk:'Тікбұрышты үшбұрыштың сүйір бұрышының тангенсі: қарсы катеттің іргелес катетке қатынасы.',src:'§9'},
+ {g:'form',s:'cos φ = |n₁·n₂| / (|n₁||n₂|)',ru:'Угол между плоскостями через нормальные векторы (глава III).',kk:'Нормаль векторлар арқылы жазықтықтар арасындағы бұрыш (III тарау).',src:'app'},
+ {g:'form',s:'⇔',ru:'Тогда и только тогда (равносильно).',kk:'Тек сонда ғана (пара-пар).',src:'app'}
+];
+var TERMS=[
+ ['теорема о трёх перпендикулярах','үш перпендикуляр туралы теорема','§15'],
+ ['обратная теорема','кері теорема','§15'],
+ ['наклонная','көлбеу','§15'],
+ ['ортогональная проекция','ортогональ проекция','§15'],
+ ['плоскость проектирования','проекциялау жазықтығы','§15'],
+ ['расстояние от точки до прямой','нүктеден түзуге дейінгі қашықтық','§10'],
+ ['двугранный угол','екіжақты бұрыш','§17'],
+ ['грань двугранного угла','екіжақты бұрыштың жағы','§17'],
+ ['ребро двугранного угла','екіжақты бұрыштың қыры','§17'],
+ ['полуплоскость','жартыжазықтық','§17'],
+ ['граничная прямая','шекаралық түзу','§17'],
+ ['линейный угол','сызықтық бұрыш','§17'],
+ ['величина двугранного угла','екіжақты бұрыштың шамасы','§17'],
+ ['прямой, острый, тупой угол','тік, сүйір, доғал бұрыш','§17'],
+ ['угол между плоскостями','екі жазықтықтың арасындағы бұрыш','§17'],
+ ['перпендикулярные плоскости','перпендикуляр жазықтықтар','§17'],
+ ['признак перпендикулярности плоскостей','жазықтықтардың перпендикулярлық белгісі','§17'],
+ ['сонаправленные лучи','бағыттас сәулелер','§9'],
+ ['правильная призма','дұрыс призма','§4'],
+ ['правильная пирамида','дұрыс пирамида','§4'],
+ ['высота пирамиды','пирамиданың биіктігі','§12'],
+ ['правильный тетраэдр','дұрыс тетраэдр','§3*'],
+ ['боковая грань','бүйір жағы','§4'],
+ ['диагональ грани','жақтың диагоналі','§9']
+];
+TERMS.forEach(function(t){REF.push({g:'term',t:1,ru:t[0],kk:t[1],src:t[2]});});
+
+/* ---------- quiz ---------- */
+var QUIZ=[
+ {q:{ru:'Что утверждает теорема о трёх перпендикулярах?',kk:'Үш перпендикуляр туралы теорема нені тұжырымдайды?'},
+  o:{ru:['Прямая плоскости, перпендикулярная проекции наклонной, перпендикулярна и наклонной','Три прямые, перпендикулярные плоскости, параллельны','Перпендикуляр короче любой наклонной','Угол с плоскостью наименьший из всех углов'],kk:['Жазықтықтағы көлбеу проекциясына перпендикуляр түзу көлбеуге де перпендикуляр','Жазықтыққа перпендикуляр үш түзу параллель','Перпендикуляр кез келген көлбеуден қысқа','Жазықтықпен бұрыш барлық бұрыштардың ең кішісі']},a:0,
+  w:{ru:'Так звучит теорема: перпендикулярность проекции даёт перпендикулярность самой наклонной.',kk:'Теорема дәл осылай айтылады: проекцияға перпендикулярлық көлбеудің өзіне де перпендикулярлықты береді.'}},
+ {q:{ru:'Верна ли теорема, обратная теореме о трёх перпендикулярах?',kk:'Үш перпендикуляр туралы теоремаға кері теорема дұрыс па?'},
+  o:{ru:['Нет, никогда','Да: если прямая плоскости перпендикулярна наклонной, то она перпендикулярна и проекции','Верна только для куба','Верна только если наклонная равна проекции'],kk:['Жоқ, ешқашан','Иә: жазықтықтағы түзу көлбеуге перпендикуляр болса, ол проекцияға да перпендикуляр','Тек куб үшін дұрыс','Тек көлбеу проекцияға тең болғанда дұрыс']},a:1,
+  w:{ru:'Если b ⊥ AB и b ⊥ AA′, то b ⊥ плоскости AA′B, а проекция A′B лежит в этой плоскости.',kk:'b ⊥ AB және b ⊥ AA′ болса, b ⊥ AA′B жазықтығы, ал A′B проекциясы осы жазықтықта жатыр.'}},
+ {q:{ru:'В кубе ABCDA₁B₁C₁D₁ проекция BD₁ на плоскость ABC — это BD. Что можно сказать о прямых AC и BD₁?',kk:'ABCDA₁B₁C₁D₁ кубында BD₁-дің ABC жазықтығына проекциясы — BD. AC және BD₁ түзулері туралы не айтуға болады?'},
+  o:{ru:['Параллельны','Пересекаются под 60°','Перпендикулярны','Совпадают'],kk:['Параллель','60° бұрышпен қиылысады','Перпендикуляр','Беттеседі']},a:2,
+  w:{ru:'AC ⊥ BD (диагонали квадрата), значит, по теореме о трёх перпендикулярах AC ⊥ BD₁.',kk:'AC ⊥ BD (квадрат диагональдары), демек үш перпендикуляр теоремасы бойынша AC ⊥ BD₁.'}},
+ {q:{ru:'AA′ ⊥ π, A′B ⊥ b, b ⊂ π, AA′ = 3, A′B = 4. Чему равно расстояние от точки A до прямой b?',kk:'AA′ ⊥ π, A′B ⊥ b, b ⊂ π, AA′ = 3, A′B = 4. A нүктесінен b түзуіне дейінгі қашықтық неге тең?'},
+  o:{ru:['7','5','√7','12'],kk:['7','5','√7','12']},a:1,
+  w:{ru:'AB ⊥ b по теореме о трёх перпендикулярах, AB² = 9 + 16 = 25, AB = 5.',kk:'Үш перпендикуляр теоремасы бойынша AB ⊥ b, AB² = 9 + 16 = 25, AB = 5.'}},
+ {q:{ru:'Что называется линейным углом двугранного угла?',kk:'Екіжақты бұрыштың сызықтық бұрышы деп нені айтады?'},
+  o:{ru:['Угол между рёбрами многогранника','Угол между лучами, по которым плоскость, перпендикулярная ребру, пересекает грани','Угол между гранью и плоскостью, параллельной ребру','Угол между ребром и гранью'],kk:['Көпжақтың қырлары арасындағы бұрыш','Қырға перпендикуляр жазықтық жақтарды қиятын сәулелер арасындағы бұрыш','Жақ пен қырға параллель жазықтық арасындағы бұрыш','Қыр мен жақ арасындағы бұрыш']},a:1,
+  w:{ru:'Берут плоскость, перпендикулярную ребру; её линии пересечения с гранями образуют линейный угол.',kk:'Қырға перпендикуляр жазықтық алынады; оның жақтармен қиылысу сызықтары сызықтық бұрышты жасайды.'}},
+ {q:{ru:'Какому промежутку принадлежит величина двугранного угла?',kk:'Екіжақты бұрыштың шамасы қай аралықта жатады?'},
+  o:{ru:['[0°; 90°]','(0°; 90°]','(0°; 180°]','[0°; 360°)'],kk:['[0°; 90°]','(0°; 90°]','(0°; 180°]','[0°; 360°)']},a:2,
+  w:{ru:'Двугранный угол может быть тупым, поэтому величина лежит в промежутке (0°; 180°].',kk:'Екіжақты бұрыш доғал болуы мүмкін, сондықтан шамасы (0°; 180°] аралығында жатады.'}},
+ {q:{ru:'Что называется углом между двумя пересекающимися плоскостями?',kk:'Қиылысатын екі жазықтық арасындағы бұрыш деп нені айтады?'},
+  o:{ru:['Наибольший из двугранных углов','Наименьший из двугранных углов','Сумма двух смежных двугранных углов','Всегда прямой угол'],kk:['Екіжақты бұрыштардың ең үлкені','Екіжақты бұрыштардың ең кішісі','Екі сыбайлас екіжақты бұрыштың қосындысы','Әрқашан тік бұрыш']},a:1,
+  w:{ru:'Плоскости образуют углы φ и 180° − φ, берут меньший. Поэтому угол между плоскостями не больше 90°.',kk:'Жазықтықтар φ және 180° − φ бұрыштарын жасайды, кішісі алынады. Сондықтан жазықтықтар арасындағы бұрыш 90°-тан аспайды.'}},
+ {q:{ru:'Плоскость проходит через прямую, перпендикулярную другой плоскости. Как расположены плоскости?',kk:'Жазықтық екінші жазықтыққа перпендикуляр түзу арқылы өтеді. Жазықтықтар қалай орналасқан?'},
+  o:{ru:['Параллельны','Перпендикулярны','Пересекаются под 45°','Совпадают'],kk:['Параллель','Перпендикуляр','45° бұрышпен қиылысады','Беттеседі']},a:1,
+  w:{ru:'Это признак перпендикулярности плоскостей.',kk:'Бұл жазықтықтардың перпендикулярлық белгісі.'}},
+ {q:{ru:'Найдите двугранный угол между смежными гранями куба.',kk:'Кубтың көрші жақтары арасындағы екіжақты бұрышты табыңыз.'},
+  o:{ru:['45°','60°','90°','120°'],kk:['45°','60°','90°','120°']},a:2,
+  w:{ru:'Рёбра AB и AA₁ перпендикулярны ребру AD, линейный угол BAA₁ равен 90° (задача 17.1).',kk:'AB және AA₁ қырлары AD қырына перпендикуляр, BAA₁ сызықтық бұрышы 90° (17.1 есеп).'}},
+ {q:{ru:'Найдите двугранный угол между соседними боковыми гранями правильной треугольной призмы.',kk:'Дұрыс үшбұрышты призманың көрші бүйір жақтары арасындағы екіжақты бұрышты табыңыз.'},
+  o:{ru:['30°','60°','90°','120°'],kk:['30°','60°','90°','120°']},a:1,
+  w:{ru:'Линейный угол равен углу правильного треугольника в основании: 60° (задача 17.4).',kk:'Сызықтық бұрыш табандағы дұрыс үшбұрыштың бұрышына тең: 60° (17.4 есеп).'}},
+ {q:{ru:'Найдите двугранный угол между соседними боковыми гранями правильной шестиугольной призмы.',kk:'Дұрыс алтыбұрышты призманың көрші бүйір жақтары арасындағы екіжақты бұрышты табыңыз.'},
+  o:{ru:['60°','90°','108°','120°'],kk:['60°','90°','108°','120°']},a:3,
+  w:{ru:'Угол правильного шестиугольника (6 − 2)·180° / 6 = 120° (задача 17.5).',kk:'Дұрыс алтыбұрыштың бұрышы (6 − 2)·180° / 6 = 120° (17.5 есеп).'}},
+ {q:{ru:'В правильной четырёхугольной пирамиде сторона основания равна 2, высота равна 1. Найдите двугранный угол между боковой гранью и основанием.',kk:'Дұрыс төртбұрышты пирамидада табанының қабырғасы 2-ге, биіктігі 1-ге тең. Бүйір жағы мен табаны арасындағы екіжақты бұрышты табыңыз.'},
+  o:{ru:['30°','45°','60°','90°'],kk:['30°','45°','60°','90°']},a:1,
+  w:{ru:'В треугольнике SEO катеты SO = EO = 1, значит, угол SEO = 45° (пример 1 учебника).',kk:'SEO үшбұрышында SO = EO = 1 катеттері, демек SEO бұрышы = 45° (оқулықтағы 1-мысал).'}},
+ {q:{ru:'У правильной четырёхугольной пирамиды все рёбра равны 1. Найдите тангенс двугранного угла между боковой гранью и основанием.',kk:'Дұрыс төртбұрышты пирамиданың барлық қырлары 1-ге тең. Бүйір жағы мен табаны арасындағы екіжақты бұрыштың тангенсін табыңыз.'},
+  o:{ru:['1','√2','√3','1/2'],kk:['1','√2','√3','1/2']},a:1,
+  w:{ru:'OE = 1/2, SO = √(1 − 1/2) = √2/2, tg φ = SO : OE = √2 (задача 17.12).',kk:'OE = 1/2, SO = √(1 − 1/2) = √2/2, tg φ = SO : OE = √2 (17.12 есеп).'}},
+ {q:{ru:'Найдите косинус двугранного угла между соседними гранями правильного тетраэдра.',kk:'Дұрыс тетраэдрдің көрші жақтары арасындағы екіжақты бұрыштың косинусын табыңыз.'},
+  o:{ru:['1/2','1/3','√3/2','√2/2'],kk:['1/2','1/3','√3/2','√2/2']},a:1,
+  w:{ru:'AE = DE = √3/2, AD = 1; cos φ = (3/4 + 3/4 − 1) : (2 · 3/4) = 1/3 (задача 17.15).',kk:'AE = DE = √3/2, AD = 1; cos φ = (3/4 + 3/4 − 1) : (2 · 3/4) = 1/3 (17.15 есеп).'}},
+ {q:{ru:'В кубе ABCDA₁B₁C₁D₁ найдите тангенс угла между плоскостями ABC и ACB₁.',kk:'ABCDA₁B₁C₁D₁ кубында ABC және ACB₁ жазықтықтары арасындағы бұрыштың тангенсін табыңыз.'},
+  o:{ru:['1','√2','√2/2','√3'],kk:['1','√2','√2/2','√3']},a:1,
+  w:{ru:'Линейный угол BOB₁, где O — середина AC. BO = √2/2, BB₁ = 1, tg φ = 1 : (√2/2) = √2 (задача 17.8).',kk:'BOB₁ — сызықтық бұрыш, мұнда O — AC-ның ортасы. BO = √2/2, BB₁ = 1, tg φ = 1 : (√2/2) = √2 (17.8 есеп).'}},
+ {q:{ru:'В единичном кубе найдите косинус угла между плоскостями ACB₁ и ACD₁.',kk:'Бірлік кубта ACB₁ және ACD₁ жазықтықтары арасындағы бұрыштың косинусын табыңыз.'},
+  o:{ru:['1/2','1/3','2/3','0'],kk:['1/2','1/3','2/3','0']},a:1,
+  w:{ru:'В треугольнике B₁OD₁ стороны OB₁ = OD₁ = √6/2, B₁D₁ = √2; по теореме косинусов cos φ = 1/3 (задача 17.9).',kk:'B₁OD₁ үшбұрышында OB₁ = OD₁ = √6/2, B₁D₁ = √2; косинус теоремасы бойынша cos φ = 1/3 (17.9 есеп).'}},
+ {q:{ru:'Верно ли, что две плоскости, перпендикулярные третьей, параллельны?',kk:'Үшінші жазықтыққа перпендикуляр екі жазықтық параллель деген дұрыс па?'},
+  o:{ru:['Да, всегда','Нет, они могут пересекаться','Только если плоскости равны','Только в кубе'],kk:['Иә, әрқашан','Жоқ, олар қиылысуы мүмкін','Тек жазықтықтар тең болғанда','Тек кубта']},a:1,
+  w:{ru:'Например, две соседние стены комнаты перпендикулярны полу, но пересекаются (задача 17.6).',kk:'Мысалы, бөлменің екі көрші қабырғасы еденге перпендикуляр, бірақ қиылысады (17.6 есеп).'}},
+ {q:{ru:'Сколько плоскостей, перпендикулярных данной плоскости, можно провести через данную точку?',kk:'Берілген нүкте арқылы берілген жазықтыққа перпендикуляр неше жазықтық жүргізуге болады?'},
+  o:{ru:['Ни одной','Одну','Две','Бесконечно много'],kk:['Бірде-бір','Біреу','Екеу','Шексіз көп']},a:3,
+  w:{ru:'Через перпендикуляр из точки к плоскости проходит бесконечно много плоскостей, и все они перпендикулярны данной (задача 17.7).',kk:'Нүктеден жазықтыққа түсірілген перпендикуляр арқылы шексіз көп жазықтық өтеді, олардың бәрі берілген жазықтыққа перпендикуляр (17.7 есеп).'}}
+];
+
+
+/* ---------- solver ---------- */
+var SOLCFG={"kinds": ["pline", "planes"], "ex": ["x1", "x15", "x16", "x17", "x18", "x6"], "dist": false};
+/* ================= solver: geometry ================= */
+var SOLFIG={
+ box:{ru:'Прямоугольный параллелепипед ABCDA₁B₁C₁D₁',kk:'ABCDA₁B₁C₁D₁ тікбұрышты параллелепипеді',par:[['a',1],['b',1],['c',1]],pn:{ru:['AB = a','AD = b','AA₁ = c'],kk:['AB = a','AD = b','AA₁ = c']}},
+ pyr4:{ru:'Правильная четырёхугольная пирамида SABCD',kk:'Дұрыс төртбұрышты SABCD пирамидасы',par:[['a',2],['h',1]],pn:{ru:['сторона основания a','высота h = SO'],kk:['табан қабырғасы a','биіктігі h = SO']}},
+ pri3:{ru:'Правильная треугольная призма ABCA₁B₁C₁',kk:'Дұрыс үшбұрышты ABCA₁B₁C₁ призмасы',par:[['a',2],['h',3]],pn:{ru:['сторона основания a','высота h = AA₁'],kk:['табан қабырғасы a','биіктігі h = AA₁']}},
+ pri6:{ru:'Правильная шестиугольная призма ABCDEFA₁…F₁',kk:'Дұрыс алтыбұрышты ABCDEFA₁…F₁ призмасы',par:[['a',1],['h',1]],pn:{ru:['сторона основания a','высота h = AA₁'],kk:['табан қабырғасы a','биіктігі h = AA₁']}}
+};
+var SOLKINDS=[
+ {id:'pp',g:['pt','pt'],ru:'Точка — точка',kk:'Нүкте — нүкте'},
+ {id:'pline',g:['pt','ln'],ru:'Точка — прямая',kk:'Нүкте — түзу'},
+ {id:'pplane',g:['pt','pn'],ru:'Точка — плоскость',kk:'Нүкте — жазықтық'},
+ {id:'lplane',g:['ln','pn'],ru:'Прямая — плоскость',kk:'Түзу — жазықтық'},
+ {id:'lines',g:['ln','ln'],ru:'Прямая — прямая',kk:'Түзу — түзу'},
+ {id:'planes',g:['pn','pn'],ru:'Плоскость — плоскость',kk:'Жазықтық — жазықтық'},
+ {id:'poslines',g:['ln','ln'],ru:'Две прямые: как расположены',kk:'Екі түзу: қалай орналасқан'},
+ {id:'poslp',g:['ln','pn'],ru:'Прямая и плоскость: как расположены',kk:'Түзу және жазықтық: қалай орналасқан'},
+ {id:'pospp',g:['pn','pn'],ru:'Две плоскости: как расположены',kk:'Екі жазықтық: қалай орналасқан'},
+ {id:'coplanar',g:['pt','pt','pt','pt'],ru:'Четыре точки: в одной ли плоскости',kk:'Төрт нүкте: бір жазықтықта ма'}
+];
+var GN={pt:1,ln:2,pn:3};
+var SOLPRE={
+ box:{pp:['A','C₁'],pline:['A','B₁','D₁'],pplane:['A','C','D','A₁'],lplane:['A','A₁','B','D','D₁'],lines:['A','A₁','B','D₁'],planes:['A','B','B₁','D','C','C₁'],poslines:['A','A₁','C','C₁'],poslp:['A','A₁','A','B','C'],pospp:['A','B','C','A₁','B₁','C₁'],coplanar:['A','B','C₁','D₁']},
+ pyr4:{pp:['S','A'],pline:['S','A','B'],pplane:['S','A','B','C'],lplane:['B','C','A','D','S'],lines:['S','A','B','C'],planes:['S','B','C','A','B','C'],poslines:['S','A','B','C'],poslp:['B','C','A','D','S'],pospp:['S','A','B','S','C','D'],coplanar:['S','A','C','B']},
+ pri3:{pp:['A','B₁'],pline:['A','B₁','C₁'],pplane:['A','B','B₁','C'],lplane:['A','A₁','B','B₁','C'],lines:['A','A₁','B','C'],planes:['A','B','C','A₁','B₁','C₁'],poslines:['A','A₁','B','C'],poslp:['A','A₁','B','B₁','C'],pospp:['A','B','C','A₁','B₁','C₁'],coplanar:['A','B','A₁','B₁']},
+ pri6:{pp:['A','D₁'],pline:['A','B₁','E₁'],pplane:['A','B','E','E₁'],lplane:['A','A₁','B','E','E₁'],lines:['A','A₁','B','E₁'],planes:['A','B','B₁','E','D','D₁'],poslines:['A','A₁','B','E₁'],poslp:['A','A₁','B','E','E₁'],pospp:['A','B','B₁','E','D','D₁'],coplanar:['A','B','D','E']}
+};
+var SOLEX=[
+ {id:'p1',tag:'§5',ru:'Куб: AA₁ и CC₁',kk:'Куб: AA₁ және CC₁',fig:'box',par:[1,1,1],kind:'poslines',sel:['A','A₁','C','C₁']},
+ {id:'p2',tag:'§6',ru:'Куб: AB и BC',kk:'Куб: AB және BC',fig:'box',par:[1,1,1],kind:'poslines',sel:['A','B','B','C']},
+ {id:'p3',tag:'§6',ru:'Куб: AB и CC₁',kk:'Куб: AB және CC₁',fig:'box',par:[1,1,1],kind:'poslines',sel:['A','B','C','C₁']},
+ {id:'p4',tag:'§7',ru:'Куб: AA₁ и плоскость ABC',kk:'Куб: AA₁ және ABC жазықтығы',fig:'box',par:[1,1,1],kind:'poslp',sel:['A','A₁','A','B','C']},
+ {id:'p5',tag:'§7',ru:'Куб: AB и плоскость ABC',kk:'Куб: AB және ABC жазықтығы',fig:'box',par:[1,1,1],kind:'poslp',sel:['A','B','A','B','C']},
+ {id:'p6',tag:'§7',ru:'Куб: AA₁ и плоскость BCC₁',kk:'Куб: AA₁ және BCC₁ жазықтығы',fig:'box',par:[1,1,1],kind:'poslp',sel:['A','A₁','B','C','C₁']},
+ {id:'p7',tag:'§8',ru:'Куб: плоскости ABC и A₁B₁C₁',kk:'Куб: ABC және A₁B₁C₁ жазықтықтары',fig:'box',par:[1,1,1],kind:'pospp',sel:['A','B','C','A₁','B₁','C₁']},
+ {id:'p8',tag:'А3',ru:'Куб: плоскости ABC и ABB₁',kk:'Куб: ABC және ABB₁ жазықтықтары',fig:'box',par:[1,1,1],kind:'pospp',sel:['A','B','C','A','B','B₁']},
+ {id:'p9',tag:'А2',ru:'Куб: точки A, B, C₁, D₁',kk:'Куб: A, B, C₁, D₁ нүктелері',fig:'box',par:[1,1,1],kind:'coplanar',sel:['A','B','C₁','D₁']},
+ {id:'p10',tag:'А4',ru:'Куб: точки A, B, C, A₁',kk:'Куб: A, B, C, A₁ нүктелері',fig:'box',par:[1,1,1],kind:'coplanar',sel:['A','B','C','A₁']},
+ {id:'x1',tag:'§10',ru:'Куб: A → B₁D₁',kk:'Куб: A → B₁D₁',fig:'box',par:[1,1,1],kind:'pline',sel:['A','B₁','D₁']},
+ {id:'x2',tag:'§12',ru:'Куб: A → плоскость CDA₁',kk:'Куб: A → CDA₁ жазықтығы',fig:'box',par:[1,1,1],kind:'pplane',sel:['A','C','D','A₁']},
+ {id:'x3',tag:'§13',ru:'Куб: AA₁ ∥ BDD₁',kk:'Куб: AA₁ ∥ BDD₁',fig:'box',par:[1,1,1],kind:'lplane',sel:['A','A₁','B','D','D₁']},
+ {id:'x4',tag:'§14',ru:'Куб: AA₁ и BD₁',kk:'Куб: AA₁ және BD₁',fig:'box',par:[1,1,1],kind:'lines',sel:['A','A₁','B','D₁']},
+ {id:'x5',tag:'§14',ru:'Шестиугольная призма: AA₁ и BE₁',kk:'Алтыбұрышты призма: AA₁ және BE₁',fig:'pri6',par:[1,1],kind:'lines',sel:['A','A₁','B','E₁']},
+ {id:'x6',tag:'§17',ru:'Пирамида: SBC и основание',kk:'Пирамида: SBC және табан',fig:'pyr4',par:[2,1],kind:'planes',sel:['S','B','C','A','B','C']},
+ {id:'x7',tag:'§9',ru:'Куб: угол между AB₁ и BC₁',kk:'Куб: AB₁ және BC₁ арасындағы бұрыш',fig:'box',par:[1,1,1],kind:'lines',sel:['A','B₁','B','C₁']},
+ {id:'x8',tag:'§16',ru:'Куб: угол AC₁ и ABC',kk:'Куб: AC₁ және ABC арасындағы бұрыш',fig:'box',par:[1,1,1],kind:'lplane',sel:['A','C₁','A','B','C']},
+ {id:'x9',tag:'§9',ru:'Куб: AC и B₁D₁ (скрещиваются)',kk:'Куб: AC және B₁D₁ (айқас)',fig:'box',par:[1,1,1],kind:'lines',sel:['A','C','B₁','D₁']},
+ {id:'x10',tag:'§11',ru:'Куб: AA₁ ⊥ плоскости ABC',kk:'Куб: AA₁ ⊥ ABC жазықтығы',fig:'box',par:[1,1,1],kind:'lplane',sel:['A','A₁','A','B','C']},
+ {id:'x11',tag:'§12',ru:'Пирамида: высота SO',kk:'Пирамида: SO биіктігі',fig:'pyr4',par:[2,3],kind:'pplane',sel:['S','A','B','C']},
+ {id:'x12',tag:'§16',ru:'Пирамида: SA и основание',kk:'Пирамида: SA және табан',fig:'pyr4',par:[2,3],kind:'lplane',sel:['S','A','A','B','C']},
+ {id:'x13',tag:'§12',ru:'Параллелепипед 3×4×12: диагональ',kk:'3×4×12 параллелепипед: диагональ',fig:'box',par:[3,4,12],kind:'pp',sel:['A','C₁']},
+ {id:'x14',tag:'§13',ru:'Параллелепипед: плоскости ABB₁ и DCC₁',kk:'Параллелепипед: ABB₁ және DCC₁ жазықтықтары',fig:'box',par:[3,4,5],kind:'planes',sel:['A','B','B₁','D','C','C₁']},
+ {id:'x15',tag:'§17',ru:'Куб: плоскости A₁BD и ABC',kk:'Куб: A₁BD және ABC жазықтықтары',fig:'box',par:[1,1,1],kind:'planes',sel:['A₁','B','D','A','B','C']},
+ {id:'x16',tag:'§17',ru:'Куб: плоскости ABC₁D₁ и ABC',kk:'Куб: ABC₁D₁ және ABC жазықтықтары',fig:'box',par:[1,1,1],kind:'planes',sel:['A','B','C₁','A','B','C']},
+ {id:'x17',tag:'§17',ru:'Куб: BDD₁ ⊥ ACC₁',kk:'Куб: BDD₁ ⊥ ACC₁',fig:'box',par:[1,1,1],kind:'planes',sel:['B','D','D₁','A','C','C₁']},
+ {id:'x18',tag:'§17',ru:'Призма: грани ABB₁ и BCC₁',kk:'Призма: ABB₁ және BCC₁ жақтары',fig:'pri3',par:[2,3],kind:'planes',sel:['A','B','B₁','B','C','C₁']}
+];
+
+function solFigure(fig,p){
+ var n,i,V=[],names=[],F=[],R,a,h;
+ if(fig==='box'){
+  var A=p[0],B=p[1],C=p[2];
+  V=[[0,0,0],[A,0,0],[A,B,0],[0,B,0],[0,0,C],[A,0,C],[A,B,C],[0,B,C]];
+  names=['A','B','C','D','A₁','B₁','C₁','D₁'];F=[[0,1,2,3],[4,5,6,7],[0,1,5,4],[1,2,6,5],[2,3,7,6],[3,0,4,7]];
+ }else if(fig==='pyr4'){
+  a=p[0];h=p[1];V=[[0,0,0],[a,0,0],[a,a,0],[0,a,0],[a/2,a/2,h]];names=['A','B','C','D','S'];F=[[0,1,2,3],[0,1,4],[1,2,4],[2,3,4],[3,0,4]];
+ }else{
+  n=fig==='pri3'?3:6;a=p[0];h=p[1];
+  var b=[[0,0]],dir=0,k;
+  if(n===3){b=[[0,0],[a,0],[a/2,a*Math.sqrt(3)/2]];}
+  else{for(k=1;k<n;k++){b.push([b[k-1][0]+a*Math.cos(dir*D),b[k-1][1]+a*Math.sin(dir*D)]);dir+=60;}}
+  V=b.map(function(q){return [q[0],q[1],0];}).concat(b.map(function(q){return [q[0],q[1],h];}));
+  for(i=0;i<n;i++)names.push('ABCDEF'.charAt(i));
+  for(i=0;i<n;i++)names.push('ABCDEF'.charAt(i)+SUB);
+  var f0=[],f1_=[];for(i=0;i<n;i++){f0.push(i);f1_.push(n+i);}F=[f0,f1_];
+  for(i=0;i<n;i++)F.push([i,(i+1)%n,n+(i+1)%n,n+i]);
+ }
+ var mn=[1e9,1e9,1e9],mx=[-1e9,-1e9,-1e9];
+ V.forEach(function(q){for(i=0;i<3;i++){mn[i]=Math.min(mn[i],q[i]);mx[i]=Math.max(mx[i],q[i]);}});
+ var ext=Math.max(mx[0]-mn[0],mx[1]-mn[1],mx[2]-mn[2])||1;
+ return {V:V,names:names,F:F,c:[(mn[0]+mx[0])/2,(mn[1]+mx[1])/2,(mn[2]+mx[2])/2],s:1.4/ext,ext:ext};
+}
+function cs(v){return '('+v.map(function(x){return fmtN(x,3);}).join('; ')+')';}
+function gcd(a,b){return b?gcd(b,a%b):a;}
+function exactStr(x2){
+ if(!isFinite(x2))return null;
+ if(Math.abs(x2)<1e-12)return '0';
+ var den,m;
+ for(den=1;den<=720;den++){m=x2*den;if(Math.abs(m-Math.round(m))<1e-8*Math.max(1,m)&&Math.round(m)>0)break;}
+ if(den>720)return null;
+ m=Math.round(m);
+ var mn=m*den,k=1,r=mn,d;
+ for(d=2;d*d<=r;d++){while(r%(d*d)===0){r/=d*d;k*=d;}}
+ var g=gcd(k,den);k/=g;den/=g;
+ if(r===1)return den===1?String(k):k+'/'+den;
+ var top=(k===1?'':String(k))+'√'+r;
+ return den===1?top:top+'/'+den;
+}
+function sqrtStr(x2,d){var e=exactStr(x2);return e?(/^\d+$/.test(e)?e:e+' ≈ '+fmtN(d,4)):'≈ '+fmtN(d,4);}
+function lineDraw(P,Q,ts,col,w){
+ var u=vsub(Q,P),t0=Math.min.apply(null,[0].concat(ts)),t1=Math.max.apply(null,[1].concat(ts)),o=[];
+ if(t0<-1e-9)o.push(ln(vadd(P,vmul(u,t0)),P,{c:col,w:1.8,d:1}));
+ if(t1>1+1e-9)o.push(ln(Q,vadd(P,vmul(u,t1)),{c:col,w:1.8,d:1}));
+ o.push(ln(P,Q,{c:col,w:w||2.8}));
+ return o;
+}
+function lineT(P,Q,X){var u=vsub(Q,P);return vdot(vsub(X,P),u)/vdot(u,u);}
+function planePatch(pts,extra,col){
+ var Q=pts[0],e1=vunit(vsub(pts[1],Q)),n=vunit(vcross(vsub(pts[1],Q),vsub(pts[2],Q))),e2=vcross(n,e1),all=pts.concat(extra),
+     u0=1e9,u1=-1e9,v0=1e9,v1=-1e9;
+ all.forEach(function(X){var d=vsub(X,Q),a=vdot(d,e1),b=vdot(d,e2);u0=Math.min(u0,a);u1=Math.max(u1,a);v0=Math.min(v0,b);v1=Math.max(v1,b);});
+ var mg=.12*Math.max(u1-u0,v1-v0,1e-6);u0-=mg;u1+=mg;v0-=mg;v1+=mg;
+ function at(a,b){return vadd(Q,vadd(vmul(e1,a),vmul(e2,b)));}
+ return pl([at(u0,v0),at(u1,v0),at(u1,v1),at(u0,v1)],col);
+}
+function T2(ru,kk){return {ru:ru,kk:kk};}
+
+function solveSol(F,kind,sel){
+ var V=F.V,nm=function(i){return F.names[i];},P=function(i){return V[sel[i]];},N=function(i){return nm(sel[i]);},eps=1e-9*F.ext*F.ext,
+     out={ok:true,res:[],steps:[],ov:[]},sc=F.ext;
+ function bad(ru,kk){out.ok=false;out.err=T2(ru,kk);return out;}
+ var i;
+
+ if(kind==='poslines'){
+  var P1=P(0),Q1=P(1),R1=P(2),S1=P(3),a=vsub(Q1,P1),b=vsub(S1,R1),al=vdot(a,a),bl=vdot(b,b),n1_=N(0)+N(1),n2_=N(2)+N(3);
+  if(al<eps||bl<eps)return bad('Две точки одной из прямых совпадают.','Түзулердің бірінің екі нүктесі беттесіп тұр.');
+  var c=vcross(a,b),cl=vdot(c,c),w=vsub(R1,P1),cw=vcross(a,w);
+  var stV=T2('Направляющие векторы: '+n1_+'→ = '+cs(a)+', '+n2_+'→ = '+cs(b)+'.','Бағыттаушы векторлар: '+n1_+'→ = '+cs(a)+', '+n2_+'→ = '+cs(b)+'.');
+  if(cl<1e-12*al*bl){
+   if(vdot(cw,cw)/al<eps){
+    out.res=[{k:T2('Взаимное расположение','Өзара орналасуы'),v:T2('Прямые совпадают','Түзулер беттеседі'),main:1}];
+    out.steps=[stV,T2('Векторы параллельны, и точка '+N(2)+' лежит на прямой '+n1_+': прямые совпадают.',N(2)+' нүктесі '+n1_+' түзуінде жатыр, векторлар параллель: түзулер беттеседі.')];
+    out.ov=lineDraw(P1,Q1,[],'c',2.8);
+   }else{
+    out.res=[{k:T2('Взаимное расположение','Өзара орналасуы'),v:T2('Прямые параллельны','Түзулер параллель'),main:1}];
+    out.steps=[stV,T2('Векторы параллельны ('+n1_+'→ × '+n2_+'→ = 0), прямые не совпадают: '+n1_+' ∥ '+n2_+'.','Векторлар параллель ('+n1_+'→ × '+n2_+'→ = 0), түзулер беттеспейді: '+n1_+' ∥ '+n2_+'.'),
+     T2('Параллельные прямые лежат в одной плоскости, и она единственная (свойство 4, §5).','Параллель түзулер бір жазықтықта жатады, ол жалғыз (4-қасиет, §5).')];
+    out.ov=[planePatch([P1,Q1,R1],[S1],'a')].concat(lineDraw(P1,Q1,[],'c',2.8),lineDraw(R1,S1,[],'b',2.8));
+   }
+   out.ans=out.res[0];return out;
+  }
+  var dd=Math.abs(vdot(w,c))/Math.sqrt(cl);
+  if(dd<1e-9*F.ext){
+   var bb=vdot(a,b),d1=vdot(a,vsub(P1,R1)),e1=vdot(b,vsub(P1,R1)),den=al*bl-bb*bb,sp=(bb*e1-bl*d1)/den,Xi=vadd(P1,vmul(a,sp));
+   var far=vlen(vsub(R1,P1))>0?(vlen(vcross(a,vsub(R1,P1)))>=vlen(vcross(a,vsub(S1,P1)))?R1:S1):S1;
+   out.res=[{k:T2('Взаимное расположение','Өзара орналасуы'),v:T2('Прямые пересекаются в точке X','Түзулер X нүктесінде қиылысады'),main:1},{k:T2('Точка пересечения','Қиылысу нүктесі'),v:'X = '+cs(Xi)}];
+   out.steps=[stV,T2('Векторы не параллельны, а смешанное произведение векторов равно 0: прямые лежат в одной плоскости.','Векторлар параллель емес, ал аралас көбейтінді 0-ге тең: түзулер бір жазықтықта жатады.'),
+    T2('Общая точка X = '+cs(Xi)+'. Прямые пересекаются, и через них проходит единственная плоскость (свойство 3, §5).','Ортақ нүкте X = '+cs(Xi)+'. Түзулер қиылысады, олар арқылы бір ғана жазықтық өтеді (3-қасиет, §5).')];
+   out.ov=[planePatch([P1,Q1,far],[Xi,R1,S1],'a')].concat(lineDraw(P1,Q1,[lineT(P1,Q1,Xi)],'c',2.8),lineDraw(R1,S1,[lineT(R1,S1,Xi)],'b',2.8),[pt(Xi,'X',{o:[10,-10]})]);
+  }else{
+   out.res=[{k:T2('Взаимное расположение','Өзара орналасуы'),v:T2('Прямые скрещиваются','Түзулер айқас'),main:1}];
+   out.steps=[stV,T2('Векторы не параллельны, и смешанное произведение векторов '+n1_+'→, '+n2_+'→, '+N(0)+N(2)+'→ не равно 0 ('+fmtN(vdot(w,c),4)+'): прямые не лежат в одной плоскости.','Векторлар параллель емес, ал '+n1_+'→, '+n2_+'→, '+N(0)+N(2)+'→ векторларының аралас көбейтіндісі 0-ге тең емес ('+fmtN(vdot(w,c),4)+'): түзулер бір жазықтықта жатпайды.'),
+    T2('Прямые не пересекаются и не параллельны, значит, скрещиваются (§6).','Түзулер қиылыспайды және параллель емес, демек айқас (§6).')];
+   out.ov=lineDraw(P1,Q1,[],'c',2.8).concat(lineDraw(R1,S1,[],'b',2.8));
+  }
+  out.ans=out.res[0];return out;
+ }
+ if(kind==='poslp'){
+  var Pa=P(0),Qa=P(1),Ra=P(2),Sa=P(3),Ta=P(4),u=vsub(Qa,Pa),nn=vcross(vsub(Sa,Ra),vsub(Ta,Ra)),nl=vdot(nn,nn),ul=vdot(u,u),nmL=N(0)+N(1),nmP='('+N(2)+N(3)+N(4)+')';
+  if(ul<eps)return bad('Две точки прямой совпадают.','Түзудің екі нүктесі беттесіп тұр.');
+  if(nl<1e-12*Math.pow(F.ext,4))return bad('Три точки плоскости лежат на одной прямой.','Жазықтықтың үш нүктесі бір түзуде жатыр.');
+  var sn=vdot(nn,u),stN=T2('Нормаль плоскости '+nmP+': n = '+cs(nn)+', направляющий вектор прямой '+nmL+'→ = '+cs(u)+'.','Жазықтық нормалі '+nmP+': n = '+cs(nn)+', '+nmL+' түзуінің бағыттаушы векторы '+nmL+'→ = '+cs(u)+'.');
+  if(Math.abs(sn)/Math.sqrt(nl*ul)>1e-9){
+   var tt=vdot(nn,vsub(Ra,Pa))/sn,Xa=vadd(Pa,vmul(u,tt));
+   out.res=[{k:T2('Взаимное расположение','Өзара орналасуы'),v:T2('Прямая пересекает плоскость в точке X','Түзу жазықтықты X нүктесінде қияды'),main:1},{k:T2('Точка пересечения','Қиылысу нүктесі'),v:'X = '+cs(Xa)}];
+   out.steps=[stN,T2('n · '+nmL+'→ = '+fmtN(sn,4)+' ≠ 0: прямая не параллельна плоскости.','n · '+nmL+'→ = '+fmtN(sn,4)+' ≠ 0: түзу жазықтыққа параллель емес.'),
+    T2('Общая точка одна: X = '+cs(Xa)+'. Прямая пересекает плоскость (§7).','Ортақ нүкте біреу: X = '+cs(Xa)+'. Түзу жазықтықты қияды (§7).')];
+   out.ov=[planePatch([Ra,Sa,Ta],[Xa,Pa,Qa],'a')].concat(lineDraw(Pa,Qa,[lineT(Pa,Qa,Xa)],'c',2.8),[pt(Xa,'X',{o:[10,-10]})]);
+  }else{
+   var h0=vdot(nn,vsub(Pa,Ra))/Math.sqrt(nl);
+   if(Math.abs(h0)<1e-9*F.ext){
+    out.res=[{k:T2('Взаимное расположение','Өзара орналасуы'),v:T2('Прямая лежит в плоскости','Түзу жазықтықта жатыр'),main:1}];
+    out.steps=[stN,T2('n · '+nmL+'→ = 0 и точка '+N(0)+' лежит в плоскости: у прямой и плоскости две общие точки '+N(0)+' и '+N(1)+'.','n · '+nmL+'→ = 0 және '+N(0)+' нүктесі жазықтықта жатыр: түзу мен жазықтықтың '+N(0)+' және '+N(1)+' екі ортақ нүктесі бар.'),
+     T2('Если у прямой и плоскости две общие точки, прямая лежит в плоскости (свойство 1, §2).','Егер түзу мен жазықтықтың екі ортақ нүктесі болса, түзу жазықтықта жатады (1-қасиет, §2).')];
+    out.ov=[planePatch([Ra,Sa,Ta],[Pa,Qa],'a')].concat(lineDraw(Pa,Qa,[],'c',2.8));
+   }else{
+    out.res=[{k:T2('Взаимное расположение','Өзара орналасуы'),v:T2('Прямая параллельна плоскости','Түзу жазықтыққа параллель'),main:1}];
+    out.steps=[stN,T2('n · '+nmL+'→ = 0, а точка '+N(0)+' не лежит в плоскости: общих точек нет.','n · '+nmL+'→ = 0, ал '+N(0)+' нүктесі жазықтықта жатпайды: ортақ нүктелер жоқ.'),
+     T2('Прямая и плоскость не имеют общих точек, значит, прямая параллельна плоскости (§7).','Түзу мен жазықтықтың ортақ нүктесі жоқ, демек түзу жазықтыққа параллель (§7).')];
+    out.ov=[planePatch([Ra,Sa,Ta],[Pa,Qa],'a')].concat(lineDraw(Pa,Qa,[],'c',2.8));
+   }
+  }
+  out.ans=out.res[0];return out;
+ }
+ if(kind==='pospp'){
+  var A1=P(0),A2=P(1),A3=P(2),B1=P(3),B2=P(4),B3=P(5),n1=vcross(vsub(A2,A1),vsub(A3,A1)),n2=vcross(vsub(B2,B1),vsub(B3,B1)),l1=vdot(n1,n1),l2=vdot(n2,n2),sc4=Math.pow(F.ext,4);
+  if(l1<1e-12*sc4||l2<1e-12*sc4)return bad('Три точки одной из плоскостей лежат на одной прямой.','Жазықтықтардың бірінің үш нүктесі бір түзуде жатыр.');
+  var cr=vcross(n1,n2),stN2=T2('Нормали: n₁ = '+cs(n1)+', n₂ = '+cs(n2)+'.','Нормальдар: n₁ = '+cs(n1)+', n₂ = '+cs(n2)+'.');
+  if(vdot(cr,cr)/(l1*l2)<1e-12){
+   var sh=vdot(n1,vsub(B1,A1))/Math.sqrt(l1);
+   if(Math.abs(sh)<1e-9*F.ext){
+    out.res=[{k:T2('Взаимное расположение','Өзара орналасуы'),v:T2('Плоскости совпадают','Жазықтықтар беттеседі'),main:1}];
+    out.steps=[stN2,T2('n₁ ∥ n₂ и точка '+N(3)+' лежит в первой плоскости: плоскости совпадают.','n₁ ∥ n₂ және '+N(3)+' нүктесі бірінші жазықтықта жатыр: жазықтықтар беттеседі.')];
+    out.ov=[planePatch([A1,A2,A3],[B1,B2,B3],'a')];
+   }else{
+    out.res=[{k:T2('Взаимное расположение','Өзара орналасуы'),v:T2('Плоскости параллельны','Жазықтықтар параллель'),main:1}];
+    out.steps=[stN2,T2('n₁ ∥ n₂ (n₁ × n₂ = 0), а точка '+N(3)+' не лежит в первой плоскости: общих точек нет.','n₁ ∥ n₂ (n₁ × n₂ = 0), ал '+N(3)+' нүктесі бірінші жазықтықта жатпайды: ортақ нүктелер жоқ.'),
+     T2('Плоскости без общих точек параллельны (§8).','Ортақ нүктесі жоқ жазықтықтар параллель (§8).')];
+    out.ov=[planePatch([A1,A2,A3],[A1,A2,A3],'a'),planePatch([B1,B2,B3],[B1,B2,B3],'b')];
+   }
+  }else{
+   var dv=cr,h1=vdot(n1,A1),h2=vdot(n2,B1),cg=[0,0,0];
+   [A1,A2,A3,B1,B2,B3].forEach(function(X){cg=vadd(cg,X);});cg=vmul(cg,1/6);
+   var dl=vdot(dv,dv),O=vmul(vadd(vadd(vmul(vcross(n2,dv),h1),vmul(vcross(dv,n1),h2)),vmul(cr,vdot(dv,cg))),1/dl),ud=vunit(dv);
+   out.res=[{k:T2('Взаимное расположение','Өзара орналасуы'),v:T2('Плоскости пересекаются по прямой c','Жазықтықтар c түзуі бойымен қиылысады'),main:1},{k:T2('Точка на прямой c','c түзуіндегі нүкте'),v:'O = '+cs(O)},{k:T2('Направление c','c бағыты'),v:cs(ud)}];
+   out.steps=[stN2,T2('Нормали не параллельны: плоскости не параллельны и не совпадают.','Нормальдар параллель емес: жазықтықтар параллель де, беттеспейді де.'),
+    T2('У плоскостей есть общая точка O = '+cs(O)+', значит, они пересекаются по прямой c, проходящей через O (аксиома 3).','Жазықтықтардың O = '+cs(O)+' ортақ нүктесі бар, демек олар O арқылы өтетін c түзуі бойымен қиылысады (3-аксиома).')];
+   out.ov=[planePatch([A1,A2,A3],[O,vadd(O,vmul(ud,F.ext*.4)),vsub(O,vmul(ud,F.ext*.4))],'a'),planePatch([B1,B2,B3],[O,vadd(O,vmul(ud,F.ext*.4)),vsub(O,vmul(ud,F.ext*.4))],'b'),
+    ln(vsub(O,vmul(ud,F.ext*.5)),vadd(O,vmul(ud,F.ext*.5)),{c:'accent',w:2.6}),pt(O,'O',{o:[10,-10]})];
+  }
+  out.ans=out.res[0];return out;
+ }
+ if(kind==='coplanar'){
+  var Z=[0,1,2,3].map(function(k){return P(k);}),nm4=[0,1,2,3].map(function(k){return N(k);}),u3=vsub(Z[1],Z[0]),v3=vsub(Z[2],Z[0]),w3=vsub(Z[3],Z[0]),n3=vcross(u3,v3);
+  if(vdot(n3,n3)<1e-12*Math.pow(F.ext,4))return bad('Первые три точки лежат на одной прямой: через них проходит много плоскостей. Выберите другие точки.','Алғашқы үш нүкте бір түзуде жатыр: олар арқылы көп жазықтық өтеді. Басқа нүктелерді таңдаңыз.');
+  var vol=vdot(n3,w3);
+  var stA=T2('Первые три точки '+nm4[0]+nm4[1]+nm4[2]+' не лежат на одной прямой, поэтому через них проходит единственная плоскость (аксиома 2).','Алғашқы үш нүкте '+nm4[0]+nm4[1]+nm4[2]+' бір түзуде жатпайды, сондықтан олар арқылы бір ғана жазықтық өтеді (2-аксиома).');
+  if(Math.abs(vol)<1e-9*Math.pow(F.ext,3)){
+   out.res=[{k:T2('Вывод','Қорытынды'),v:T2('Все четыре точки лежат в одной плоскости','Төрт нүктенің бәрі бір жазықтықта жатыр'),main:1}];
+   out.steps=[stA,T2('Смешанное произведение '+nm4[0]+nm4[1]+'→ · ('+nm4[0]+nm4[2]+'→ × '+nm4[0]+nm4[3]+'→) = 0: точка '+nm4[3]+' лежит в этой плоскости.',nm4[0]+nm4[1]+'→ · ('+nm4[0]+nm4[2]+'→ × '+nm4[0]+nm4[3]+'→) аралас көбейтіндісі 0-ге тең: '+nm4[3]+' нүктесі осы жазықтықта жатыр.')];
+   out.ov=[planePatch([Z[0],Z[1],Z[2]],[Z[3]],'a')];
+  }else{
+   var Hh=vsub(Z[3],vmul(n3,vdot(n3,w3)/vdot(n3,n3)));
+   out.res=[{k:T2('Вывод','Қорытынды'),v:T2('Четыре точки не лежат в одной плоскости','Төрт нүкте бір жазықтықта жатпайды'),main:1}];
+   out.steps=[stA,T2('Смешанное произведение '+nm4[0]+nm4[1]+'→ · ('+nm4[0]+nm4[2]+'→ × '+nm4[0]+nm4[3]+'→) = '+fmtN(vol,4)+' ≠ 0: точка '+nm4[3]+' не лежит в плоскости '+nm4[0]+nm4[1]+nm4[2]+'.',nm4[0]+nm4[1]+'→ · ('+nm4[0]+nm4[2]+'→ × '+nm4[0]+nm4[3]+'→) = '+fmtN(vol,4)+' ≠ 0: '+nm4[3]+' нүктесі '+nm4[0]+nm4[1]+nm4[2]+' жазықтығында жатпайды.'),
+    T2('Значит, есть четыре точки не в одной плоскости (аксиома 4).','Демек, бір жазықтықта жатпайтын төрт нүкте бар (4-аксиома).')];
+   out.ov=[planePatch([Z[0],Z[1],Z[2]],[Hh],'a'),ln(Z[3],Hh,{c:'faint',w:1.8,d:1})].concat([0,1,2].map(function(k){return ln(Z[3],Z[k],{c:'accent',w:2});}));
+  }
+  out.ans=out.res[0];return out;
+ }
+ if(kind==='pp'){
+  var d=vsub(P(1),P(0)),d2=vdot(d,d);
+  if(d2<eps)return bad('Точки совпадают: расстояние равно 0.','Нүктелер беттесіп тұр: қашықтық 0-ге тең.');
+  var L=Math.sqrt(d2);
+  out.res.push({k:T2('Расстояние','Арақашықтық'),v:sqrtStr(d2,L),main:1});
+  out.steps=[
+   T2('Нужно найти длину отрезка '+N(0)+N(1)+'.',N(0)+N(1)+' кесіндісінің ұзындығын табу керек.'),
+   T2('Координаты: '+N(0)+' = '+cs(P(0))+', '+N(1)+' = '+cs(P(1))+' (начало в A, оси вдоль рёбер основания и высоты).',N(0)+' = '+cs(P(0))+', '+N(1)+' = '+cs(P(1))+' (бас нүкте A).'),
+   T2(N(0)+N(1)+' = √(Δx² + Δy² + Δz²) = √'+fmtN(d2,4)+' = '+sqrtStr(d2,L),N(0)+N(1)+' = √(Δx² + Δy² + Δz²) = √'+fmtN(d2,4)+' = '+sqrtStr(d2,L))
+  ];
+  out.steps[1].kk=N(0)+' = '+cs(P(0))+', '+N(1)+' = '+cs(P(1))+' (бас нүкте A, осьтер табан қырлары мен биіктік бойымен).';
+  out.ov=[ln(P(0),P(1),{c:'accent',w:3})];
+  out.ans=out.res[0];
+  return out;
+ }
+ if(kind==='pline'){
+  var Pp=P(0),Q=P(1),R=P(2),u=vsub(R,Q),w=vsub(Pp,Q),ul=vdot(u,u);
+  if(ul<eps)return bad('Две точки прямой совпадают.','Түзудің екі нүктесі беттесіп тұр.');
+  var cr=vcross(u,w),c2=vdot(cr,cr),dd2=c2/ul,dd=Math.sqrt(dd2),t=vdot(w,u)/ul,H=vadd(Q,vmul(u,t));
+  out.res.push({k:T2('Расстояние','Арақашықтық'),v:sqrtStr(dd2,dd),main:1});
+  out.steps=[
+   T2('Строим перпендикуляр из точки '+N(0)+' на прямую '+N(1)+N(2)+': '+N(0)+'H ⊥ '+N(1)+N(2)+', H ∈ '+N(1)+N(2)+'. Расстояние — длина '+N(0)+'H.',N(0)+' нүктесінен '+N(1)+N(2)+' түзуіне '+N(0)+'H ⊥ '+N(1)+N(2)+' перпендикулярын түсіреміз, H ∈ '+N(1)+N(2)+'. Қашықтық — '+N(0)+'H ұзындығы.'),
+   T2('Координаты: '+N(0)+' = '+cs(Pp)+', '+N(1)+' = '+cs(Q)+', '+N(2)+' = '+cs(R)+'.',N(0)+' = '+cs(Pp)+', '+N(1)+' = '+cs(Q)+', '+N(2)+' = '+cs(R)+'.'),
+   T2('Векторы: '+N(1)+N(2)+'→ = '+cs(u)+', '+N(1)+N(0)+'→ = '+cs(w)+'. Векторное произведение: |'+N(1)+N(2)+'→ × '+N(1)+N(0)+'→| = '+fmtN(Math.sqrt(c2),4)+', |'+N(1)+N(2)+'→| = '+fmtN(Math.sqrt(ul),4)+'.',
+      'Векторлар: '+N(1)+N(2)+'→ = '+cs(u)+', '+N(1)+N(0)+'→ = '+cs(w)+'. Векторлық көбейтінді: |'+N(1)+N(2)+'→ × '+N(1)+N(0)+'→| = '+fmtN(Math.sqrt(c2),4)+', |'+N(1)+N(2)+'→| = '+fmtN(Math.sqrt(ul),4)+'.'),
+   T2('ρ = |'+N(1)+N(2)+'→ × '+N(1)+N(0)+'→| / |'+N(1)+N(2)+'→| = '+sqrtStr(dd2,dd),'ρ = |'+N(1)+N(2)+'→ × '+N(1)+N(0)+'→| / |'+N(1)+N(2)+'→| = '+sqrtStr(dd2,dd)),
+   T2('Основание перпендикуляра: H = '+N(1)+' + t·'+N(1)+N(2)+'→, t = '+fmtN(t,4)+', H = '+cs(H)+'.'+(t<0||t>1?' H лежит вне отрезка '+N(1)+N(2)+' (на продолжении).':''),
+      'Перпендикулярдың табаны: H = '+N(1)+' + t·'+N(1)+N(2)+'→, t = '+fmtN(t,4)+', H = '+cs(H)+'.'+(t<0||t>1?' H нүктесі '+N(1)+N(2)+' кесіндісінен тыс жатыр (жалғасында).':''))
+  ];
+  if(dd2<eps)out.steps.push(T2('Точка лежит на прямой: расстояние равно 0.','Нүкте түзудің бойында жатыр: қашықтық 0-ге тең.'));
+  out.ov=lineDraw(Q,R,[t],'c',2.8);
+  if(dd2>=eps){out.ov.push(ln(Pp,H,{c:'accent',w:3}),rightAt(H,vsub(Pp,H),u,.07*F.ext),pt(H,'H',{o:[10,-10]}));}
+  out.ans=out.res[0];
+  return out;
+ }
+ if(kind==='pplane'){
+  var Pq=P(0),Q1=P(1),R1=P(2),S1=P(3),nn=vcross(vsub(R1,Q1),vsub(S1,Q1)),nl2=vdot(nn,nn);
+  if(nl2<eps*eps*1e-3||nl2<1e-12*Math.pow(F.ext,4))return bad('Три точки плоскости лежат на одной прямой.','Жазықтықтың үш нүктесі бір түзуде жатыр.');
+  var s=vdot(nn,vsub(Pq,Q1)),dd2b=s*s/nl2,db=Math.sqrt(dd2b),Hh=vsub(Pq,vmul(nn,s/nl2));
+  out.res.push({k:T2('Расстояние','Арақашықтық'),v:sqrtStr(dd2b,db),main:1});
+  out.steps=[
+   T2('Строим перпендикуляр из '+N(0)+' на плоскость ('+N(1)+N(2)+N(3)+'): '+N(0)+'H ⊥ ('+N(1)+N(2)+N(3)+'). Расстояние — длина '+N(0)+'H.',N(0)+' нүктесінен ('+N(1)+N(2)+N(3)+') жазықтығына '+N(0)+'H ⊥ ('+N(1)+N(2)+N(3)+') перпендикулярын түсіреміз. Қашықтық — '+N(0)+'H ұзындығы.'),
+   T2('Координаты: '+N(0)+' = '+cs(Pq)+', '+N(1)+' = '+cs(Q1)+', '+N(2)+' = '+cs(R1)+', '+N(3)+' = '+cs(S1)+'.',N(0)+' = '+cs(Pq)+', '+N(1)+' = '+cs(Q1)+', '+N(2)+' = '+cs(R1)+', '+N(3)+' = '+cs(S1)+'.'),
+   T2('Нормаль плоскости: n = '+N(1)+N(2)+'→ × '+N(1)+N(3)+'→ = '+cs(nn)+', |n| = '+fmtN(Math.sqrt(nl2),4)+'.','Жазықтық нормалі: n = '+N(1)+N(2)+'→ × '+N(1)+N(3)+'→ = '+cs(nn)+', |n| = '+fmtN(Math.sqrt(nl2),4)+'.'),
+   T2('ρ = |n · '+N(1)+N(0)+'→| / |n| = |'+fmtN(s,4)+'| / '+fmtN(Math.sqrt(nl2),4)+' = '+sqrtStr(dd2b,db),'ρ = |n · '+N(1)+N(0)+'→| / |n| = |'+fmtN(s,4)+'| / '+fmtN(Math.sqrt(nl2),4)+' = '+sqrtStr(dd2b,db)),
+   T2('Основание перпендикуляра H = '+N(0)+' − (n·'+N(1)+N(0)+'→ / |n|²)·n = '+cs(Hh)+'.','Перпендикулярдың табаны H = '+N(0)+' − (n·'+N(1)+N(0)+'→ / |n|²)·n = '+cs(Hh)+'.')
+  ];
+  if(dd2b<eps)out.steps.push(T2('Точка лежит в плоскости: расстояние равно 0.','Нүкте жазықтықта жатыр: қашықтық 0-ге тең.'));
+  out.ov=[planePatch([Q1,R1,S1],[Hh],'a')];
+  if(dd2b>=eps){
+   var dirIn=vsub(Hh,Q1);if(vlen(dirIn)<1e-9*F.ext)dirIn=vsub(R1,Q1);
+   out.ov.push(ln(Pq,Hh,{c:'accent',w:3}),rightAt(Hh,vsub(Pq,Hh),dirIn,.07*F.ext),pt(Hh,'H',{o:[10,-10]}));
+  }
+  out.ans=out.res[0];
+  return out;
+ }
+ if(kind==='lplane'){
+  var Pl=P(0),Ql=P(1),u1=vsub(Ql,Pl),R2=P(2),S2=P(3),T3=P(4),n3=vcross(vsub(S2,R2),vsub(T3,R2)),nl3=vdot(n3,n3),ul1=vdot(u1,u1);
+  if(ul1<eps)return bad('Две точки прямой совпадают.','Түзудің екі нүктесі беттесіп тұр.');
+  if(nl3<1e-12*Math.pow(F.ext,4))return bad('Три точки плоскости лежат на одной прямой.','Жазықтықтың үш нүктесі бір түзуде жатыр.');
+  var sn=vdot(n3,u1),sinp=Math.abs(sn)/Math.sqrt(ul1*nl3);
+  if(sinp<1e-9&&!SOLCFG.dist){
+   var inpl=Math.abs(vdot(n3,vsub(Pl,R2)))/Math.sqrt(nl3)<1e-9*F.ext;
+   out.res=[{k:T2('Угол между прямой и плоскостью','Түзу мен жазықтықтың арасындағы бұрыш'),v:'0°',main:1}];
+   out.steps=[T2('Нормаль плоскости: n = '+cs(n3)+', направляющий вектор прямой '+N(0)+N(1)+'→ = '+cs(u1)+'.','Жазықтық нормалі: n = '+cs(n3)+', түзудің бағыттаушы векторы '+N(0)+N(1)+'→ = '+cs(u1)+'.'),
+    T2('n · '+N(0)+N(1)+'→ = 0: '+(inpl?'прямая лежит в плоскости':'прямая параллельна плоскости')+', угол равен 0°.','n · '+N(0)+N(1)+'→ = 0: '+(inpl?'түзу жазықтықта жатыр':'түзу жазықтыққа параллель')+', бұрыш 0°.')];
+   out.ov=[planePatch([R2,S2,T3],[Pl,Ql],'a')].concat(lineDraw(Pl,Ql,[],'c',2.8));
+   out.ans=out.res[0];
+   return out;
+  }
+  if(sinp<1e-9){
+   var sP=vdot(n3,vsub(Pl,R2)),dd2c=sP*sP/nl3,dc=Math.sqrt(dd2c),Hc=vsub(Pl,vmul(n3,sP/nl3));
+   out.res.push({k:T2('Расстояние (прямая ∥ плоскости)','Арақашықтық (түзу ∥ жазықтық)'),v:sqrtStr(dd2c,dc),main:1});
+   out.res.push({k:T2('Угол','Бұрыш'),v:'0°'});
+   out.steps=[
+    T2('Проверяем параллельность: n = '+N(2)+N(3)+'→ × '+N(2)+N(4)+'→ = '+cs(n3)+', направляющий вектор '+N(0)+N(1)+'→ = '+cs(u1)+'; n · '+N(0)+N(1)+'→ = 0, значит, прямая параллельна плоскости (или лежит в ней).',
+       'Параллельдікті тексереміз: n = '+N(2)+N(3)+'→ × '+N(2)+N(4)+'→ = '+cs(n3)+', бағыттаушы вектор '+N(0)+N(1)+'→ = '+cs(u1)+'; n · '+N(0)+N(1)+'→ = 0, демек түзу жазықтыққа параллель (немесе оның ішінде жатыр).'),
+    T2('Расстояние между прямой и плоскостью равно расстоянию от любой точки прямой до плоскости (§13). Берём '+N(0)+': ρ = |n · '+N(2)+N(0)+'→| / |n| = '+sqrtStr(dd2c,dc),
+       'Түзу мен жазықтықтың арақашықтығы түзудің кез келген нүктесінен жазықтыққа дейінгі қашықтыққа тең (§13). '+N(0)+' нүктесін аламыз: ρ = |n · '+N(2)+N(0)+'→| / |n| = '+sqrtStr(dd2c,dc)),
+    T2('Основание перпендикуляра из '+N(0)+': H = '+cs(Hc)+'.',N(0)+' нүктесінен түсірілген перпендикулярдың табаны: H = '+cs(Hc)+'.')
+   ];
+   if(dd2c<eps)out.steps.push(T2('Расстояние 0: прямая лежит в плоскости.','Қашықтық 0: түзу жазықтықта жатыр.'));
+   out.ov=[planePatch([R2,S2,T3],[Hc,Pl,Ql],'a')].concat(lineDraw(Pl,Ql,[],'c',2.8));
+   if(dd2c>=eps){out.ov.push(ln(Pl,Hc,{c:'accent',w:3}),rightAt(Hc,vsub(Pl,Hc),vsub(S2,R2),.07*F.ext),pt(Hc,'H',{o:[10,-10]}));}
+   out.ans=out.res[0];
+  }else{
+   var phi=Math.asin(Math.min(1,sinp))/D,tt=vdot(n3,vsub(R2,Pl))/sn,Xp=vadd(Pl,vmul(u1,tt));
+   out.res.push({k:T2('Угол между прямой и плоскостью','Түзу мен жазықтықтың арасындағы бұрыш'),v:'φ ≈ '+fmtN(phi,2)+'°,  sin φ = '+sqrtStr(sinp*sinp,sinp),main:1});
+   if(SOLCFG.dist)out.res.push({k:T2('Расстояние','Арақашықтық'),v:'0 (прямая пересекает плоскость)'});
+   if(phi>89.99999)out.res.push({k:T2('Вывод','Қорытынды'),v:T2('Прямая перпендикулярна плоскости','Түзу жазықтыққа перпендикуляр')});
+   out.steps=[
+    T2('Нормаль плоскости: n = '+N(2)+N(3)+'→ × '+N(2)+N(4)+'→ = '+cs(n3)+', направляющий вектор прямой '+N(0)+N(1)+'→ = '+cs(u1)+'.','Жазықтық нормалі: n = '+N(2)+N(3)+'→ × '+N(2)+N(4)+'→ = '+cs(n3)+', түзудің бағыттаушы векторы '+N(0)+N(1)+'→ = '+cs(u1)+'.'),
+    T2('Угол между прямой и плоскостью — угол между прямой и её ортогональной проекцией на плоскость (§16). Он дополняет до 90° угол между прямой и нормалью: sin φ = |n · '+N(0)+N(1)+'→| / (|n|·|'+N(0)+N(1)+'→|) = '+fmtN(sinp,4)+'.',
+       'Түзу мен жазықтықтың арасындағы бұрыш — түзу мен оның жазықтықтағы ортогональ проекциясының арасындағы бұрыш (§16). sin φ = |n · '+N(0)+N(1)+'→| / (|n|·|'+N(0)+N(1)+'→|) = '+fmtN(sinp,4)+'.'),
+    T2('φ = arcsin '+fmtN(sinp,4)+' ≈ '+fmtN(phi,2)+'°.','φ = arcsin '+fmtN(sinp,4)+' ≈ '+fmtN(phi,2)+'°.'),
+    T2('Прямая пересекает плоскость в точке X = '+cs(Xp)+'; расстояние между ними равно 0.','Түзу жазықтықты X = '+cs(Xp)+' нүктесінде қиып өтеді; олардың арақашықтығы 0-ге тең.')
+   ];
+   var dirU=vsub(vlen(vsub(Pl,Xp))>=vlen(vsub(Ql,Xp))?Pl:Ql,Xp);
+   var nu=vunit(n3),proj_=vsub(dirU,vmul(nu,vdot(dirU,nu)));
+   out.ov=[planePatch([R2,S2,T3],[Xp,Pl,Ql],'a')].concat(lineDraw(Pl,Ql,[lineT(Pl,Ql,Xp)],'c',2.8));
+   out.ov.push(pt(Xp,'X',{o:[10,-10]}));
+   if(vlen(proj_)>1e-6*vlen(dirU)){out.ov.push(ln(Xp,vadd(Xp,proj_),{c:'faint',w:2}),ang(Xp,dirU,proj_,{r:.14*F.ext,lab:fmtN(phi,1)+'°'}));}
+   else out.ov.push(rightAt(Xp,dirU,vsub(S2,R2),.07*F.ext));
+   out.ans=out.res[0];
+  }
+  return out;
+ }
+ if(kind==='lines'){
+  var P1=P(0),Q2=P(1),R3=P(2),S3=P(3),a1=vsub(Q2,P1),b1=vsub(S3,R3),al=vdot(a1,a1),bl=vdot(b1,b1);
+  if(al<eps||bl<eps)return bad('Две точки одной из прямых совпадают.','Түзулердің бірінің екі нүктесі беттесіп тұр.');
+  var cr2=vcross(a1,b1),crl=vdot(cr2,cr2),cosp=Math.abs(vdot(a1,b1))/Math.sqrt(al*bl),ph=Math.acos(Math.min(1,cosp))/D;
+  var angRes={k:T2('Угол между прямыми','Түзулердің арасындағы бұрыш'),v:'φ ≈ '+fmtN(ph,2)+'°,  cos φ = '+sqrtStr(cosp*cosp,cosp)};
+  var cosLine='cos φ = |'+N(0)+N(1)+'→ · '+N(2)+N(3)+'→| / (|'+N(0)+N(1)+'→|·|'+N(2)+N(3)+'→|) = '+fmtN(cosp,4)+', φ ≈ '+fmtN(ph,2)+'°.';
+  var st0=T2('Направляющие векторы: '+N(0)+N(1)+'→ = '+cs(a1)+', '+N(2)+N(3)+'→ = '+cs(b1)+'.','Бағыттаушы векторлар: '+N(0)+N(1)+'→ = '+cs(a1)+', '+N(2)+N(3)+'→ = '+cs(b1)+'.');
+  var stAng=T2('Угол между прямыми (§9): '+cosLine,'Түзулердің арасындағы бұрыш (§9): '+cosLine);
+  var wv=vsub(P1,R3);
+  if(!SOLCFG.dist){
+   var kd=crl<1e-12*al*bl?0:(Math.abs(vdot(wv,cr2))/Math.sqrt(crl)<1e-9*F.ext?1:2),sg=vdot(a1,b1)>=0?1:-1;
+   out.res=[Object.assign({main:1},angRes)];
+   if(ph>89.99999)out.res.push({k:T2('Вывод','Қорытынды'),v:T2('Прямые перпендикулярны','Түзулер перпендикуляр')});
+   out.ov=lineDraw(P1,Q2,[],'c',2.8).concat(lineDraw(R3,S3,[],'b',2.8));
+   if(kd===1){
+    var bb2=vdot(a1,b1),dd12=vdot(a1,wv),ee2=vdot(b1,wv),den3=al*bl-bb2*bb2,sP2=(bb2*ee2-bl*dd12)/den3,Xj=vadd(P1,vmul(a1,sP2));
+    out.steps=[st0,T2('Прямые пересекаются в точке X = '+cs(Xj)+'.','Түзулер X = '+cs(Xj)+' нүктесінде қиылысады.'),stAng];
+    out.ov=lineDraw(P1,Q2,[lineT(P1,Q2,Xj)],'c',2.8).concat(lineDraw(R3,S3,[lineT(R3,S3,Xj)],'b',2.8));
+    var dA=vsub(far0(P1,Q2,Xj),Xj),dB=vsub(far0(R3,S3,Xj),Xj);
+    if(vlen(dA)>1e-9&&vlen(dB)>1e-9){if(ph<89.99999&&angDeg(dA,dB)>90)dB=vmul(dB,-1);out.ov.push(ang(Xj,dA,dB,{r:.14*F.ext,sq:ph>89.99999,lab:ph>89.99999?'':fmtN(ph,1)+'°'}));}
+    out.ov.push(pt(Xj,'X',{o:[10,-10]}));
+   }else if(kd===0){
+    out.steps=[st0,T2('Векторы параллельны: прямые параллельны, угол между ними равен 0°.','Векторлар параллель: түзулер параллель, олардың арасындағы бұрыш 0°.')];
+   }else{
+    out.steps=[st0,T2('Прямые скрещиваются. Угол между скрещивающимися прямыми — угол между пересекающимися прямыми, параллельными данным (§9): проводим через '+N(0)+' прямую, параллельную '+N(2)+N(3)+'.','Түзулер айқас. Айқас түзулердің арасындағы бұрыш — оларға параллель қиылысқан түзулердің арасындағы бұрыш (§9): '+N(0)+' нүктесі арқылы '+N(2)+N(3)+' түзуіне параллель түзу жүргіземіз.'),stAng];
+    out.ov.push(ln(P1,vadd(P1,b1),{c:'faint',w:2,d:1}),ang(P1,a1,vmul(b1,sg),{r:.14*F.ext,sq:ph>89.99999,lab:ph>89.99999?'':fmtN(ph,1)+'°'}));
+   }
+   out.ans=out.res[0];
+   return out;
+  }
+  if(crl<1e-12*al*bl){
+   var cr3=vcross(a1,vsub(R3,P1)),dd2d=vdot(cr3,cr3)/al,dd3=Math.sqrt(dd2d),tt2=vdot(vsub(R3,P1),a1)/al,Hd=vadd(P1,vmul(a1,tt2));
+   out.res=[{k:T2('Расстояние (прямые параллельны)','Арақашықтық (түзулер параллель)'),v:sqrtStr(dd2d,dd3),main:1},{k:T2('Угол','Бұрыш'),v:'0°'}];
+   out.steps=[st0,T2('Векторы параллельны ('+N(0)+N(1)+'→ × '+N(2)+N(3)+'→ = 0): прямые параллельны, угол равен 0°.','Векторлар параллель ('+N(0)+N(1)+'→ × '+N(2)+N(3)+'→ = 0): түзулер параллель, бұрыш 0°.'),
+    T2('Расстояние между параллельными прямыми — расстояние от любой точки одной прямой до другой (§14). От точки '+N(2)+' до прямой '+N(0)+N(1)+': ρ = |'+N(0)+N(1)+'→ × '+N(0)+N(2)+'→| / |'+N(0)+N(1)+'→| = '+sqrtStr(dd2d,dd3),
+       'Параллель екі түзудің арақашықтығы — біреуінің кез келген нүктесінен екіншісіне дейінгі қашықтық (§14). '+N(2)+' нүктесінен '+N(0)+N(1)+' түзуіне: ρ = |'+N(0)+N(1)+'→ × '+N(0)+N(2)+'→| / |'+N(0)+N(1)+'→| = '+sqrtStr(dd2d,dd3)),
+    T2('Основание перпендикуляра из '+N(2)+': H = '+cs(Hd)+'.',N(2)+' нүктесінен түсірілген перпендикулярдың табаны: H = '+cs(Hd)+'.')];
+   if(dd2d<eps)out.steps.push(T2('Расстояние 0: прямые совпадают.','Қашықтық 0: түзулер беттеседі.'));
+   out.ov=lineDraw(P1,Q2,[tt2],'c',2.8).concat(lineDraw(R3,S3,[],'b',2.8));
+   if(dd2d>=eps)out.ov.push(ln(R3,Hd,{c:'accent',w:3}),rightAt(Hd,vsub(R3,Hd),a1,.07*F.ext),pt(Hd,'H',{o:[10,-10]}));
+   out.ans=out.res[0];
+   return out;
+  }
+  var dsk=Math.abs(vdot(wv,cr2))/Math.sqrt(crl);
+  if(dsk<1e-9*F.ext){
+   var bb=vdot(a1,b1),dd1=vdot(a1,wv),ee=vdot(b1,wv),den=al*bl-bb*bb,sP=(bb*ee-bl*dd1)/den,Xi=vadd(P1,vmul(a1,sP));
+   out.res=[Object.assign({main:1},angRes),{k:T2('Расстояние','Арақашықтық'),v:'0 (прямые пересекаются)'}];
+   out.steps=[st0,stAng,T2('Смешанное произведение векторов равно 0: прямые лежат в одной плоскости и пересекаются в точке X = '+cs(Xi)+'; расстояние между ними 0.','Аралас көбейтінді 0-ге тең: түзулер бір жазықтықта жатыр және X = '+cs(Xi)+' нүктесінде қиылысады; арақашықтығы 0.')];
+   out.ov=lineDraw(P1,Q2,[lineT(P1,Q2,Xi)],'c',2.8).concat(lineDraw(R3,S3,[lineT(R3,S3,Xi)],'b',2.8));
+   var da=vsub(far0(P1,Q2,Xi),Xi),db_=vsub(far0(R3,S3,Xi),Xi);
+   if(vlen(da)>1e-9&&vlen(db_)>1e-9)out.ov.push(ang(Xi,da,db_,{r:.14*F.ext,lab:fmtN(angDeg(da,db_),1)+'°'}));
+   out.ov.push(pt(Xi,'X',{o:[10,-10]}));
+   out.ans=out.res[0];
+   return out;
+  }
+  var e1=vdot(a1,wv),e2=vdot(b1,wv),b_=vdot(a1,b1),den2=al*bl-b_*b_,s1=(b_*e2-bl*e1)/den2,t1=(al*e2-b_*e1)/den2,M=vadd(P1,vmul(a1,s1)),Nn=vadd(R3,vmul(b1,t1)),dd2e=dsk*dsk;
+  out.res=[{k:T2('Расстояние (прямые скрещиваются)','Арақашықтық (түзулер айқас)'),v:sqrtStr(dd2e,dsk),main:1},angRes];
+  out.steps=[st0,stAng,
+   T2('Прямые не параллельны и не пересекаются — скрещиваются. Расстояние между ними — длина общего перпендикуляра (§14). |'+N(0)+N(1)+'→ × '+N(2)+N(3)+'→| = '+fmtN(Math.sqrt(crl),4)+'.',
+      'Түзулер параллель емес және қиылыспайды — айқас. Олардың арақашықтығы — ортақ перпендикулярдың ұзындығы (§14). |'+N(0)+N(1)+'→ × '+N(2)+N(3)+'→| = '+fmtN(Math.sqrt(crl),4)+'.'),
+   T2('Расстояние равно расстоянию от прямой до параллельной ей плоскости, проведённой через вторую прямую: ρ = |'+N(0)+N(2)+'→ · ('+N(0)+N(1)+'→ × '+N(2)+N(3)+'→)| / |'+N(0)+N(1)+'→ × '+N(2)+N(3)+'→| = |'+fmtN(vdot(vsub(R3,P1),cr2),4)+'| / '+fmtN(Math.sqrt(crl),4)+' = '+sqrtStr(dd2e,dsk),
+      'Арақашықтық түзуден екінші түзу арқылы өтетін оған параллель жазықтыққа дейінгі қашықтыққа тең: ρ = |'+N(0)+N(2)+'→ · ('+N(0)+N(1)+'→ × '+N(2)+N(3)+'→)| / |'+N(0)+N(1)+'→ × '+N(2)+N(3)+'→| = |'+fmtN(vdot(vsub(R3,P1),cr2),4)+'| / '+fmtN(Math.sqrt(crl),4)+' = '+sqrtStr(dd2e,dsk)),
+   T2('Концы общего перпендикуляра: M = '+cs(M)+' на прямой '+N(0)+N(1)+', K = '+cs(Nn)+' на прямой '+N(2)+N(3)+'; MK ⊥ обеим прямым.','Ортақ перпендикулярдың ұштары: '+N(0)+N(1)+' түзуінде M = '+cs(M)+', '+N(2)+N(3)+' түзуінде K = '+cs(Nn)+'; MK екі түзуге де перпендикуляр.')];
+  out.ov=lineDraw(P1,Q2,[s1],'c',2.8).concat(lineDraw(R3,S3,[t1],'b',2.8));
+  out.ov.push(ln(M,Nn,{c:'accent',w:3}),rightAt(M,vsub(Nn,M),a1,.06*F.ext),rightAt(Nn,vsub(M,Nn),b1,.06*F.ext),pt(M,'M',{o:[-16,-6]}),pt(Nn,'K',{o:[10,-10]}));
+  out.ans=out.res[0];
+  return out;
+ }
+ if(kind==='planes'){
+  var A1=P(0),A2=P(1),A3=P(2),B1=P(3),B2=P(4),B3=P(5),n1=vcross(vsub(A2,A1),vsub(A3,A1)),n2=vcross(vsub(B2,B1),vsub(B3,B1)),l1=vdot(n1,n1),l2=vdot(n2,n2),sc4=Math.pow(F.ext,4);
+  if(l1<1e-12*sc4||l2<1e-12*sc4)return bad('Три точки одной из плоскостей лежат на одной прямой.','Жазықтықтардың бірінің үш нүктесі бір түзуде жатыр.');
+  var cr5=vcross(n1,n2),cosa=Math.abs(vdot(n1,n2))/Math.sqrt(l1*l2),pa=Math.acos(Math.min(1,cosa))/D,sn1=vdot(cr5,cr5)/(l1*l2);
+  var stN=T2('Нормали: n₁ = '+N(0)+N(1)+'→ × '+N(0)+N(2)+'→ = '+cs(n1)+', n₂ = '+N(3)+N(4)+'→ × '+N(3)+N(5)+'→ = '+cs(n2)+'.','Нормальдар: n₁ = '+N(0)+N(1)+'→ × '+N(0)+N(2)+'→ = '+cs(n1)+', n₂ = '+N(3)+N(4)+'→ × '+N(3)+N(5)+'→ = '+cs(n2)+'.');
+  if(sn1<1e-12&&!SOLCFG.dist){
+   out.res=[{k:T2('Угол между плоскостями','Жазықтықтардың арасындағы бұрыш'),v:'0°',main:1}];
+   out.steps=[stN,T2('n₁ ∥ n₂: плоскости параллельны (или совпадают), угол между ними равен 0°.','n₁ ∥ n₂: жазықтықтар параллель (немесе беттеседі), олардың арасындағы бұрыш 0°.')];
+   out.ov=[planePatch([A1,A2,A3],[A1,A2,A3],'a'),planePatch([B1,B2,B3],[B1,B2,B3],'b')];
+   out.ans=out.res[0];
+   return out;
+  }
+  if(sn1<1e-12){
+   var s5=vdot(n1,vsub(B1,A1)),dd2f=s5*s5/l1,df=Math.sqrt(dd2f),Hf=vsub(B1,vmul(n1,s5/l1));
+   out.res.push({k:T2('Расстояние (плоскости параллельны)','Арақашықтық (жазықтықтар параллель)'),v:sqrtStr(dd2f,df),main:1});
+   out.res.push({k:T2('Угол','Бұрыш'),v:'0°'});
+   out.steps=[stN,T2('n₁ ∥ n₂, поэтому плоскости параллельны (или совпадают).','n₁ ∥ n₂, сондықтан жазықтықтар параллель (немесе беттеседі).'),
+    T2('Расстояние между параллельными плоскостями — расстояние от любой точки одной плоскости до другой (§13): ρ = |n₁ · '+N(0)+N(3)+'→| / |n₁| = '+sqrtStr(dd2f,df),
+       'Параллель екі жазықтықтың арақашықтығы — біреуінің кез келген нүктесінен екіншісіне дейінгі қашықтық (§13): ρ = |n₁ · '+N(0)+N(3)+'→| / |n₁| = '+sqrtStr(dd2f,df))];
+   if(dd2f<eps)out.steps.push(T2('Расстояние 0: плоскости совпадают.','Қашықтық 0: жазықтықтар беттеседі.'));
+   out.ov=[planePatch([A1,A2,A3],[Hf],'a'),planePatch([B1,B2,B3],[B1,B2,B3],'b')];
+   if(dd2f>=eps)out.ov.push(ln(B1,Hf,{c:'accent',w:3}),rightAt(Hf,vsub(B1,Hf),vsub(A2,A1),.07*F.ext),pt(Hf,'H',{o:[10,-10]}));
+   out.ans=out.res[0];
+   return out;
+  }
+  var dv=cr5,h1=vdot(n1,A1),h2=vdot(n2,B1),cg=[0,0,0];
+  [A1,A2,A3,B1,B2,B3].forEach(function(X){cg=vadd(cg,X);});cg=vmul(cg,1/6);
+  var dl=vdot(dv,dv),O=vmul(vadd(vadd(vmul(vcross(n2,dv),h1),vmul(vcross(dv,n1),h2)),vmul(cr5,vdot(dv,cg))),1/dl);
+  function pickDir(nn_,Ps){
+   var best=Ps[0],bd=-1,t_;Ps.forEach(function(X){var w_=vsub(X,O),q_=vsub(w_,vmul(dv,vdot(w_,dv)/dl)),m_=vlen(q_);if(m_>bd){bd=m_;best=q_;}});
+   return vunit(best);
+  }
+  var tA=pickDir(n1,[A1,A2,A3]),tB=pickDir(n2,[B1,B2,B3]),dih=angDeg(tA,tB);
+  out.res.push({k:T2('Угол между плоскостями','Жазықтықтардың арасындағы бұрыш'),v:'φ ≈ '+fmtN(pa,2)+'°,  cos φ = '+(exactStr(cosa*cosa)?sqrtStr(cosa*cosa,cosa):'≈ '+fmtN(cosa,4)),main:1});
+  out.res.push({k:T2('Двугранный угол (между выбранными гранями)','Екіжақты бұрыш (таңдалған жақтар арасында)'),v:fmtN(dih,2)+'°'});
+  if(SOLCFG.dist)out.res.push({k:T2('Расстояние','Арақашықтық'),v:'0 (плоскости пересекаются)'});
+  if(pa>89.99999)out.res.push({k:T2('Вывод','Қорытынды'),v:T2('Плоскости перпендикулярны','Жазықтықтар перпендикуляр')});
+  out.steps=[stN,
+   T2('Угол между плоскостями (§17) — наименьший из двугранных углов: cos φ = |n₁ · n₂| / (|n₁|·|n₂|) = '+fmtN(cosa,4)+', φ ≈ '+fmtN(pa,2)+'°.','Жазықтықтар арасындағы бұрыш (§17) — екіжақты бұрыштардың кішісі: cos φ = |n₁ · n₂| / (|n₁|·|n₂|) = '+fmtN(cosa,4)+', φ ≈ '+fmtN(pa,2)+'°.'),
+   T2('Плоскости пересекаются по прямой; на чертеже показан линейный угол двугранного угла с выбранными гранями: '+fmtN(dih,2)+'°'+(Math.abs(dih-pa)>1e-6?' (он тупой; угол между плоскостями равен 180° − '+fmtN(dih,2)+'° = '+fmtN(pa,2)+'°).':'.'),
+      'Жазықтықтар түзу бойымен қиылысады; сызбада таңдалған жақтары бар екіжақты бұрыштың сызықтық бұрышы көрсетілген: '+fmtN(dih,2)+'°'+(Math.abs(dih-pa)>1e-6?' (ол доғал; жазықтықтардың арасындағы бұрыш 180° − '+fmtN(dih,2)+'° = '+fmtN(pa,2)+'°).':'.'))];
+  var rr=.14*F.ext;
+  out.ov=[planePatch([A1,A2,A3],[O,vadd(O,vmul(tA,rr*4))],'a'),planePatch([B1,B2,B3],[O,vadd(O,vmul(tB,rr*4))],'b'),
+   ln(vsub(O,vmul(vunit(dv),F.ext*.45)),vadd(O,vmul(vunit(dv),F.ext*.45)),{c:'accent',w:2.4}),
+   ln(O,vadd(O,vmul(tA,rr*3)),{c:'ink',w:2}),ln(O,vadd(O,vmul(tB,rr*3)),{c:'ink',w:2})];
+  if(Math.abs(dih-90)<1e-6)out.ov.push(rightAt(O,tA,tB,rr));
+  else out.ov.push(ang(O,tA,tB,{r:rr*1.1,lab:fmtN(dih,1)+'°'}));
+  out.ov.push(pt(O,'O',{o:[10,-10]}));
+  out.ans=out.res[0];
+  return out;
+ }
+ return bad('Неизвестный тип задачи.','Белгісіз есеп түрі.');
+}
+function far0(P,Q,X){var t=lineT(P,Q,X);return t<.5?Q:P;}
+function solDraw(F,out){
+ var map=function(X){return [(X[0]-F.c[0])*F.s,(X[2]-F.c[2])*F.s,-(X[1]-F.c[1])*F.s];};
+ var Vm=F.V.map(map),Pm=poly(Vm,F.F,F.names);
+ function mp(p){
+  var q={},k;for(k in p)q[k]=p[k];
+  if(p.k==='line'){q.a=map(p.a);q.b=map(p.b);}
+  else if(p.k==='plane'){q.pts=p.pts.map(map);}
+  else if(p.k==='pt'){q.p=map(p.p);}
+  else if(p.k==='ang'){q.o=map(p.o);var u2=vsub(map(vadd(p.o,p.u)),q.o),w2=vsub(map(vadd(p.o,p.w)),q.o);q.u=vunit(u2);q.w=vunit(w2);q.r=p.r*F.s;}
+  return q;
+ }
+ Pm.ov=(out&&out.ok?out.ov:[]).map(mp);
+ return [Pm];
+}
+
+T.ru.tabs.sol='Решатель';T.kk.tabs.sol='Шешуші';T.ru.intro.sol='Решатель задач по теме 10.5: расстояние от точки до прямой, угол между плоскостями и перпендикулярность плоскостей. Выберите фигуру и объекты — решение по шагам и чертёж.';T.kk.intro.sol='10.5 тақырыбы бойынша шешуші: нүктеден түзуге дейінгі қашықтық, жазықтықтардың арасындағы бұрыш және жазықтықтардың перпендикулярлығы. Фигураны және объектілерді таңдаңыз — шешуі қадам-қадаммен және сызба.';
+/* ---------- state ---------- */
+/* ---------- state ---------- */
+var pref=LS.get('three.prefs')||{};
+var TABS=['tp','dih','pl','sol','ref','qz'];
+var state={
+ lang:(pref.lang==='kk'||pref.lang==='ru')?pref.lang:'kk',
+ theme:(pref.theme==='dark'||pref.theme==='light')?pref.theme:((window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light'),
+ tab:(TABS.indexOf(pref.tab)>=0)?pref.tab:'tp',
+ size:(pref.size===0||pref.size===1||pref.size===2)?pref.size:1,
+ views:{}, quiz:{i:0,sel:null,score:0,done:false}, ref:{q:'',g:'all'}
+};
+var UVALS=[1,1.25,1.6];
+function applySize(){
+ var u=UVALS[state.size],r=document.documentElement.style,t=T[state.lang];
+ r.setProperty('--u',u);r.setProperty('--k',1+(u-1)*.6);r.setProperty('--ul',1+(u-1)*.5);
+ $('#sizeSeg').setAttribute('aria-label',t.sizeGroup);
+ $$('#sizeSeg button').forEach(function(b){var i=+b.dataset.size;b.setAttribute('aria-pressed',String(i===state.size));b.setAttribute('aria-label',t.sizeNames[i]);b.title=t.sizeNames[i];});
+}
+function savePrefs(){LS.set('three.prefs',{lang:state.lang,theme:state.theme,tab:state.tab,size:state.size});}
+function view(id){
+ if(!state.views[id]){var it=ITEMS[id];state.views[id]={yaw:it.v0?it.v0.yaw:-.55,pitch:it.v0?it.v0.pitch:.5,mode:it.def,n:it.slider?it.slider.def:0};}
+ return state.views[id];
+}
+function tagOf(id){var t=ITEMS[id].tag;return typeof t==='string'?t:t[state.lang];}
+
+/* ---------- 3D rendering ---------- */
+var S=108,CX=210,CY=150;
+function proj(p,v){
+ var cy=Math.cos(v.yaw),sy=Math.sin(v.yaw),cp=Math.cos(v.pitch),sp=Math.sin(v.pitch);
+ var x1=p[0]*cy+p[2]*sy,z1=-p[0]*sy+p[2]*cy;
+ var y2=p[1]*cp-z1*sp,z2=p[1]*sp+z1*cp;
+ return {x:CX+x1*S,y:CY-y2*S,z:z2};
+}
+function f1(n){return n.toFixed(1);}
+function polySVG(p,v){
+ var cy=Math.cos(v.yaw),sy=Math.sin(v.yaw),cp=Math.cos(v.pitch),sp=Math.sin(v.pitch),i,R,c=[0,0,0];
+ R=p.V.map(function(q){var x1=q[0]*cy+q[2]*sy,z1=-q[0]*sy+q[2]*cy;return [x1,q[1]*cp-z1*sp,q[1]*sp+z1*cp];});
+ R.forEach(function(r){c[0]+=r[0];c[1]+=r[1];c[2]+=r[2];});
+ c=c.map(function(x){return x/R.length;});
+ var front=p.F.map(function(f){
+  var a=R[f[0]],b=R[f[1]],d=R[f[2]],u=[b[0]-a[0],b[1]-a[1],b[2]-a[2]],w=[d[0]-a[0],d[1]-a[1],d[2]-a[2]];
+  var n=[u[1]*w[2]-u[2]*w[1],u[2]*w[0]-u[0]*w[2],u[0]*w[1]-u[1]*w[0]],fc=[0,0,0];
+  f.forEach(function(k){fc[0]+=R[k][0];fc[1]+=R[k][1];fc[2]+=R[k][2];});
+  fc=fc.map(function(x){return x/f.length;});
+  if(n[0]*(fc[0]-c[0])+n[1]*(fc[1]-c[1])+n[2]*(fc[2]-c[2])<0)n=[-n[0],-n[1],-n[2]];
+  return n[2]>1e-6;
+ });
+ var sc=R.map(function(r){return {x:CX+r[0]*S,y:CY-r[1]*S};});
+ var edges={},vis=R.map(function(){return false;});
+ p.F.forEach(function(f,fi){
+  for(i=0;i<f.length;i++){
+   var a=f[i],b=f[(i+1)%f.length],k=a<b?a+'-'+b:b+'-'+a;
+   if(!edges[k])edges[k]={a:a,b:b,vis:false};
+   if(front[fi]){edges[k].vis=true;vis[a]=true;vis[b]=true;}
+  }
+ });
+ var hid='',shown='',fills='',labels='',k,e;
+ for(k in edges){
+  e=edges[k];
+  var seg='<line x1="'+f1(sc[e.a].x)+'" y1="'+f1(sc[e.a].y)+'" x2="'+f1(sc[e.b].x)+'" y2="'+f1(sc[e.b].y)+'"';
+  if(e.vis)shown+=seg+' class="ln ln-ink" stroke-width="2"/>';
+  else hid+=seg+' class="ln ln-faint" stroke-width="1.3" stroke-dasharray="5 5"/>';
+ }
+ p.F.forEach(function(f,fi){
+  if(front[fi])fills+='<polygon class="pl-f" points="'+f.map(function(q){return f1(sc[q].x)+','+f1(sc[q].y);}).join(' ')+'"/>';
+ });
+ var mx=0,my=0;sc.forEach(function(s){mx+=s.x;my+=s.y;});mx/=sc.length;my/=sc.length;
+ sc.forEach(function(s,idx){
+  var dx=s.x-mx,dy=s.y-my,d=Math.sqrt(dx*dx+dy*dy)||1;
+  labels+='<text class="lbl'+(vis[idx]?'':' lbl-h')+'" x="'+f1(Math.max(12,Math.min(408,s.x+dx/d*15)))+'" y="'+f1(Math.max(12,Math.min(288,s.y+dy/d*15)))+'">'+p.names[idx]+'</text>';
+  if(vis[idx])labels+='<circle class="pt" cx="'+f1(s.x)+'" cy="'+f1(s.y)+'" r="3.6"/>';
+ });
+ return hid+fills+shown+(p.ov?renderPrims(p.ov,v):'')+labels;
+}
+function clampX(x){return Math.max(14,Math.min(406,x));}
+function clampY(y){return Math.max(14,Math.min(286,y));}
+function renderPrims(prims,v){
+ var items=prims.map(function(p){
+  if(p.k==='plane'){var q=p.pts.map(function(x){return proj(x,v)});return {p:p,q:q,z:q.reduce(function(s,a){return s+a.z},0)/q.length};}
+  if(p.k==='line'){var a=proj(p.a,v),b=proj(p.b,v);return {p:p,a:a,b:b,z:(a.z+b.z)/2+.25};}
+  if(p.k==='ang'){var o=proj(p.o,v);return {p:p,q:o,z:o.z+.35};}
+  var r=proj(p.p,v);return {p:p,q:r,z:r.z+.5};
+ }).sort(function(x,y){return x.z-y.z});
+ var shapes='',labels='';
+ function P2(a){return a.map(function(q){return f1(q.x)+','+f1(q.y);}).join(' ');}
+ items.forEach(function(it){
+  var p=it.p;
+  if(p.k==='plane'){
+   shapes+='<polygon class="pl-'+p.col+'" points="'+P2(it.q)+'"/>';
+   if(p.lab){
+    var cx=0,cy=0;it.q.forEach(function(a){cx+=a.x;cy+=a.y});cx/=it.q.length;cy/=it.q.length;
+    var c=it.q[p.li],dx=c.x-cx,dy=c.y-cy,d=Math.sqrt(dx*dx+dy*dy)||1;
+    labels+='<text class="lbl lbl-pl lbl-'+p.col+'" x="'+f1(clampX(c.x+dx/d*15))+'" y="'+f1(clampY(c.y+dy/d*15))+'">'+p.lab+'</text>';
+   }
+  }else if(p.k==='line'){
+   shapes+='<line class="ln ln-'+p.c+'" x1="'+f1(it.a.x)+'" y1="'+f1(it.a.y)+'" x2="'+f1(it.b.x)+'" y2="'+f1(it.b.y)+'" stroke-width="'+p.w+'"'+(p.d?' stroke-dasharray="5 5"':'')+'/>';
+   if(p.lab){
+    var lt=p.lt||.5,e=p.le==='a'?it.a:(p.le==='m'?{x:it.a.x+(it.b.x-it.a.x)*lt,y:it.a.y+(it.b.y-it.a.y)*lt}:it.b);
+    labels+='<text class="lbl lbl-ln" x="'+f1(clampX(e.x+p.lo[0]))+'" y="'+f1(clampY(e.y+p.lo[1]))+'">'+p.lab+'</text>';
+   }
+  }else if(p.k==='ang'){
+   var cs=[],th=Math.acos(Math.max(-1,Math.min(1,vdot(p.u,p.w)))),i,N=14,t,d2,ok=true;
+   if(p.sq){
+    var pa=vadd(p.o,vmul(p.u,p.r)),pb=vadd(pa,vmul(p.w,p.r)),pc=vadd(p.o,vmul(p.w,p.r));
+    var qs=[p.o,pa,pb,pc].map(function(x){return proj(x,v);});
+    shapes+='<polygon class="ang-f" points="'+P2(qs)+'"/><polyline class="ang-s" points="'+P2(qs.slice(1))+'"/>';
+   }else if(th>1e-3&&th<Math.PI-1e-3){
+    for(i=0;i<=N;i++){t=i/N;d2=vadd(vmul(p.u,Math.sin((1-t)*th)/Math.sin(th)),vmul(p.w,Math.sin(t*th)/Math.sin(th)));cs.push(proj(vadd(p.o,vmul(d2,p.r)),v));}
+    shapes+='<polygon class="ang-f" points="'+f1(it.q.x)+','+f1(it.q.y)+' '+P2(cs)+'"/><polyline class="ang-s" points="'+P2(cs)+'"/>';
+   }else ok=false;
+   if(p.lab&&ok){
+    var bs=vadd(p.u,p.w);
+    if(vlen(bs)>1e-3){var lp=proj(vadd(p.o,vmul(vunit(bs),p.r*(p.sq?2.3:1.55))),v);
+     labels+='<text class="lbl lbl-ang lbl-b" x="'+f1(clampX(lp.x))+'" y="'+f1(clampY(lp.y))+'">'+p.lab+'</text>';}
+   }
+  }else{
+   shapes+='<circle class="pt" cx="'+f1(it.q.x)+'" cy="'+f1(it.q.y)+'" r="4.6"/>';
+   labels+='<text class="lbl" x="'+f1(clampX(it.q.x+p.o[0]))+'" y="'+f1(clampY(it.q.y+p.o[1]))+'">'+p.lab+'</text>';
+  }
+ });
+ return shapes+labels;
+}
+function renderScene(prims,v){
+ var polyP=prims.filter(function(p){return p.k==='poly';})[0];
+ if(polyP)return polySVG(polyP,v);
+ return renderPrims(prims,v);
+}
+function drawFig(id){
+ if(id==='sol'){drawSol();return;}
+ var svg=$('svg[data-fig="'+id+'"]');if(!svg)return;
+ var it=ITEMS[id],v=view(id),L=state.lang,t=T[L];
+ svg.innerHTML=renderScene(it.build(v.mode,v),v);
+ var cap=$('[data-cap="'+id+'"]');
+ if(cap){
+  if(it.dyn)cap.textContent=it.dyn(v,L);
+  else{var m=it.modes.filter(function(x){return x.id===v.mode})[0];if(m&&m.cap)cap.textContent=m.cap[L];}
+ }
+ var cn=$('[data-counts="'+id+'"]');
+ if(cn&&it.poly){
+  var c=polyCounts(it.poly(v));
+  cn.innerHTML=c.map(function(x,i){return '<div class="count"><span>'+t.cntNames[i]+' ('+t.cntLetters[i]+')</span><b>'+x+'</b></div>';}).join('');
+ }
+}
+
+/* ---------- views ---------- */
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');}
+function cardHTML(id){
+ var it=ITEMS[id],L=state.lang,t=T[L],v=view(id),modes='';
+ if(it.modes.length>1){
+  modes='<div class="modes" role="group">'+it.modes.map(function(m){
+   return '<button type="button" class="mode" data-act="mode" data-id="'+id+'" data-mode="'+m.id+'" aria-pressed="'+(v.mode===m.id)+'">'+m[L]+'</button>';
+  }).join('')+'</div>';
+ }
+ var slider='';
+ if(it.slider){
+  slider='<label class="slider" for="n-'+id+'"><span>'+(it.slider.sym||'n')+' = <b id="nv-'+id+'">'+(it.slider.fmt?it.slider.fmt(v.n):v.n)+'</b>'+(it.slider.unit||'')+'</span><input type="range" id="n-'+id+'" data-id="'+id+'" min="'+it.slider.min+'" max="'+it.slider.max+'" value="'+v.n+'"></label>';
+ }
+ var proof='';
+ if(it.proof){
+  proof='<details class="proof"><summary>'+t.proof+'</summary><ol>'+it.proof.map(function(s){
+   return '<li>'+esc(s[L])+(s.ref?s.ref.map(function(r){return '<span class="ref">'+esc(tagOf(r))+'</span>';}).join(''):'')+'</li>';
+  }).join('')+'</ol></details>';
+ }
+ var defs=it.defs?'<ul class="defs">'+it.defs[L].map(function(d){return '<li>'+esc(d)+'</li>';}).join('')+'</ul>':'';
+ var extra=it.extra?'<p class="extra"><b>'+t.more+'.</b> '+esc(it.extra[L])+'</p>':'';
+ return '<article class="card" id="card-'+id+'">'+
+  '<div class="c-text">'+
+   '<div class="c-head"><span class="tag">'+esc(tagOf(id))+'</span><h2>'+it.title[L]+'</h2></div>'+
+   '<p class="stmt">'+it.stmt[L]+'</p>'+defs+
+   '<p class="sym"><small>'+t.sym+'</small>'+it.sym[L]+'</p>'+extra+
+   '<div class="real"><small>'+t.real+'</small><p>'+it.real[L]+'</p></div>'+
+   proof+
+  '</div>'+
+  '<div class="c-fig">'+
+   '<figure class="fig"><svg data-fig="'+id+'" viewBox="0 0 420 300" role="img" tabindex="0" aria-label="'+esc(it.title[L])+'"></svg>'+
+   '<figcaption data-cap="'+id+'"></figcaption></figure>'+
+   (it.counts?'<div class="counts" data-counts="'+id+'"></div>':'')+
+   modes+slider+
+   '<div class="fig-foot"><span>'+t.hint+'</span><button type="button" class="link-btn" data-act="reset" data-id="'+id+'">'+t.reset+'</button></div>'+
+  '</div></article>';
+}
+function legendHTML(){
+ var L=state.lang;
+ return '<details class="legend"><summary>'+T[L].notation+'</summary><ul class="legend-g">'+
+  LEGEND.map(function(r){return '<li><b>'+r[0]+'</b><span>'+r[1][L]+'</span></li>'}).join('')+'</ul></details>';
+}
+function pick(x,L){return (x&&typeof x==='object')?x[L]:x;}
+function refMatch(e,L,q){
+ if(!q)return true;
+ var hay=[pick(e.s,'ru'),pick(e.s,'kk'),e.ru,e.kk,pick(e.ex,'ru'),pick(e.ex,'kk')].join(' ').toLowerCase();
+ return hay.indexOf(q.toLowerCase())>=0;
+}
+function refCard(e,L,t){
+ var top;
+ if(e.t){
+  var other=L==='ru'?'kk':'ru';
+  top='<div class="rc-top"><div class="rc-term">'+esc(e[L])+'</div><span class="rc-src">'+esc(e.src)+'</span></div><p class="rc-alt">'+(other==='ru'?'рус':'қаз')+': '+esc(e[other])+'</p>';
+  return '<div class="rc">'+top+'</div>';
+ }
+ var s=pick(e.s,L),ex=pick(e.ex,L),src=pick(e.src,L);
+ return '<div class="rc"><div class="rc-top"><button type="button" class="symbtn" data-act="copy" data-sym="'+esc(s).replace(/"/g,'&quot;')+'" aria-label="'+esc(t.copied)+': '+esc(s).replace(/"/g,'&quot;')+'">'+esc(s)+'</button>'+
+  '<span class="rc-src">'+(src==='app'?(L==='ru'?'в приложении':'қосымшада'):esc(src))+'</span></div>'+
+  '<p class="rc-txt">'+esc(e[L])+'</p>'+(ex?'<p class="rc-ex">'+esc(ex)+'</p>':'')+'</div>';
+}
+function refGridHTML(){
+ var L=state.lang,t=T[L],q=state.ref.q.trim(),g=state.ref.g,out='',any=false;
+ GROUPS.forEach(function(gr){
+  if(g!=='all'&&g!==gr.id)return;
+  var list=REF.filter(function(e){return e.g===gr.id&&refMatch(e,L,q);});
+  if(!list.length)return;
+  any=true;
+  out+='<section class="rgroup"><h3>'+gr[L]+'</h3><div class="ref-grid">'+list.map(function(e){return refCard(e,L,t);}).join('')+'</div></section>';
+ });
+ return any?out:'<p class="empty">'+t.empty+'</p>';
+}
+function refHTML(){
+ var L=state.lang,t=T[L];
+ var chips='<button type="button" class="mode" data-act="rgroup" data-g="all" aria-pressed="'+(state.ref.g==='all')+'">'+t.all+'</button>'+
+  GROUPS.map(function(gr){return '<button type="button" class="mode" data-act="rgroup" data-g="'+gr.id+'" aria-pressed="'+(state.ref.g===gr.id)+'">'+gr[L]+'</button>';}).join('');
+ return '<div class="stack"><p class="intro">'+t.intro.ref+'</p>'+
+  '<div class="ref-tools"><input type="search" id="refq" class="search" placeholder="'+esc(t.search)+'" value="'+esc(state.ref.q).replace(/"/g,'&quot;')+'" autocomplete="off"><div class="chips" role="group">'+chips+'</div></div>'+
+  '<div id="refGrid" style="display:grid;gap:18px">'+refGridHTML()+'</div><p class="src-note">'+t.srcNote+'</p></div>';
+}
+function quizHTML(){
+ var L=state.lang,t=T[L],q=state.quiz,n=QUIZ.length;
+ if(q.done){
+  var msg=q.score>=n-1?t.r5:(q.score>=Math.ceil(n*.6)?t.r3:t.r0);
+  return '<section class="card quiz"><div class="q-n">'+t.result+'</div><div class="score">'+q.score+' '+t.of+' '+n+'</div><p class="q-t">'+msg+'</p>'+
+   '<button type="button" class="btn" data-act="qrestart">'+t.again+'</button></section>';
+ }
+ var it=QUIZ[q.i],dots='',i;
+ for(i=0;i<n;i++)dots+='<i class="'+(i<=q.i?'on':'')+'"></i>';
+ var opts=it.o[L].map(function(o,i){
+  var cls='opt',dis='';
+  if(q.sel!==null){dis=' disabled';if(i===it.a)cls+=' ok';else if(i===q.sel)cls+=' bad';}
+  return '<button type="button" class="'+cls+'" data-act="qpick" data-i="'+i+'"'+dis+'><span class="k">'+String.fromCharCode(65+i)+'</span><span>'+o+'</span></button>';
+ }).join('');
+ var fb='';
+ if(q.sel!==null){
+  var good=q.sel===it.a;
+  fb='<p class="fb" role="status"><b class="'+(good?'ok':'bad')+'">'+(good?t.ok:t.bad)+'</b> '+it.w[L]+'</p>'+
+   '<button type="button" class="btn" data-act="qnext">'+(q.i===n-1?t.finish:t.next)+'</button>';
+ }
+ return '<section class="card quiz"><div class="prog" aria-hidden="true">'+dots+'</div>'+
+  '<div class="q-n">'+t.qOf+' '+(q.i+1)+' '+t.of+' '+n+'</div><h2 class="q-t">'+it.q[L]+'</h2><div class="opts">'+opts+'</div>'+fb+'</section>';
+}
+function renderView(){
+ var L=state.lang,t=T[L],h='',tab=state.tab;
+ if(LIST[tab]){
+  h='<div class="stack"><p class="intro">'+t.intro[tab]+'</p>'+(tab==='tp'?legendHTML():'')+LIST[tab].map(cardHTML).join('')+'<p class="src-note">'+t.srcNote+'</p></div>';
+ }else if(tab==='sol')h=solHTML();
+ else if(tab==='ref')h=refHTML();
+ else h='<div class="stack">'+quizHTML()+'</div>';
+ $('#view').innerHTML=h;
+ (LIST[tab]||[]).forEach(drawFig);
+ if(tab==='sol')solAfterRender();
+}
+function renderTabs(){
+ var t=T[state.lang];
+ $('#tabs').innerHTML=TABS.map(function(k){
+  return '<button type="button" class="tab" role="tab" data-act="tab" data-tab="'+k+'" aria-selected="'+(state.tab===k)+'">'+t.tabs[k]+'</button>';
+ }).join('');
+}
+var ICON={
+ sun:'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>',
+ moon:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>',
+ pen:'<path d="M4 20l1-4L16.5 4.5a2 2 0 0 1 3 3L8 19l-4 1z"/><path d="M14.5 6.5l3 3"/>',
+ eraser:'<path d="M9 19h11"/><path d="M5.6 15.4l8.8-8.8a2 2 0 0 1 2.8 0l2.2 2.2a2 2 0 0 1 0 2.8L12.5 19H9.4a2 2 0 0 1-1.4-.6l-2.4-2.4a1 1 0 0 1 0-1.4z"/>',
+ undo:'<path d="M9 14L4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/>',
+ trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>'
+};
+function svgI(n){return '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+ICON[n]+'</svg>';}
+function renderTheme(){
+ var t=T[state.lang],b=$('#themeBtn');
+ document.documentElement.setAttribute('data-theme',state.theme);
+ b.innerHTML=svgI(state.theme==='dark'?'sun':'moon');
+ var lab=state.theme==='dark'?t.toLight:t.toDark;
+ b.setAttribute('aria-label',lab);b.setAttribute('title',lab);
+}
+
+/* ---------- pen / ink layer ---------- */
+var ink=$('#ink'),ctx=ink.getContext('2d'),dpr=1;
+var penStore=LS.get('three.ink')||{};
+var pen={tool:'off',color:'p1',size:1,armed:false};
+var SIZES=[2.2,4,7];
+var strokes=[],cur=null,erasing=false,armTimer=null;
+function penKey(){return state.lang+'|'+state.tab;}
+function loadStrokes(){var k=penKey();if(!Array.isArray(penStore[k]))penStore[k]=[];strokes=penStore[k];}
+function saveInk(){LS.set('three.ink',penStore);}
+function colorOf(c){return getComputedStyle(document.documentElement).getPropertyValue('--pen-'+c.slice(1)).trim()||'#1b3fd0';}
+function sizeInk(){
+ var v=$('#view'),w=v.clientWidth,h=v.clientHeight;
+ if(!w||!h)return;
+ dpr=Math.min(window.devicePixelRatio||1,1.5);
+ ink.width=Math.round(w*dpr);ink.height=Math.round(h*dpr);
+ ink.style.width=w+'px';ink.style.height=h+'px';
+ drawAll();
+}
+function setLine(s){
+ var col=colorOf(s.c);
+ ctx.strokeStyle=col;ctx.fillStyle=col;ctx.lineWidth=s.w;ctx.lineCap='round';ctx.lineJoin='round';
+}
+function drawStroke(s){
+ var w=ink.clientWidth,p=s.p.map(function(a){return [a[0]*w,a[1]]});
+ setLine(s);
+ if(p.length===1){ctx.beginPath();ctx.arc(p[0][0],p[0][1],s.w/2,0,6.2832);ctx.fill();return;}
+ ctx.beginPath();ctx.moveTo(p[0][0],p[0][1]);
+ for(var i=1;i<p.length-1;i++){ctx.quadraticCurveTo(p[i][0],p[i][1],(p[i][0]+p[i+1][0])/2,(p[i][1]+p[i+1][1])/2);}
+ var l=p[p.length-1];ctx.lineTo(l[0],l[1]);ctx.stroke();
+}
+function drawAll(){
+ ctx.setTransform(dpr,0,0,dpr,0,0);
+ ctx.clearRect(0,0,ink.clientWidth,ink.clientHeight);
+ strokes.forEach(drawStroke);
+}
+function pos(e){var r=ink.getBoundingClientRect();return [(e.clientX-r.left)/r.width,e.clientY-r.top];}
+function eraseAt(e){
+ var r=ink.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top,R=15,n=strokes.length;
+ for(var i=strokes.length-1;i>=0;i--){
+  if(strokes[i].p.some(function(a){var dx=a[0]*r.width-x,dy=a[1]-y;return dx*dx+dy*dy<R*R;}))strokes.splice(i,1);
+ }
+ if(strokes.length!==n)drawAll();
+}
+ink.addEventListener('pointerdown',function(e){
+ if(pen.tool==='off')return;
+ e.preventDefault();
+ try{ink.setPointerCapture(e.pointerId);}catch(x){}
+ if(pen.tool==='pen'){
+  cur={c:pen.color,w:SIZES[pen.size],p:[pos(e)]};strokes.push(cur);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  var q=cur.p[0];setLine(cur);ctx.beginPath();ctx.arc(q[0]*ink.clientWidth,q[1],cur.w/2,0,6.2832);ctx.fill();
+ }else{erasing=true;eraseAt(e);}
+});
+ink.addEventListener('pointermove',function(e){
+ if(cur){
+  var p=pos(e),l=cur.p[cur.p.length-1],w=ink.clientWidth,dx=(p[0]-l[0])*w,dy=p[1]-l[1];
+  if(dx*dx+dy*dy<2.25)return;
+  cur.p.push(p);
+  ctx.setTransform(dpr,0,0,dpr,0,0);setLine(cur);
+  ctx.beginPath();ctx.moveTo(l[0]*w,l[1]);ctx.lineTo(p[0]*w,p[1]);ctx.stroke();
+ }else if(erasing){eraseAt(e);}
+});
+function endInk(){
+ if(cur){cur=null;drawAll();saveInk();}
+ if(erasing){erasing=false;saveInk();}
+}
+ink.addEventListener('pointerup',endInk);
+ink.addEventListener('pointercancel',endInk);
+
+function toast(msg){
+ var el=$('#toast');el.textContent=msg;el.hidden=false;
+ clearTimeout(toast.t);toast.t=setTimeout(function(){el.hidden=true;},3200);
+}
+function renderPen(){
+ var t=T[state.lang];
+ var colors=['p1','p2','p3'].map(function(c,i){
+  return '<button type="button" class="tool sw" data-color="'+c+'" aria-pressed="'+(pen.tool==='pen'&&pen.color===c)+'" aria-label="'+t['c'+(i+1)]+'" title="'+t['c'+(i+1)]+'"><i class="dot" style="background:var(--pen-'+(i+1)+')"></i></button>';
+ }).join('');
+ var sz=Math.round(SIZES[pen.size]*1.6+4);
+ $('#penWrap').innerHTML='<div class="pen-bar" role="toolbar" aria-label="'+t.penGroup+'">'+
+  '<button type="button" class="tool" data-tool="pen" aria-pressed="'+(pen.tool==='pen')+'" aria-label="'+t.pen+'" title="'+t.pen+'">'+svgI('pen')+'</button>'+
+  '<button type="button" class="tool" data-tool="eraser" aria-pressed="'+(pen.tool==='eraser')+'" aria-label="'+t.eraser+'" title="'+t.eraser+'">'+svgI('eraser')+'</button>'+
+  '<span class="sep"></span>'+colors+
+  '<button type="button" class="tool" data-act="size" aria-label="'+t.size+'" title="'+t.size+'"><i class="dot" style="width:'+sz+'px;height:'+sz+'px"></i></button>'+
+  '<span class="sep"></span>'+
+  '<button type="button" class="tool" data-act="undo" aria-label="'+t.undo+'" title="'+t.undo+'">'+svgI('undo')+'</button>'+
+  '<button type="button" class="tool'+(pen.armed?' armed':'')+'" data-act="clear" aria-label="'+(pen.armed?t.clearArmed:t.clear)+'" title="'+(pen.armed?t.clearArmed:t.clear)+'">'+svgI('trash')+'</button>'+
+  '</div>';
+ document.body.setAttribute('data-tool',pen.tool);
+}
+
+/* ---------- events ---------- */
+function setTool(name){
+ var t=T[state.lang];
+ pen.tool=(pen.tool===name)?'off':name;
+ renderPen();
+ if(pen.tool==='pen')toast(t.penOn);else if(pen.tool==='eraser')toast(t.eraserOn);
+}
+function copySym(s){
+ var t=T[state.lang];
+ function ok(){toast(t.copied+': '+s);}
+ function fail(){toast(t.copyFail);}
+ try{
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(s).then(ok,fail);}else fail();
+ }catch(e){fail();}
+}
+document.addEventListener('click',function(e){
+ var el=e.target.closest('button');if(!el)return;
+ var t=T[state.lang];
+ if(el.dataset.lang){
+  state.lang=el.dataset.lang;savePrefs();fullRender();return;
+ }
+ if(el.dataset.size!==undefined&&el.closest('#sizeSeg')){state.size=+el.dataset.size;savePrefs();applySize();requestAnimationFrame(function(){sizeInk();drawAll();});return;}
+ if(el.dataset.tool){setTool(el.dataset.tool);return;}
+ if(el.dataset.color){pen.color=el.dataset.color;pen.tool='pen';renderPen();return;}
+ var act=el.dataset.act;if(!act)return;
+ if(act==='theme'){state.theme=state.theme==='dark'?'light':'dark';savePrefs();renderTheme();requestAnimationFrame(drawAll);}
+ else if(act==='tab'){state.tab=el.dataset.tab;savePrefs();fullRender();window.scrollTo(0,0);}
+ else if(act==='mode'){
+  var v=view(el.dataset.id),nm=el.dataset.mode;
+  if(nm==='net'){v.yaw=0;v.pitch=Math.PI/2;}
+  else if(v.mode==='net'){v.yaw=-.55;v.pitch=.5;}
+  v.mode=nm;
+  $$('[data-act="mode"][data-id="'+el.dataset.id+'"]').forEach(function(b){b.setAttribute('aria-pressed',String(b===el));});
+  drawFig(el.dataset.id);
+ }
+ else if(act==='reset'){var v2=view(el.dataset.id);var it0=ITEMS[el.dataset.id];v2.yaw=it0.v0?it0.v0.yaw:-.55;v2.pitch=it0.v0?it0.v0.pitch:.5;drawFig(el.dataset.id);}
+ else if(act==='rgroup'){
+  state.ref.g=el.dataset.g;
+  $$('[data-act="rgroup"]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.g===state.ref.g));});
+  $('#refGrid').innerHTML=refGridHTML();requestAnimationFrame(sizeInk);
+ }
+ else if(act==='copy'){copySym(el.dataset.sym);}
+ else if(act==='qpick'){
+  var q=state.quiz;if(q.sel!==null)return;
+  q.sel=+el.dataset.i;if(q.sel===QUIZ[q.i].a)q.score++;renderView();sizeInk();
+ }
+ else if(act==='qnext'){
+  var qq=state.quiz;
+  if(qq.i===QUIZ.length-1)qq.done=true;else{qq.i++;qq.sel=null;}
+  renderView();sizeInk();
+ }
+ else if(act==='qrestart'){state.quiz={i:0,sel:null,score:0,done:false};renderView();sizeInk();}
+ else if(act==='size'){pen.size=(pen.size+1)%SIZES.length;renderPen();}
+ else if(act==='undo'){strokes.pop();drawAll();saveInk();}
+ else if(act==='clear'){
+  if(pen.armed){strokes.length=0;drawAll();saveInk();pen.armed=false;clearTimeout(armTimer);renderPen();toast(t.cleared);}
+  else{pen.armed=true;renderPen();toast(t.clearArmed);clearTimeout(armTimer);armTimer=setTimeout(function(){pen.armed=false;renderPen();},3000);}
+ }
+});
+document.addEventListener('input',function(e){
+ var el=e.target;
+ if(el.id==='refq'){state.ref.q=el.value;$('#refGrid').innerHTML=refGridHTML();requestAnimationFrame(sizeInk);}
+ else if(el.type==='range'&&el.dataset.id){
+  var v=view(el.dataset.id);v.n=+el.value;
+  var nv=$('#nv-'+el.dataset.id);if(nv){var sl=ITEMS[el.dataset.id].slider;nv.textContent=sl&&sl.fmt?sl.fmt(v.n):v.n;}
+  drawFig(el.dataset.id);
+ }
+});
+
+/* drag to rotate figures */
+var drag=null;
+document.addEventListener('pointerdown',function(e){
+ var s=e.target.closest&&e.target.closest('svg[data-fig]');if(!s)return;
+ drag={id:s.dataset.fig,x:e.clientX,y:e.clientY,pid:e.pointerId,svg:s};
+ try{s.setPointerCapture(e.pointerId);}catch(x){}
+ s.classList.add('grab');
+});
+document.addEventListener('pointermove',function(e){
+ if(!drag||e.pointerId!==drag.pid)return;
+ var v=view(drag.id),dx=e.clientX-drag.x,dy=e.clientY-drag.y;
+ drag.x=e.clientX;drag.y=e.clientY;
+ v.yaw+=dx*.011;
+ if(e.pointerType==='mouse')v.pitch=Math.max(-.25,Math.min(Math.PI/2,v.pitch+dy*.01));
+ drawFig(drag.id);
+});
+function endDrag(e){if(drag&&e.pointerId===drag.pid){drag.svg.classList.remove('grab');drag=null;}}
+document.addEventListener('pointerup',endDrag);
+document.addEventListener('pointercancel',endDrag);
+document.addEventListener('keydown',function(e){
+ var s=e.target.closest&&e.target.closest('svg[data-fig]');if(!s)return;
+ var v=view(s.dataset.fig),k=e.key,h=true;
+ if(k==='ArrowLeft')v.yaw-=.12;else if(k==='ArrowRight')v.yaw+=.12;
+ else if(k==='ArrowUp')v.pitch=Math.min(Math.PI/2,v.pitch+.08);else if(k==='ArrowDown')v.pitch=Math.max(-.25,v.pitch-.08);
+ else h=false;
+ if(h){e.preventDefault();drawFig(s.dataset.fig);}
+});
+
+/* ---------- solver UI ---------- */
+var SOLT={
+ ru:{fig:'Фигура',dims:'Размеры',task:'Что найти',ex:'Примеры из учебника',ans:'Ответ',sol:'Решение',obj:{pt:'Точка',ln:'Прямая',pn:'Плоскость'},nth:['1-я','2-я','3-я'],pt:'точка',cap:'Искомый перпендикуляр или отрезок выделен толстой линией.',bad:'Проверьте данные',vals:'Размеры должны быть положительными числами.'},
+ kk:{fig:'Фигура',dims:'Өлшемдері',task:'Нені табу керек',ex:'Оқулықтағы мысалдар',ans:'Жауабы',sol:'Шешуі',obj:{pt:'Нүкте',ln:'Түзу',pn:'Жазықтық'},nth:['1-ші','2-ші','3-ші'],pt:'нүкте',cap:'Ізделінді перпендикуляр немесе кесінді қалың сызықпен көрсетілген.',bad:'Деректерді тексеріңіз',vals:'Өлшемдер оң сандар болуы керек.'}
+};
+state.sol=null;
+ITEMS.sol={v0:{yaw:-.6,pitch:.45},def:'x',modes:[]};
+function solNames(fig){return solFigure(fig,SOLFIG[fig].par.map(function(p){return p[1];})).names;}
+function solSetSel(){
+ var s=state.sol,names=solNames(s.fig);
+ s.sel=SOLPRE[s.fig][s.kind].map(function(n){return names.indexOf(n);});
+}
+function solInit(){
+ if(state.sol)return;
+ var e0=SOLEX.filter(function(x){return x.id===SOLCFG.ex[0];})[0];
+ state.sol={fig:e0.fig,par:e0.par.slice(),kind:e0.kind,sel:[],ex:e0.id};
+ var nm0=solNames(e0.fig);state.sol.sel=e0.sel.map(function(n){return nm0.indexOf(n);});
+}
+function solKind(){return SOLKINDS.filter(function(k){return k.id===state.sol.kind;})[0];}
+function solControls(){
+ var s=state.sol,L=state.lang,t=SOLT[L],names=solNames(s.fig),k=solKind(),h='';
+ h+='<div class="sol-f"><label for="sol-fig">'+t.fig+'</label><select id="sol-fig">'+Object.keys(SOLFIG).map(function(f){return '<option value="'+f+'"'+(f===s.fig?' selected':'')+'>'+SOLFIG[f][L]+'</option>';}).join('')+'</select></div>';
+ h+='<div class="sol-f"><label>'+t.dims+'</label><div class="sol-par">'+SOLFIG[s.fig].par.map(function(p,i){
+  return '<label class="sol-n"><span>'+p[0]+' =</span><input type="number" inputmode="decimal" step="any" min="0.01" id="sol-p'+i+'" data-i="'+i+'" value="'+s.par[i]+'" aria-label="'+esc(SOLFIG[s.fig].pn[L][i])+'"></label>';
+ }).join('')+'</div><small class="sol-hint">'+SOLFIG[s.fig].pn[L].join(' · ')+'</small></div>';
+ h+='<div class="sol-f"><label for="sol-kind">'+t.task+'</label><select id="sol-kind">'+SOLKINDS.filter(function(q){return SOLCFG.kinds.indexOf(q.id)>=0;}).map(function(q){return '<option value="'+q.id+'"'+(q.id===s.kind?' selected':'')+'>'+q[L]+'</option>';}).join('')+'</select></div>';
+ var pos=0,same=k.g[0]===k.g[1];
+ h+='<div class="sol-objs">'+k.g.map(function(g,gi){
+  var title=t.obj[g]+(same?' '+(gi+1):''),n=GN[g],sl='';
+  for(var j=0;j<n;j++){
+   var idx=pos+j,opts=names.map(function(nm,vi){return '<option value="'+vi+'"'+(vi===s.sel[idx]?' selected':'')+'>'+nm+'</option>';}).join('');
+   sl+='<label class="sol-v"><span>'+(n>1?t.nth[j]+' '+t.pt:t.pt)+'</span><select class="sol-sel" data-i="'+idx+'">'+opts+'</select></label>';
+  }
+  pos+=n;
+  return '<fieldset class="sol-o"><legend>'+title+'</legend>'+sl+'</fieldset>';
+ }).join('')+'</div>';
+ h+='<div class="sol-f"><label>'+t.ex+'</label><div class="modes" role="group">'+SOLEX.filter(function(e){return SOLCFG.ex.indexOf(e.id)>=0;}).sort(function(x,y){return SOLCFG.ex.indexOf(x.id)-SOLCFG.ex.indexOf(y.id);}).map(function(e){
+  return '<button type="button" class="mode" data-act="solex" data-id="'+e.id+'" aria-pressed="'+(s.ex===e.id)+'">'+e.tag+' · '+e[L]+'</button>';
+ }).join('')+'</div></div>';
+ return h;
+}
+function solOutHTML(out){
+ var L=state.lang,t=SOLT[L];
+ if(!out.ok)return '<p class="fb" role="status"><b class="bad">'+t.bad+'.</b> '+esc(out.err[L])+'</p>';
+ var main=out.res.filter(function(r){return r.main;})[0]||out.res[0];
+ return '<div class="sol-ans" role="status"><small>'+t.ans+'</small>'+out.res.map(function(r){return '<div class="sol-res'+(r===main?' main':'')+'"><span class="k">'+esc(r.k[L])+'</span><b>'+esc(typeof r.v==='object'?r.v[L]:r.v)+'</b></div>';}).join('')+'</div>'+
+  '<details class="proof" open><summary>'+t.sol+'</summary><ol>'+out.steps.map(function(x){return '<li>'+esc(x[L])+'</li>';}).join('')+'</ol></details>';
+}
+function solCompute(){
+ var s=state.sol,F=solFigure(s.fig,s.par),out=solveSol(F,s.kind,s.sel);
+ state.solCache={F:F,out:out};
+ return state.solCache;
+}
+function drawSol(){
+ var svg=$('svg[data-fig="sol"]');if(!svg||!state.sol)return;
+ var c=state.solCache||solCompute();
+ svg.innerHTML=renderScene(solDraw(c.F,c.out),view('sol'));
+}
+function solRefresh(){
+ var c=solCompute(),o=$('#solOut');
+ if(o)o.innerHTML=solOutHTML(c.out);
+ drawSol();
+ requestAnimationFrame(sizeInk);
+}
+function solHTML(){
+ solInit();
+ var L=state.lang,t=SOLT[L],tt=T[L];
+ return '<div class="stack"><p class="intro">'+tt.intro.sol+'</p>'+
+  '<article class="card sol" id="card-sol"><div class="c-text"><div id="solCtl">'+solControls()+'</div></div>'+
+  '<div class="c-fig"><figure class="fig"><svg data-fig="sol" viewBox="0 0 420 300" role="img" tabindex="0" aria-label="'+esc(tt.tabs.sol)+'"></svg><figcaption>'+t.cap+'</figcaption></figure>'+
+  '<div class="fig-foot"><span>'+tt.hint+'</span><button type="button" class="link-btn" data-act="reset" data-id="sol">'+tt.reset+'</button></div><div class="work" aria-hidden="true"><small>'+(L==='ru'?'Место для решения':'Шешуге арналған орын')+'</small></div><div id="solOut"></div></div></article>'+
+  '<p class="src-note">'+tt.srcNote+'</p></div>';
+}
+function solAfterRender(){solRefresh();}
+function solSetEx(id){
+ var e=SOLEX.filter(function(x){return x.id===id;})[0],s=state.sol,names=solNames(e.fig);
+ s.fig=e.fig;s.par=e.par.slice();s.kind=e.kind;s.sel=e.sel.map(function(n){return names.indexOf(n);});s.ex=id;
+ $('#solCtl').innerHTML=solControls();solRefresh();
+}
+document.addEventListener('change',function(e){
+ var el=e.target,s=state.sol;if(!s||state.tab!=='sol')return;
+ if(el.id==='sol-fig'){s.fig=el.value;s.par=SOLFIG[s.fig].par.map(function(p){return p[1];});solSetSel();s.ex=null;$('#solCtl').innerHTML=solControls();solRefresh();}
+ else if(el.id==='sol-kind'){s.kind=el.value;solSetSel();s.ex=null;$('#solCtl').innerHTML=solControls();solRefresh();}
+ else if(el.classList.contains('sol-sel')){s.sel[+el.dataset.i]=+el.value;s.ex=null;$$('[data-act="solex"]').forEach(function(b){b.setAttribute('aria-pressed','false');});solRefresh();}
+});
+document.addEventListener('input',function(e){
+ var el=e.target,s=state.sol;if(!s||state.tab!=='sol'||!el.id||el.id.indexOf('sol-p')!==0)return;
+ var v=parseFloat(String(el.value).replace(',','.'));
+ if(!(v>0)||!isFinite(v)){el.setAttribute('aria-invalid','true');return;}
+ el.removeAttribute('aria-invalid');
+ s.par[+el.dataset.i]=v;s.ex=null;$$('[data-act="solex"]').forEach(function(b){b.setAttribute('aria-pressed','false');});solRefresh();
+});
+document.addEventListener('click',function(e){
+ var el=e.target.closest&&e.target.closest('[data-act="solex"]');if(!el)return;
+ solSetEx(el.dataset.id);
+});
+
+/* ---------- boot ---------- */
+function fullRender(){
+ var L=state.lang,t=T[L];
+ document.documentElement.lang=L==='kk'?'kk':'ru';
+ $('#bt').textContent=t.title;$('#bs').textContent=t.sub;
+ $$('.seg button[data-lang]').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.lang===L));});
+ applySize();
+ renderTabs();renderTheme();loadStrokes();renderView();renderPen();
+ requestAnimationFrame(sizeInk);
+}
+fullRender();
+if(window.ResizeObserver)new ResizeObserver(function(){sizeInk();}).observe($('#view'));
+window.addEventListener('resize',sizeInk);
+})();
+</script>
+<script>
+/* subscript fallback: Unicode ₀-₉ -> real <sub>/<tspan> (fonts of some touch panels lack these glyphs) */
+(function(){
+var RE=/[₀-₉]+/, RG=/([₀-₉]+)/g, SV='http://www.w3.org/2000/svg';
+function dig(s){return s.replace(/[₀-₉]/g,function(c){return String.fromCharCode(c.charCodeAt(0)-0x2080+48);});}
+function inSvg(n){var p=n.parentNode;while(p&&p.nodeType===1){if(p.namespaceURI===SV)return true;p=p.parentNode;}return false;}
+function fix(t){
+ var par=t.parentNode;if(!par||!RE.test(t.nodeValue))return;
+ var tag=par.nodeName.toLowerCase();
+ if(tag==='script'||tag==='style'||tag==='textarea')return;
+ if(tag==='option'||tag==='title'){t.nodeValue=dig(t.nodeValue);return;}
+ var parts=t.nodeValue.split(RG),frag=document.createDocumentFragment(),svg=inSvg(t),i,sub;
+ for(i=0;i<parts.length;i++){
+  if(!parts[i])continue;
+  sub=(i%2===1);
+  if(svg){
+   var ts=document.createElementNS(SV,'tspan');
+   if(sub){ts.setAttribute('dy','0.28em');ts.setAttribute('font-size','72%');ts.textContent=dig(parts[i]);}
+   else{ts.textContent=parts[i];if(i>1)ts.setAttribute('dy','-0.28em');}
+   frag.appendChild(ts);
+  }else if(sub){var s=document.createElement('sub');s.className='sbx';s.textContent=dig(parts[i]);frag.appendChild(s);}
+  else frag.appendChild(document.createTextNode(parts[i]));
+ }
+ par.replaceChild(frag,t);
+}
+function walk(n){
+ if(n.nodeType===3){fix(n);return;}
+ if(n.nodeType!==1)return;
+ var w=document.createTreeWalker(n,NodeFilter.SHOW_TEXT,null),a=[],x;
+ while((x=w.nextNode()))if(RE.test(x.nodeValue))a.push(x);
+ a.forEach(fix);
+}
+var st=document.createElement('style');st.textContent='sub.sbx{font-size:.72em;line-height:0;vertical-align:baseline;position:relative;top:.28em}';document.head.appendChild(st);
+var busy=false;
+new MutationObserver(function(ms){
+ if(busy)return;busy=true;
+ ms.forEach(function(m){
+  if(m.type==='characterData')fix(m.target);
+  else m.addedNodes.forEach(walk);
+ });
+ busy=false;
+}).observe(document.body||document.documentElement,{childList:true,subtree:true,characterData:true});
+walk(document.body||document.documentElement);
+})();
+</script>
